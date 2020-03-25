@@ -52,10 +52,9 @@
 <h2><label for="mdp">Confirmation du mot de passe</label>
 <input type="password" name="mdp" id="mdp" placeholder="confirmer votre nouveau mot de passe"/></h2>
 
-<ul>
-	<li><input type="submit" name="Valider" value="Valider les modifications" title="Validation des saisies" ></li>
-	<li><input type="submit" name="Supprimer" value="Supprimer le compte" title="Suppression du compte utilisateur"></li>
-</ul>
+<input type="submit" name="Valider" value="Valider les modifications" title="Validation des saisies" >
+
+<input type="submit" name="Supprimer" value="Supprimer le compte" title="Suppression du compte utilisateur">
 
 <jsp:include page="/WEB-INF/includes/footer.jsp"></jsp:include>
 
