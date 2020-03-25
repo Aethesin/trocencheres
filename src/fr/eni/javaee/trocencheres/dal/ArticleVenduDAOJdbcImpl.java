@@ -13,9 +13,10 @@ import fr.eni.javaee.trocencheres.exception.BusinessException;
 
 public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
-	private static final String INSERT_ARTICLE_VENDU = "insert into ARTICLE_VENDU(nomArticle, description,dateDebutEncheres, "
-			+ "dateFinEncheres, miseAPrix, prixVente, "
-			+ "noUtilisateur, noCategorie) values (?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_ARTICLE_VENDU = "insert into ARTICLES_VENDUS"
+			+ "(nom_article, description,date_debut_encheres, "
+			+ "date_fin_encheres, prix_initial, prix_vente, "
+			+ "no_utilisateur, no_categorie) values (?, ?, ?, ?, ?, ?, ?, ?)";
 
 	@Override
 	public void insertArticleVendu(ArticleVendu articleVendu) throws BusinessException {
@@ -33,7 +34,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 				PreparedStatement pstmt = cnx.prepareStatement(INSERT_ARTICLE_VENDU,
 						PreparedStatement.RETURN_GENERATED_KEYS);
-				pstmt.setString(1, articleVendu.getnomArticleVendu());
+				pstmt.setString(1, articleVendu.getNomArticleVendu());
 				pstmt.setString(2, articleVendu.getDescription());
 				pstmt.setString(3, articleVendu.getDateDebutEncheres().format(formatter));
 				pstmt.setString(4, articleVendu.getDateFinEncheres().format(formatter));
@@ -44,7 +45,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				pstmt.executeUpdate();
 				ResultSet rs = pstmt.getGeneratedKeys();
 				if (rs.next()) {
-					articleVendu.setnoArticleVendu(rs.getInt(1));
+					articleVendu.setNoArticleVendu(rs.getInt(1));
 				}
 				rs.close();
 				pstmt.close();
@@ -71,7 +72,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	@Override
 	public List<ArticleVendu> selectArticleVenduByMotCle(String motCle) throws BusinessException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
