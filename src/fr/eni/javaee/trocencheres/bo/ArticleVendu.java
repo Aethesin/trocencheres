@@ -10,6 +10,7 @@ public class ArticleVendu implements Serializable {
 	private Integer noArticleVendu;
 	private String nomArticleVendu;
 	private String description;
+	private String imageURL;
 	private LocalDateTime dateDebutEncheres;
 	private LocalDateTime dateFinEncheres;
 	private Integer miseAPrix;

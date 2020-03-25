@@ -33,7 +33,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 				PreparedStatement pstmt = cnx.prepareStatement(INSERT_ARTICLE_VENDU,
 						PreparedStatement.RETURN_GENERATED_KEYS);
-				pstmt.setString(1, articleVendu.getnomArticleVendu());
+				pstmt.setString(1, articleVendu.getNomArticleVendu());
 				pstmt.setString(2, articleVendu.getDescription());
 				pstmt.setString(3, articleVendu.getDateDebutEncheres().format(formatter));
 				pstmt.setString(4, articleVendu.getDateFinEncheres().format(formatter));
@@ -44,7 +44,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				pstmt.executeUpdate();
 				ResultSet rs = pstmt.getGeneratedKeys();
 				if (rs.next()) {
-					articleVendu.setnoArticleVendu(rs.getInt(1));
+					articleVendu.setNoArticleVendu(rs.getInt(1));
 				}
 				rs.close();
 				pstmt.close();
