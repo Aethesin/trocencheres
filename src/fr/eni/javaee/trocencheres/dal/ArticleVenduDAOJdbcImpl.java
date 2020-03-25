@@ -72,7 +72,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	@Override
 	public List<ArticleVendu> selectArticleVenduByMotCle(String motCle) throws BusinessException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
