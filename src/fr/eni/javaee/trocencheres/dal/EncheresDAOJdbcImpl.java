@@ -15,13 +15,6 @@ import fr.eni.javaee.trocencheres.exception.BusinessException;
 
 public class EncheresDAOJdbcImpl implements EncheresDAO {
 	
-	private static final String UPDATE_ENCHERE = "update ENCHERE set noUtilisateur=? noArticle=?, DateEnchere=? montantEnchere=?";
-	private static final String SELECT_ENCHERE="select a.nomArticle, a.description, a.prixVente, a.miseAPrix, a.dateDebutEncheres, "
-			+ "a.dateFinEncheres, r.rue, r.codePostal, r.ville, u.pseudo "
-			+ "from ARTICLE_VENDU a inner join ENCHERE e on a.noArticle = e.noArticle "
-			+ "inner join UTILISATEUR u on u.noUtilisateur = e.noUtilisateur "
-			+ "inner join RETRAIT r on r.noArticle = a.nomArticle "
-			+ "where e.noArticle = ?";
 
 	private static final String INSERT_ENCHERE = "insert into ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) values (?,?,?,?)";
 	private static final String UPDATE_ENCHERE = "update ENCHERES set no_utilisateur=?, no_article=?, date_enchere=?, montant_enchere=?";
