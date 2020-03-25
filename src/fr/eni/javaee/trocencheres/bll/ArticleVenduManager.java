@@ -105,4 +105,5 @@ public class ArticleVenduManager {
 		this.articleVenduDAO = articleVenduDAO;
 	}
 
+
 }
