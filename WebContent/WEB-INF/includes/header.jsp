@@ -1,0 +1,1 @@
+<h1 style="text-align: center;">Les objets sont nos amis</h1>

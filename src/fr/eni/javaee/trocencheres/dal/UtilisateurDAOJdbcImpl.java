@@ -1,0 +1,102 @@
+package fr.eni.javaee.trocencheres.dal;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import fr.eni.javaee.trocencheres.bo.Utilisateur;
+import fr.eni.javaee.trocencheres.exception.BusinessException;
+import fr.eni.javaee.trocencheres.messages.LecteurMessage;
+
+public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
+	
+
+	private static final String INSERT_UTILISATEUR = "insert into utilisateurs(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values (?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT, 0)";
+	private static final String SELECT_CONNEXION = "select pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur from utilisateurs where pseudo = ?;";
+	private LecteurMessage mes;
+	
+	
+	@Override
+	public void insertUtilisateur(Utilisateur utilisateur) throws BusinessException {
+		Connection cnx = null;
+		try {
+			cnx = ConnectionProvider.getConnection();
+			cnx.setAutoCommit(false);
+			PreparedStatement psmt = cnx.prepareStatement(INSERT_UTILISATEUR , PreparedStatement.RETURN_GENERATED_KEYS);
+			psmt.setString(1, utilisateur.getPseudo());
+			psmt.setString(2, utilisateur.getNom());
+			psmt.setString(3, utilisateur.getPrenom());
+			psmt.setString(4, utilisateur.getEmail());
+			psmt.setString(5, utilisateur.getTelephone());
+			psmt.setString(6, utilisateur.getRue());
+			psmt.setString(7, utilisateur.getCodePostal());
+			psmt.setString(8, utilisateur.getVille());
+			psmt.setString(9, utilisateur.getMotDePasse());
+			int nbEnregistrement = psmt.executeUpdate();
+			if(nbEnregistrement == 1) {
+				ResultSet rs = psmt.getGeneratedKeys();
+				if(rs.next()) {
+					utilisateur.setNoUtilisateur(rs.getInt(1));;
+				}
+				rs.close();
+				
+			}
+			psmt.close();
+			cnx.commit();
+		}catch (Exception e) {
+			e.printStackTrace();
+			try {
+				cnx.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}finally {
+			try {
+				cnx.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+
+	}
+
+	public Utilisateur afficherUtilisateurPseudo(String pseudo) throws BusinessException {
+		Utilisateur utilisateur = new Utilisateur();
+		
+		try (Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = cnx.prepareStatement(SELECT_CONNEXION);){
+			pstmt.setString(1, pseudo);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()){
+				utilisateur.setPseudo(rs.getString("pseudo"));
+				utilisateur.setNom(rs.getString("nom"));
+				utilisateur.setPrenom(rs.getString("prenom"));
+				utilisateur.setEmail(rs.getString("email"));
+				utilisateur.setTelephone(rs.getString("telephone"));
+				utilisateur.setRue(rs.getString("rue"));
+				utilisateur.setCodePostal(rs.getString("code_postal"));
+				utilisateur.setVille(rs.getString("ville"));
+				utilisateur.setMotDePasse(rs.getString("mot_de_passe"));
+				utilisateur.setCredit(rs.getInt("credit"));
+				utilisateur.setAdministrateur(rs.getShort("administrateur"));				
+			}
+		} catch (SQLException e) {
+		}
+		return utilisateur;
+	}
+
+	@Override
+	public void updateUtilisateur(Utilisateur utilisateur) throws BusinessException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void supprimerUtilisateur(int noUtilisateur) throws BusinessException {
+		// TODO Auto-generated method stub
+
+	}
+
+}
