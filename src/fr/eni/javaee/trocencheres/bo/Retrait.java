@@ -3,7 +3,9 @@ package fr.eni.javaee.trocencheres.bo;
 import java.io.Serializable;
 
 public class Retrait implements Serializable {
-	private static final long serialVersionUID = 1L;
+	
+	
+	private static final long serialVersionUID = -5943590610977819557L;
 	
 	private String rue;
 	private String codePostal;

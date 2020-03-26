@@ -21,4 +21,10 @@ public class UtilisateurManager {
 	public void getInscription(Utilisateur utilisateur) throws BusinessException{
 		utilisateurDAO.insertUtilisateur(utilisateur);	
 	}
+	
+	public Utilisateur selectVendeurs(int idUtilisateur) throws BusinessException{
+		Utilisateur user = null;
+		user = utilisateurDAO.selectVendeur(idUtilisateur);
+		return user;
+	}
 }

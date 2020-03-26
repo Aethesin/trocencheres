@@ -1,6 +1,8 @@
 package fr.eni.javaee.trocencheres.bll;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.eni.javaee.trocencheres.bo.ArticleVendu;
 import fr.eni.javaee.trocencheres.dal.ArticleVenduDAO;
@@ -103,6 +105,30 @@ public class ArticleVenduManager {
 
 	public void setArticleVenduDAO(ArticleVenduDAO articleVenduDAO) {
 		this.articleVenduDAO = articleVenduDAO;
+	}
+	
+	public List<ArticleVendu> selectAllArticleVendu() throws BusinessException{
+		List<ArticleVendu> listeArticlesVendu = new ArrayList<ArticleVendu>();
+		listeArticlesVendu = articleVenduDAO.selectAllArticleVendu();
+		return listeArticlesVendu;
+	}
+	
+	public List<ArticleVendu> selectArticleVenduByCategorie(String categorie) throws BusinessException{
+		List<ArticleVendu> listeArticlesVendu = new ArrayList<ArticleVendu>();
+		listeArticlesVendu = articleVenduDAO.selectArticleVenduByCategorie(categorie);
+		return listeArticlesVendu;
+	}
+
+	public List<ArticleVendu> selectArticleVenduByMotCle(String motCle) throws BusinessException{
+		List<ArticleVendu> listeArticlesVendu = new ArrayList<ArticleVendu>();
+		listeArticlesVendu = articleVenduDAO.selectArticleVenduByMotCle(motCle);
+		return listeArticlesVendu;
+	}
+	
+	public List<ArticleVendu> selectArticleVenduByMotCleAndCategorie(String motCle, String categorie) throws BusinessException{
+		List<ArticleVendu> listeArticlesVendu = new ArrayList<ArticleVendu>();
+		listeArticlesVendu = articleVenduDAO.selectArticleVenduByMotCleAndCategorie(motCle, categorie);
+		return listeArticlesVendu;
 	}
 
 }

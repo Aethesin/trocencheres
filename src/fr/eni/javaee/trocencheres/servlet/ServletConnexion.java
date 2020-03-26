@@ -33,8 +33,15 @@ public class ServletConnexion extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pagesConnexion/login.jsp");
-		rd.forward(request, response);
+		HttpSession session = request.getSession();
+		RequestDispatcher rd = null;
+		if(session.getAttribute("utilisateur") != null){
+			rd = request.getRequestDispatcher("/Accueil");
+			rd.forward(request, response);
+		}else{
+			rd = this.getServletContext().getNamedDispatcher("login");
+			rd.forward(request, response);
+		}
 	}
 
 	/**
@@ -42,6 +49,7 @@ public class ServletConnexion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
+		HttpSession session = request.getSession();
 		try {
 			String pseudo = request.getParameter("pseudo");
 			String motDePasse = request.getParameter("motDePasse");
@@ -50,8 +58,8 @@ public class ServletConnexion extends HttpServlet {
 			user = umger.getConnexion(pseudo);
 			if(user.getPseudo().equals(pseudo) && user.getMotDePasse().equals(motDePasse)){
 				System.out.println("Connexion en tant que " + pseudo);
-				rd = this.getServletContext().getNamedDispatcher("accueil");
-				rd.forward(request, response);
+				session.setAttribute("utilisateur", user);
+				doGet(request, response);
 			}else {
 				doGet(request, response);
 			}
