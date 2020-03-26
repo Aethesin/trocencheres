@@ -5,41 +5,78 @@
 
 <c:if test="${empty listeArticlesVendu}">
 		<p>Aucun article ne correspond à la demande actuelle</p>
-	</c:if>
+</c:if>
 
-<c:forEach var="lArt" items="${listeArticlesVendu}">
-<c:set var="idUser" value="${lArt.noUtilisateur}"/>
-	<ul>
-	  <li> ${lArt.nomArticleVendu } </li>
-	  <c:if test="${lArt.prixVente == 0}">
-		  <li>
-		  	Prix : ${lArt.miseAPrix }
-		  </li>
-	  </c:if>
-	  <c:if test="${lArt.prixVente != 0}">
-		  <li>
-		  	Prix : ${lArt.prixVente }
-		  </li>
-	  </c:if>
-	  <li>
-	  	Fin de l'enchère : ${lArt.dateFinEncheres.toString() }
-	  </li>
-	  
-	  <c:if test="${empty listeVendeurs}">
-	  	<h2>PROBLEME</h2>
-	  </c:if>
-	  <c:forEach var="u" items="${listeVendeurs}">
-		  <c:set var="idArtUser" value="${u.noUtilisateur }"></c:set>
-		  <c:if test="${lArt.noUtilisateur == u.noUtilisateur}">
+<c:if test="${sessionScope.utilisateur == null}">
+	<c:forEach var="lArt" items="${listeArticlesVendu}">
+		<c:set var="idUser" value="${lArt.noUtilisateur}"/>
+		<c:set var="i" value="0"/>
+		<ul>
+		  <li> ${lArt.nomArticleVendu } </li>
+		  <c:if test="${lArt.prixVente == 0}">
 			  <li>
-			  	Vendeur : ${u.pseudo}
+			  	Prix : ${lArt.miseAPrix }
 			  </li>
 		  </c:if>
-	  
-	  </c:forEach>
-	  
-	  
-	</ul>
+		  <c:if test="${lArt.prixVente != 0}">
+			  <li>
+			  	Prix : ${lArt.prixVente }
+			  </li>
+		  </c:if>
+		  <li>
+		  	Fin de l'enchère : ${lArt.dateFinEncheres.toString() }
+		  </li>
+		  
+		  <c:if test="${empty listeVendeurs}">
+		  	<h2>PROBLEME</h2>
+		  </c:if>
+		  <c:forEach var="u" items="${listeVendeurs}">
+			  <c:set var="idArtUser" value="${u.noUtilisateur }"></c:set>
+			  <c:if test="${(lArt.noUtilisateur == u.noUtilisateur) && (i == 0)}">
+				  <li>
+				  	Vendeur : ${u.pseudo}
+				  </li>
+			  <c:set var="i" value="1"/>
+			  </c:if>
+		  
+		  </c:forEach> 
+		</ul>
+	</c:forEach>
+</c:if>
 
-	
-</c:forEach>
+<c:if test="${sessionScope.utilisateur != null}">
+	<c:forEach var="lArt" items="${listeArticlesVendu}">
+		<c:set var="idUser" value="${lArt.noUtilisateur}"/>
+		<c:set var="i" value="0"/>
+		<ul>
+		  <li> ${lArt.nomArticleVendu } </li>
+		  <c:if test="${lArt.prixVente == 0}">
+			  <li>
+			  	Prix : ${lArt.miseAPrix }
+			  </li>
+		  </c:if>
+		  <c:if test="${lArt.prixVente != 0}">
+			  <li>
+			  	Prix : ${lArt.prixVente }
+			  </li>
+		  </c:if>
+		  <li>
+		  	Fin de l'enchère : ${lArt.dateFinEncheres.toString() }
+		  </li>
+		  
+		  <c:if test="${empty listeVendeurs}">
+		  	<h2>PROBLEME</h2>
+		  </c:if>
+		  <c:forEach var="u" items="${listeVendeurs}">
+			  <c:set var="idArtUser" value="${u.noUtilisateur }"></c:set>
+			  <c:if test="${(lArt.noUtilisateur == u.noUtilisateur) && (i == 0)}">
+				  <li>
+				  	Vendeur : <a href="<%=request.getContextPath()%>/AffichProfil?pseudo=${u.pseudo}">${u.pseudo}</a>
+				  </li>
+				  <c:set var="i" value="1"/>
+			  </c:if>
+		  
+		  </c:forEach> 
+		</ul>
+	</c:forEach>
+</c:if>
