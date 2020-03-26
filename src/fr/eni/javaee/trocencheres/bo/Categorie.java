@@ -3,7 +3,9 @@ package fr.eni.javaee.trocencheres.bo;
 import java.io.Serializable;
 
 public class Categorie implements Serializable {
-	private static final long serialVersionUID = 1L;
+
+
+	private static final long serialVersionUID = -6719553791011068345L;
 	
 	private int noCategorie;
 	private String libelle;

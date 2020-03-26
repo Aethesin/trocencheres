@@ -21,4 +21,14 @@ public abstract class CodesResultatBLL {
 	public static final int REGLE_VENDEUR_ERREUR=20006;
 
 	public static final int REGLE_CATEGORIE_ERREUR=20007;
+	
+	public static final int REGLE_DATE_ENCHERE_ERREUR=20008;
+	
+	public static final int REGLE_MONTANT_ENCHERE_ERREUR=20009;
+	
+	public static final int REGLE_NO_ARTICLE_ERREUR=20010;
+
+	public static final int REGLE_NO_UTILISATEUR_ERREUR=20010;
+
+	
 }

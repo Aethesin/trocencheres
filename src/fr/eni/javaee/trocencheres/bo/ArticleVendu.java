@@ -5,9 +5,10 @@ import java.time.LocalDateTime;
 
 
 public class ArticleVendu implements Serializable {
-	private static final long serialVersionUID = 1L;
 	
-	private Integer noArticleVendu;
+	private static final long serialVersionUID = -6998566428347980649L;
+	
+	private int noArticleVendu;
 	private String nomArticleVendu;
 	private String description;
 	private LocalDateTime dateDebutEncheres;
@@ -40,7 +41,7 @@ public class ArticleVendu implements Serializable {
 
 
 
-	public ArticleVendu(Integer noArticleVendu, String nomArticleVendu, String description,
+	public ArticleVendu(int noArticleVendu, String nomArticleVendu, String description,
 			LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres, int miseAPrix, int prixVente,
 			int noUtilisateur, int noCategorie) {
 		super();
@@ -58,14 +59,14 @@ public class ArticleVendu implements Serializable {
 
 
 
-	public Integer getNoArticleVendu() {
+	public int getNoArticleVendu() {
 		return noArticleVendu;
 	}
 
 
 
 
-	public void setNoArticleVendu(Integer noArticleVendu) {
+	public void setNoArticleVendu(int noArticleVendu) {
 		this.noArticleVendu = noArticleVendu;
 	}
 
@@ -191,11 +192,14 @@ public class ArticleVendu implements Serializable {
 
 
 
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((noArticleVendu == null) ? 0 : noArticleVendu.hashCode());
+		result = prime * result + noArticleVendu;
+		result = prime * result + noCategorie;
 		result = prime * result + noUtilisateur;
 		return result;
 	}
@@ -212,10 +216,9 @@ public class ArticleVendu implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		ArticleVendu other = (ArticleVendu) obj;
-		if (noArticleVendu == null) {
-			if (other.noArticleVendu != null)
-				return false;
-		} else if (!noArticleVendu.equals(other.noArticleVendu))
+		if (noArticleVendu != other.noArticleVendu)
+			return false;
+		if (noCategorie != other.noCategorie)
 			return false;
 		if (noUtilisateur != other.noUtilisateur)
 			return false;

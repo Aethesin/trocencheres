@@ -3,8 +3,10 @@ package fr.eni.javaee.trocencheres.bo;
 import java.io.Serializable;
 
 public class Utilisateur implements Serializable {
-	private static final long serialVersionUID = 1L;
+	
 
+	private static final long serialVersionUID = 2413305857405017184L;
+	
 	private int noUtilisateur;
 	private String pseudo;
 	private String nom;

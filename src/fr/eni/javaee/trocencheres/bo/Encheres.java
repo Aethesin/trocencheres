@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class Encheres implements Serializable {
-	private static final long serialVersionUID = 1L;
+
+	
+	private static final long serialVersionUID = -5412137110359755740L;
 	
 	private LocalDateTime dateEnchere;
 	private int montantEnchere;
