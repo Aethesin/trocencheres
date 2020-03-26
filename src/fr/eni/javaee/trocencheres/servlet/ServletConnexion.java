@@ -33,8 +33,15 @@ public class ServletConnexion extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = this.getServletContext().getNamedDispatcher("login");
-		rd.forward(request, response);
+		HttpSession session = request.getSession();
+		RequestDispatcher rd = null;
+		if(session.getAttribute("utilisateur") != null){
+			rd = request.getRequestDispatcher("/Accueil");
+			rd.forward(request, response);
+		}else{
+			rd = this.getServletContext().getNamedDispatcher("login");
+			rd.forward(request, response);
+		}
 	}
 
 	/**
@@ -52,8 +59,7 @@ public class ServletConnexion extends HttpServlet {
 			if(user.getPseudo().equals(pseudo) && user.getMotDePasse().equals(motDePasse)){
 				System.out.println("Connexion en tant que " + pseudo);
 				session.setAttribute("utilisateur", user);
-				rd = this.getServletContext().getNamedDispatcher("accueil");
-				rd.forward(request, response);
+				doGet(request, response);
 			}else {
 				doGet(request, response);
 			}

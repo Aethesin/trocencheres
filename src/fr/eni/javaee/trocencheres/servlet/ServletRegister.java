@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.javaee.trocencheres.bll.UtilisateurManager;
 import fr.eni.javaee.trocencheres.bo.Utilisateur;
@@ -41,6 +42,7 @@ public class ServletRegister extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		umger = new UtilisateurManager();
+		HttpSession session = request.getSession();
 		try {
 			String pseudo = request.getParameter("pseudo");
 			String nom = request.getParameter("nom");
@@ -53,18 +55,17 @@ public class ServletRegister extends HttpServlet {
 			String motDePasse = request.getParameter("motDePasse");
 			String motDePasseVerif = request.getParameter("motDePasseVerif");
 			if(!motDePasse.equals(motDePasseVerif)){
-				RequestDispatcher rd = this.getServletContext().getNamedDispatcher("register");
-				rd.forward(request, response);
+				doGet(request, response);
 			}else{
 				Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse);
 				umger.getInscription(utilisateur);
-				RequestDispatcher rd = this.getServletContext().getNamedDispatcher("accueil");
+				session.setAttribute("utilisateur", utilisateur);
+				RequestDispatcher rd = request.getRequestDispatcher("/Accueil");
 				rd.forward(request, response);				
 			}
 		} catch (BusinessException e) {
-			RequestDispatcher rd = this.getServletContext().getNamedDispatcher("register");
-			rd.forward(request, response);
 			e.printStackTrace();
+			doGet(request, response);
 		}
 	}
 

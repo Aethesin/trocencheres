@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class ServletUseBean
  */
-@WebServlet("/fr.eni.javaee.trocencheres.servlet/ServletAffichProfil")
+@WebServlet("/AffichProfil")
 public class ServletAffichProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -22,7 +22,8 @@ public class ServletAffichProfil extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/AffichProfil.jsp");
+		
+		RequestDispatcher rd = this.getServletContext().getNamedDispatcher("profil");
 		rd.forward(request, response);
 	}
 

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.eni.javaee.trocencheres.bo.Utilisateur;
 import fr.eni.javaee.trocencheres.exception.BusinessException;
@@ -14,6 +16,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	private static final String INSERT_UTILISATEUR = "insert into utilisateurs(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values (?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT, 0)";
 	private static final String SELECT_CONNEXION = "select pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur from utilisateurs where pseudo = ?;";
+	private static final String SELECT_UTILISATEURS = "select no_utilisateur, pseudo from utilisateurs where no_utilisateur = ?";
 	private LecteurMessage mes;
 	
 	
@@ -83,6 +86,23 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				utilisateur.setAdministrateur(rs.getShort("administrateur"));				
 			}
 		} catch (SQLException e) {
+		}
+		return utilisateur;
+	}
+	
+	public Utilisateur selectVendeur(int idUtilisateur) throws BusinessException{
+		Utilisateur utilisateur = new Utilisateur();
+		
+		try (Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = cnx.prepareStatement(SELECT_UTILISATEURS);){
+			pstmt.setInt(1, idUtilisateur);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()){				
+				utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));			
+				utilisateur.setPseudo(rs.getString("pseudo"));
+			}
+		} catch (SQLException e) {
+			System.out.println("Ptdr");
 		}
 		return utilisateur;
 	}

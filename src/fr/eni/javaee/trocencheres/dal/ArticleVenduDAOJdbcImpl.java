@@ -158,8 +158,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		articleVendu.setNoArticleVendu(rs.getInt("no_article"));
 		articleVendu.setNomArticleVendu(rs.getString("nom_article"));
 		articleVendu.setDescription(rs.getString("description"));
-//		articleVendu.setDateDebutEncheres(rs.getString("date_debut_encheres"));
-//		articleVendu.setDateFinEncheres(rs.getString("date_fin_encheres"));
+		articleVendu.setDateDebutEncheres(rs.getTimestamp("date_debut_encheres").toLocalDateTime());
+		articleVendu.setDateFinEncheres(rs.getTimestamp("date_fin_encheres").toLocalDateTime());
 		articleVendu.setMiseAPrix(rs.getInt("prix_initial"));
 		articleVendu.setPrixVente(rs.getInt("prix_vente"));
 		articleVendu.setNoUtilisateur(rs.getInt("no_utilisateur"));
