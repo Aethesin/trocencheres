@@ -33,7 +33,7 @@ public class ServletConnexion extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = this.getServletContext().getNamedDispatcher("login");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pagesConnexion/login.jsp");
 		rd.forward(request, response);
 	}
 

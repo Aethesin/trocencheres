@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<jsp:include page="/WEB-INF/includes/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/includes/headerConnecté.jsp"></jsp:include>
 
 <h1>Modifier / supprimer mon Profil</h1>
 
@@ -44,13 +44,13 @@
 <input type="text" name="ville" id="ville" placeholder="saisir votre nouvelle ville" value="<jsp:getProperty property="ville" name="utilisateur"/>"/></h2>
 
 <h2><label for="mdp">Mot de passe actuel</label>
-<input type="text" name="mdp" id="mdp" value='<jsp:getProperty property="motDePasse" name="utilisateur"/>' disabled="disabled"/></h2>
+<input type="password" name="mdpActuel" id="mdpActuel" placeholder="saisir votre ancien mot de passe"/></h2>
 
 <h2><label for="mdp">Nouveau mot de passe</label>
 <input type="password" name="mdp" id="mdp" placeholder="saisir votre nouveau mot de passe"/></h2>
 
 <h2><label for="mdp">Confirmation du mot de passe</label>
-<input type="password" name="mdp" id="mdp" placeholder="confirmer votre nouveau mot de passe"/></h2>
+<input type="password" name="mdpConfirm" id="mdpConfirm" placeholder="confirmer votre nouveau mot de passe"/></h2>
 
 <input type="submit" name="Valider" value="Valider les modifications" title="Validation des saisies" >
 
