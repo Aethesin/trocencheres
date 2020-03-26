@@ -5,10 +5,9 @@
 
 <c:if test="${sessionScope.utilisateur != null }">
 	<h1 style="text-align: center;">Les objets sont nos amis</h1>
-	<h3>${utilisateur.pseudo }</h3>
-	<form action="<%=request.getContextPath()%>/Deconnexion" method="post">
-		<button type="submit" value="Déconnexion">Déconnexion</button>
-	</form>
+	<a href="<%=request.getContextPath()%>/AffichProfil?pseudo=${sessionScope.utilisateur.pseudo}">Mon profil</a>
+	<a href="<%=request.getContextPath()%>/Deconnexion">Déconnexion</a>
+	
 </c:if>
 <c:if test="${sessionScope.utilisateur == null }">
 	<h1 style="text-align: center;">Les objets sont nos amis</h1>

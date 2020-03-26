@@ -1,6 +1,7 @@
 <%@page import="fr.eni.javaee.trocencheres.bo.Utilisateur"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +10,7 @@
 </head>
 <body>
 
-<jsp:include page="/WEB-INF/includes/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/includes/headerDéconnecté.jsp"></jsp:include>
 
 <h1>Détail du Profil</h1>
 
@@ -31,10 +32,12 @@
 
 <h2>Ville : <jsp:getProperty property="ville" name="utilisateur"/></h2>
 
-<div>bouton edit</div>
+<c:if test="${sessionScope.utilisateur != null}"><div>bouton edit</div></c:if>
+
 <!-- possible uniquement si user = session en cours -->
 
 <jsp:include page="/WEB-INF/includes/footer.jsp"></jsp:include>
+
 
 </body>
 </html>
