@@ -35,6 +35,6 @@ public abstract class CodesResultatDAL {
 	 */
 	public static final int ENCHERE_TERMINEE=10005;
 	
-	public static final int SELECT_BY_NOARTICLE_ECHEC = 10006;
+	public static final int SELECT_BY_NO_ARTICLE_ECHEC = 10006;
 	
 }

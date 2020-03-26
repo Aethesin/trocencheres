@@ -16,10 +16,22 @@ public class ArticleVenduManager {
 		this.setArticleVenduDAO(DAOFactory.getArticleVenduDAO());
 		
 	}
-
-	public ArticleVendu insertArticleVendu(String nomArticleVendu, String description, LocalDateTime dateDebutEncheres,
-			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, int noUtilisateur, int noCategorie)
-			throws BusinessException {
+	
+	/**
+	 * Méthode en charge de
+	 * @param noArticleVendu
+	 * @param nomArticleVendu
+	 * @param description
+	 * @param dateDebutEncheres
+	 * @param dateFinEncheres
+	 * @param miseAPrix
+	 * @param prixVente
+	 * @param noUtilisateur
+	 * @param noCategorie
+	 */
+	public void insertArticleVendu(int noArticleVendu, String nomArticleVendu, String description,
+			LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres, int miseAPrix, int prixVente,
+			int noUtilisateur, int noCategorie) throws BusinessException {
 
 		BusinessException businessException = new BusinessException();
 		ArticleVendu articleVendu = new ArticleVendu(nomArticleVendu, description, dateDebutEncheres, dateFinEncheres,
@@ -36,8 +48,6 @@ public class ArticleVenduManager {
 		if(businessException.hasErreurs()) {
 			throw businessException;
 		}
-
-		return articleVendu;
 	}
 
 	private void validerCategorie(ArticleVendu articleVendu, BusinessException businessException) {
@@ -130,5 +140,7 @@ public class ArticleVenduManager {
 		listeArticlesVendu = articleVenduDAO.selectArticleVenduByMotCleAndCategorie(motCle, categorie);
 		return listeArticlesVendu;
 	}
+
+	
 
 }
