@@ -15,3 +15,5 @@
 	<a href="<%=request.getContextPath()%>/Register">S'inscrire</a>
 	<a href="<%=request.getContextPath()%>/Connexion">Se connecter</a>
 </c:if>
+
+
