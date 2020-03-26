@@ -42,7 +42,6 @@ public class ServletConnexion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
-		HttpSession session = request.getSession();
 		try {
 			String pseudo = request.getParameter("pseudo");
 			String motDePasse = request.getParameter("motDePasse");
@@ -51,7 +50,6 @@ public class ServletConnexion extends HttpServlet {
 			user = umger.getConnexion(pseudo);
 			if(user.getPseudo().equals(pseudo) && user.getMotDePasse().equals(motDePasse)){
 				System.out.println("Connexion en tant que " + pseudo);
-				session.setAttribute("utilisateur", user);
 				rd = this.getServletContext().getNamedDispatcher("accueil");
 				rd.forward(request, response);
 			}else {
