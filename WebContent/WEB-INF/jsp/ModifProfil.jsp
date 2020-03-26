@@ -11,7 +11,7 @@
 
 <h1>Modifier / supprimer mon Profil</h1>
 
-<%Utilisateur user = new Utilisateur()%>
+<%-- <%Utilisateur user = new Utilisateur()%>
 
 <h2><label for="pseudo">Pseudo</label>
 <input type="text" name="pseudo" id="pseudo" placeholder="saisir votre nouveau pseudo" value="<%=user.getPseudo()%>"/></h2>
@@ -49,7 +49,7 @@
 
 <h2><label for="mdp">Confirmation du mot de passe</label>
 <input type="password" name="mdp" id="mdp" placeholder="confirmer votre nouveau mot de passe"/></h2>
-
+ --%>
 
 <div>bouton enregistrer modifs</div>
 

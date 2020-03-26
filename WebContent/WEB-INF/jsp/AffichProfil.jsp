@@ -11,7 +11,7 @@
 
 <h1>Détail du Profil</h1>
 
-<%Utilisateur user = new Utilisateur() %>
+<%-- <%Utilisateur user = new Utilisateur() %>
 
 <h2>Pseudo : <%=user.getPseudo() %></h2>
 
@@ -27,7 +27,7 @@
 
 <h2>Code postal : <%=user.getCodePostal() %></h2>
 
-<h2>Ville : <%=user.getVille()%></h2>
+<h2>Ville : <%=user.getVille()%></h2> --%>
 
 
 <div>bouton edit</div>

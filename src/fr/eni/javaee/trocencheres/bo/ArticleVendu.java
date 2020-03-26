@@ -2,7 +2,7 @@ package fr.eni.javaee.trocencheres.bo;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 
 public class ArticleVendu implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -10,20 +10,39 @@ public class ArticleVendu implements Serializable {
 	private Integer noArticleVendu;
 	private String nomArticleVendu;
 	private String description;
-	private String imageURL;
 	private LocalDateTime dateDebutEncheres;
 	private LocalDateTime dateFinEncheres;
-	private Integer miseAPrix;
-	private Integer prixVente;
-	private Utilisateur utilisateur;
-	private Categorie categorie;
+	private int miseAPrix;
+	private int prixVente;
+	private int noUtilisateur;
+	private int noCategorie;
 	
 	public ArticleVendu() {
 		super();
 	}
 
-	public ArticleVendu(Integer noArticleVendu, String nomArticleVendu, String description, LocalDateTime dateDebutEncheres,
-			LocalDateTime dateFinEncheres, Integer miseAPrix, Integer prixVente) {
+	
+	
+
+	public ArticleVendu(String nomArticleVendu, String description, LocalDateTime dateDebutEncheres,
+			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, int noUtilisateur, int noCategorie) {
+		super();
+		this.nomArticleVendu = nomArticleVendu;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+		this.noUtilisateur = noUtilisateur;
+		this.noCategorie = noCategorie;
+	}
+
+
+
+
+	public ArticleVendu(Integer noArticleVendu, String nomArticleVendu, String description,
+			LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres, int miseAPrix, int prixVente,
+			int noUtilisateur, int noCategorie) {
 		super();
 		this.noArticleVendu = noArticleVendu;
 		this.nomArticleVendu = nomArticleVendu;
@@ -32,134 +51,157 @@ public class ArticleVendu implements Serializable {
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
+		this.noUtilisateur = noUtilisateur;
+		this.noCategorie = noCategorie;
 	}
 
-	public ArticleVendu(String nomArticleVendu, String description, LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres,
-			Integer miseAPrix, Integer prixVente) {
-		super();
-		this.nomArticleVendu = nomArticleVendu;
-		this.description = description;
-		this.dateDebutEncheres = dateDebutEncheres;
-		this.dateFinEncheres = dateFinEncheres;
-		this.miseAPrix = miseAPrix;
-		this.prixVente = prixVente;
-	}
 
-	
-	
-	public ArticleVendu(String nomArticleVendu, String description, LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres,
-			Integer miseAPrix, Integer prixVente, Utilisateur utilisateur, Categorie categorie) {
-		super();
-		this.nomArticleVendu = nomArticleVendu;
-		this.description = description;
-		this.dateDebutEncheres = dateDebutEncheres;
-		this.dateFinEncheres = dateFinEncheres;
-		this.miseAPrix = miseAPrix;
-		this.prixVente = prixVente;
-		this.utilisateur = utilisateur;
-		this.categorie = categorie;
-	}
 
-	public ArticleVendu(Integer noArticleVendu, String nomArticleVendu, String description, LocalDateTime dateDebutEncheres,
-			LocalDateTime dateFinEncheres, Integer miseAPrix, Integer prixVente, Utilisateur utilisateur, Categorie categorie) {
-		super();
-		this.noArticleVendu = noArticleVendu;
-		this.nomArticleVendu = nomArticleVendu;
-		this.description = description;
-		this.dateDebutEncheres = dateDebutEncheres;
-		this.dateFinEncheres = dateFinEncheres;
-		this.miseAPrix = miseAPrix;
-		this.prixVente = prixVente;
-		this.utilisateur = utilisateur;
-		this.categorie = categorie;
-	}
 
-	public Utilisateur getUtilisateur() {
-		return utilisateur;
-	}
-
-	public void setUtilisateur(Utilisateur utilisateur) {
-		this.utilisateur = utilisateur;
-	}
-
-	public Categorie getCategorie() {
-		return categorie;
-	}
-
-	public void setCategorie(Categorie categorie) {
-		this.categorie = categorie;
-	}
-
-	public int getnoArticleVendu() {
+	public Integer getNoArticleVendu() {
 		return noArticleVendu;
 	}
 
-	public void setnoArticleVendu(Integer noArticleVendu) {
+
+
+
+	public void setNoArticleVendu(Integer noArticleVendu) {
 		this.noArticleVendu = noArticleVendu;
 	}
 
-	public String getnomArticleVendu() {
+
+
+
+	public String getNomArticleVendu() {
 		return nomArticleVendu;
 	}
 
-	public void setnomArticleVendu(String nomArticleVendu) {
+
+
+
+	public void setNomArticleVendu(String nomArticleVendu) {
 		this.nomArticleVendu = nomArticleVendu;
 	}
+
+
+
 
 	public String getDescription() {
 		return description;
 	}
 
+
+
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+
+
 
 	public LocalDateTime getDateDebutEncheres() {
 		return dateDebutEncheres;
 	}
 
+
+
+
 	public void setDateDebutEncheres(LocalDateTime dateDebutEncheres) {
 		this.dateDebutEncheres = dateDebutEncheres;
 	}
+
+
+
 
 	public LocalDateTime getDateFinEncheres() {
 		return dateFinEncheres;
 	}
 
+
+
+
 	public void setDateFinEncheres(LocalDateTime dateFinEncheres) {
 		this.dateFinEncheres = dateFinEncheres;
 	}
+
+
+
 
 	public int getMiseAPrix() {
 		return miseAPrix;
 	}
 
-	public void setMiseAPrix(Integer miseAPrix) {
+
+
+
+	public void setMiseAPrix(int miseAPrix) {
 		this.miseAPrix = miseAPrix;
 	}
+
+
+
 
 	public int getPrixVente() {
 		return prixVente;
 	}
 
-	public void setPrixVente(Integer prixVente) {
+
+
+
+	public void setPrixVente(int prixVente) {
 		this.prixVente = prixVente;
 	}
+
+
+
+
+	public int getNoUtilisateur() {
+		return noUtilisateur;
+	}
+
+
+
+
+	public void setNoUtilisateur(int noUtilisateur) {
+		this.noUtilisateur = noUtilisateur;
+	}
+
+
+
+
+	public int getNoCategorie() {
+		return noCategorie;
+	}
+
+
+
+
+	public void setNoCategorie(int noCategorie) {
+		this.noCategorie = noCategorie;
+	}
+
+
+
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
+
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((categorie == null) ? 0 : categorie.hashCode());
-		result = prime * result + noArticleVendu;
-		result = prime * result + ((nomArticleVendu == null) ? 0 : nomArticleVendu.hashCode());
-		result = prime * result + ((utilisateur == null) ? 0 : utilisateur.hashCode());
+		result = prime * result + ((noArticleVendu == null) ? 0 : noArticleVendu.hashCode());
+		result = prime * result + noUtilisateur;
 		return result;
 	}
+
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -170,25 +212,18 @@ public class ArticleVendu implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		ArticleVendu other = (ArticleVendu) obj;
-		if (categorie == null) {
-			if (other.categorie != null)
+		if (noArticleVendu == null) {
+			if (other.noArticleVendu != null)
 				return false;
-		} else if (!categorie.equals(other.categorie))
+		} else if (!noArticleVendu.equals(other.noArticleVendu))
 			return false;
-		if (noArticleVendu != other.noArticleVendu)
-			return false;
-		if (nomArticleVendu == null) {
-			if (other.nomArticleVendu != null)
-				return false;
-		} else if (!nomArticleVendu.equals(other.nomArticleVendu))
-			return false;
-		if (utilisateur == null) {
-			if (other.utilisateur != null)
-				return false;
-		} else if (!utilisateur.equals(other.utilisateur))
+		if (noUtilisateur != other.noUtilisateur)
 			return false;
 		return true;
 	}
+
+
+
 
 	@Override
 	public String toString() {

@@ -3,7 +3,10 @@ package fr.eni.javaee.trocencheres.dal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.javaee.trocencheres.bo.ArticleVendu;
@@ -16,6 +19,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private static final String INSERT_ARTICLE_VENDU = "insert into ARTICLE_VENDU(nomArticle, description,dateDebutEncheres, "
 			+ "dateFinEncheres, miseAPrix, prixVente, "
 			+ "noUtilisateur, noCategorie) values (?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String SELECT_ALL_ARTICLES = "select nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie"
+			+ " from ARTICLES_VENDUS;";
 
 	@Override
 	public void insertArticleVendu(ArticleVendu articleVendu) throws BusinessException {
@@ -77,8 +82,34 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	@Override
 	public List<ArticleVendu> selectAllArticleVendu() throws BusinessException {
-		// TODO Auto-generated method stub
+		List<ArticleVendu> listeArticlesVendu = new ArrayList<ArticleVendu>();
+		try (Connection cnx = ConnectionProvider.getConnection(); Statement smt = cnx.createStatement();){
+			ResultSet rs = smt.executeQuery(SELECT_ALL_ARTICLES);
+			ArticleVendu articleVendu = new ArticleVendu();
+			while (rs.next()) {
+				articleVendu = mappingArticles(rs);
+				listeArticlesVendu.add(articleVendu);
+			}
+			return listeArticlesVendu;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
+	}
+	
+	private ArticleVendu mappingArticles(ResultSet rs){
+		ArticleVendu articleVendu = new ArticleVendu();
+		try {
+			articleVendu.setNomArticleVendu(rs.getString("nom_article"));
+			articleVendu.setDescription(rs.getString("description"));
+			articleVendu.setMiseAPrix(rs.getInt("prix_initial"));
+			articleVendu.setPrixVente(rs.getInt("prix_vente"));
+			articleVendu.setNoUtilisateur(rs.getInt("no_utilisateur"));
+			articleVendu.setNoCategorie(rs.getInt("no_categorie"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return articleVendu;
 	}
 
 }
