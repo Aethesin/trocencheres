@@ -4,12 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import fr.eni.javaee.trocencheres.bo.Utilisateur;
 import fr.eni.javaee.trocencheres.exception.BusinessException;
-import fr.eni.javaee.trocencheres.messages.LecteurMessage;
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	
@@ -19,8 +16,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_UTILISATEURS = "select no_utilisateur, pseudo from utilisateurs where no_utilisateur = ?";
 	private static final String UPDATE_UTILISATEUR =	"update utilisateurs set pseudo = '?',set nom = '?',set prenom = '?',set email = '?',"
 			+ "set telephone = '?',set rue = '?',set code_postal = '?',set ville = '?',set mot_de_passe = '?' where no_utilisateur = ?;";
-	private LecteurMessage mes;
-	
+	private static final String DELETE_UTILISATEUR = "delete from UTILISATEURS where no_utilisateur = ?;";
 	
 	@Override
 	public void insertUtilisateur(Utilisateur utilisateur) throws BusinessException {
@@ -138,7 +134,18 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	@Override
 	public void supprimerUtilisateur(int noUtilisateur) throws BusinessException {
-		// TODO Auto-generated method stub
+		Connection cnx = null;
+		try {
+			cnx = ConnectionProvider.getConnection();
+			cnx.setAutoCommit(false);
+			PreparedStatement pstmt = cnx.prepareStatement(DELETE_UTILISATEUR);
+			pstmt.setInt(1, noUtilisateur);
+			pstmt.executeUpdate();
+			pstmt.close();
+			cnx.commit();
+		} catch (SQLException e) {
+			throw new BusinessException();
+		}
 
 	}
 
