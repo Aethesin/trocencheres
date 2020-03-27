@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
-
 import fr.eni.javaee.trocencheres.bo.Utilisateur;
 import fr.eni.javaee.trocencheres.exception.BusinessException;
 import fr.eni.javaee.trocencheres.messages.LecteurMessage;
@@ -21,8 +19,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_UTILISATEURS = "select no_utilisateur, pseudo from utilisateurs where no_utilisateur = ?";
 	private static final String UPDATE_UTILISATEUR =	"update utilisateurs set pseudo = '?',set nom = '?',set prenom = '?',set email = '?',"
 			+ "set telephone = '?',set rue = '?',set code_postal = '?',set ville = '?',set mot_de_passe = '?' where no_utilisateur = ?;";
-														
-	
 	private LecteurMessage mes;
 	
 	
@@ -79,6 +75,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			pstmt.setString(1, pseudo);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()){
+				utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));	
 				utilisateur.setPseudo(rs.getString("pseudo"));
 				utilisateur.setNom(rs.getString("nom"));
 				utilisateur.setPrenom(rs.getString("prenom"));

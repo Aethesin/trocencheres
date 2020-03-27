@@ -21,7 +21,7 @@
     <servlet-name>accueil</servlet-name>
     <url-pattern>/accueil.jsp</url-pattern>
   </servlet-mapping>
-  
+    
   <servlet>
     <servlet-name>register</servlet-name>
     <jsp-file>/WEB-INF/pagesConnexion/register.jsp</jsp-file>
@@ -29,6 +29,15 @@
   <servlet-mapping>
     <servlet-name>register</servlet-name>
     <url-pattern>/register.jsp</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ModifProfil</servlet-name>
+    <jsp-file>/WEB-INF/jsp/ModifProfil.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ModifProfil</servlet-name>
+    <url-pattern>/ModifProfil.jsp</url-pattern>
   </servlet-mapping>
   
   <servlet>
@@ -41,6 +50,15 @@
   </servlet-mapping>
   
   <servlet>
+    <servlet-name>AffichEnchere</servlet-name>
+    <jsp-file>/WEB-INF/jsp/AffichEnchere.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AffichEnchere</servlet-name>
+    <url-pattern>/AffichEnchere.jsp</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
     <servlet-name>profil</servlet-name>
     <jsp-file>/WEB-INF/jsp/AffichProfil.jsp</jsp-file>
   </servlet>
@@ -48,4 +66,5 @@
     <servlet-name>profil</servlet-name>
     <url-pattern>/AffichProfil.jsp</url-pattern>
   </servlet-mapping>
+  
 </web-app>

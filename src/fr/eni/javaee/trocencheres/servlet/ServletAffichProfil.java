@@ -39,7 +39,6 @@ public class ServletAffichProfil extends HttpServlet {
 		}
 		try {
 			umger = new UtilisateurManager();
-			System.out.println("Salut");
 			nomUtilisateur = request.getParameter("pseudo");
 			utilisateur = umger.getConnexion(nomUtilisateur);
 			request.setAttribute("utilisateur", utilisateur);

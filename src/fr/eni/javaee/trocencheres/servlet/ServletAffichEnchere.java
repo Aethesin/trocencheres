@@ -31,8 +31,7 @@ public class ServletAffichEnchere extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		EncheresManager encheresManager = new EncheresManager();
 		Utilisateur utilisateur = new Utilisateur();
-		
-		
+				
 	}
 
 	/**

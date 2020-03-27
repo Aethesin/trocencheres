@@ -32,7 +32,14 @@
 
 <h2>Ville : <jsp:getProperty property="ville" name="utilisateur"/></h2>
 
-<c:if test="${sessionScope.utilisateur != null}"><div>bouton edit</div></c:if>
+<c:set var="u" value="${sessionScope.utilisateur}"/>
+<c:if test="${(u != null) && (u.pseudo == utilisateur.pseudo)}"><div><a href="<%=request.getContextPath()%>/ModifProfil">bouton edit</a></div></c:if>
+
+<h4>
+
+	<a href="<%=request.getContextPath()%>/">Retour à l'accueil</a>
+
+</h4>
 
 <!-- possible uniquement si user = session en cours -->
 

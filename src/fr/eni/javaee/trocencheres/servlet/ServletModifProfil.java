@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.javaee.trocencheres.bll.UtilisateurManager;
 import fr.eni.javaee.trocencheres.bo.Utilisateur;
@@ -32,8 +33,16 @@ public class ServletModifProfil extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/ModifProfil.jsp");
-		rd.forward(request, response);
+		HttpSession session = request.getSession();
+		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+		if(utilisateur != null){
+			request.setAttribute("utilisateur", utilisateur);
+			RequestDispatcher rd = this.getServletContext().getNamedDispatcher("ModifProfil");
+			rd.forward(request, response);
+		}else{
+			RequestDispatcher rd = request.getRequestDispatcher("Connexion");
+			rd.forward(request, response);
+		}
 	}
 
 	/**
