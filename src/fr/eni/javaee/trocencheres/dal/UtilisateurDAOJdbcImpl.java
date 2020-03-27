@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
+
 import fr.eni.javaee.trocencheres.bo.Utilisateur;
 import fr.eni.javaee.trocencheres.exception.BusinessException;
 import fr.eni.javaee.trocencheres.messages.LecteurMessage;
@@ -17,6 +19,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String INSERT_UTILISATEUR = "insert into utilisateurs(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values (?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT, 0)";
 	private static final String SELECT_CONNEXION = "select pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur from utilisateurs where pseudo = ?;";
 	private static final String SELECT_UTILISATEURS = "select no_utilisateur, pseudo from utilisateurs where no_utilisateur = ?";
+	private static final String UPDATE_UTILISATEUR =	"update utilisateurs set pseudo = '?',set nom = '?',set prenom = '?',set email = '?',"
+			+ "set telephone = '?',set rue = '?',set code_postal = '?',set ville = '?',set mot_de_passe = '?' where no_utilisateur = ?;";
+														
+	
 	private LecteurMessage mes;
 	
 	
@@ -109,8 +115,28 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	@Override
 	public void updateUtilisateur(Utilisateur utilisateur) throws BusinessException {
-		// TODO Auto-generated method stub
-
+		Connection cnx = null;
+		try {
+			cnx= ConnectionProvider.getConnection();
+			cnx.setAutoCommit(false);
+			
+			PreparedStatement pstmt = cnx.prepareStatement(UPDATE_UTILISATEUR);
+			pstmt.setString(1, utilisateur.getPseudo());
+			pstmt.setString(2,utilisateur.getNom());
+			pstmt.setString(3, utilisateur.getPrenom());
+			pstmt.setString(4, utilisateur.getEmail());
+			pstmt.setString(5,utilisateur.getTelephone());
+			pstmt.setString(6, utilisateur.getRue());
+			pstmt.setString(7, utilisateur.getCodePostal());
+			pstmt.setString(8,utilisateur.getVille());
+			pstmt.setString(9, utilisateur.getMotDePasse());
+			pstmt.setInt(10, utilisateur.getNoUtilisateur());
+			pstmt.executeUpdate();
+			pstmt.close();
+			cnx.commit();
+		} catch (SQLException e) {
+			throw new BusinessException();
+		}
 	}
 
 	@Override
