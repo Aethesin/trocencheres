@@ -114,6 +114,8 @@ public class ServletModifProfil extends HttpServlet {
 			} catch (BusinessException e) {
 				e.printStackTrace();
 			}
+			RequestDispatcher rq = request.getRequestDispatcher("/AffichProfil");
+			rq.forward(request, response);
 		} catch (BusinessException e) {
 			// TODO message erreur qui va  bien
 			e.printStackTrace();

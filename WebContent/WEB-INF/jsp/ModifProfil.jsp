@@ -57,6 +57,7 @@
 
 </form>
 <form action="<%=request.getContextPath()%>/SupprimProfil" method="get">
+	<input type="hidden" name="noUtilisateur" value="<jsp:getProperty property="noUtilisateur" name="utilisateur"/>">
 	<input type="submit" name="Supprimer" value="Supprimer le compte" title="Suppression du compte utilisateur">
 </form>
 
