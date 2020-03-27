@@ -12,6 +12,7 @@
     <servlet-name>login</servlet-name>
     <url-pattern>/login.jsp</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>accueil</servlet-name>
     <jsp-file>/WEB-INF/accueil.jsp</jsp-file>
@@ -20,6 +21,7 @@
     <servlet-name>accueil</servlet-name>
     <url-pattern>/accueil.jsp</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>register</servlet-name>
     <jsp-file>/WEB-INF/pagesConnexion/register.jsp</jsp-file>
@@ -28,6 +30,7 @@
     <servlet-name>register</servlet-name>
     <url-pattern>/register.jsp</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>AjoutArticle</servlet-name>
     <jsp-file>/WEB-INF/jsp/AjoutArticle.jsp</jsp-file>
@@ -35,5 +38,14 @@
   <servlet-mapping>
     <servlet-name>AjoutArticle</servlet-name>
     <url-pattern>/AjoutArticle.jsp</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>profil</servlet-name>
+    <jsp-file>/WEB-INF/jsp/AffichProfil.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>profil</servlet-name>
+    <url-pattern>/AffichProfil.jsp</url-pattern>
   </servlet-mapping>
 </web-app>

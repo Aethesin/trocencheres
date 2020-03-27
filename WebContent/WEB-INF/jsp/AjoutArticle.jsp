@@ -49,20 +49,20 @@
 
 
 			<div class="ajout">
-				<label for="nom">Nom de l'article</label> <input type="text"
-					class="form-control" id="nom" name="nom"
+				<label for="nomArticleVendu">Nom de l'article</label> <input type="text"
+					class="form-control" id="nomArticleVendu" name="nomArticleVendu"
 					placeholder="Mettez le nom de votre article">
 			</div>
 
 			<div class="ajout">
-				<label for="description">Description</label> <input type="text"
+				<label for="description">Description</label> <input type="textarea"
 					class="form-control" id="description" name="description"
 					placeholder="Mettez la description de votre article">
 			</div>
 
 			<div class="ajout">
 				<label for="dateDebutEncheres">Date de la mise aux enchères</label>
-				<input type="datetime" class="form-control" id="dateDebutEncheres"
+				<input type="date" class="form-control" id="dateDebutEncheres"
 					name="dateDebutEncheres"
 					placeholder="Mettez la date de début des enchères">
 			</div>
@@ -104,8 +104,7 @@
 
 			<div id="boutons">
 				<input type="reset" name="btAnnuler" value="Annuler" title="Annuler" />
-				<input type="submit" name="btnValider" value="Valider"
-					title="Valider" />
+				<input type="submit" name="btnValider" value="Valider" title="Valider" />
 			</div>
 
 		</div>

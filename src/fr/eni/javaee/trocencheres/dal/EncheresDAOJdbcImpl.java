@@ -18,15 +18,16 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 
 	private static final String INSERT_ENCHERE = "insert into ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) values (?,?,?,?)";
 	private static final String UPDATE_ENCHERE = "update ENCHERES set no_utilisateur=?, no_article=?, date_enchere=?, montant_enchere=?";
-	private static final String SELECT_ENCHERE = "select a.nom_article, a.description, a.prix_initial, a.prix_vente, a.date_debut_encheres, "
+	private static final String SELECT_ENCHERE = "select top 1 a.nom_article, a.description, a.prix_initial, a.prix_vente, a.date_debut_encheres, "
 			+ "a.date_fin_encheres, r.rue, r.code_postal, r.ville, u.pseudo "
 			+ "from ARTICLES_VENDUS a inner join ENCHERES e on a.no_article = e.no_article "
 			+ "inner join UTILISATEURS u on u.no_utilisateur = e.no_utilisateur "
-			+ "inner join RETRAITS r on r.no_article = a.nom_article " + "where e.no_article = ?";
+			+ "inner join RETRAITS r on r.no_article = a.nom_article "
+			+ "where no_article = ?" 
+			+ "order by a.prix_vente desc";
 
 	@Override
 	public Encheres insertEnchere(Encheres enchere) throws BusinessException {
-//		LocalDateTime dateEnchere, int montantEnchere, int noArticleVendu, int noUtilisateur
 		if (enchere == null) {
 			BusinessException businesseException = new BusinessException();
 			businesseException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_NULL);
@@ -178,7 +179,7 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();
-			businessException.ajouterErreur(CodesResultatDAL.SELECT_BY_NOARTICLE_ECHEC);
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_BY_NO_ARTICLE_ECHEC);
 		}
 
 		return enchere;

@@ -23,7 +23,7 @@ public abstract class CodesResultatServlets {
 	
 	public static final int FORMAT_NO_CATEGORIE_ERREUR = 30008;
 	
-	public static final int FORMAT_ARTICLE_ERREUR = 30009;
+	
 	
 
 }
