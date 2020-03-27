@@ -53,6 +53,8 @@ public class ServletConnexion extends HttpServlet {
 		try {
 			String pseudo = request.getParameter("pseudo");
 			String motDePasse = request.getParameter("motDePasse");
+			String checkbox = request.getParameter("seSouvenir");
+			System.out.println(checkbox);
 			umger = new UtilisateurManager();
 			Utilisateur user = new Utilisateur();
 			user = umger.getConnexion(pseudo);
