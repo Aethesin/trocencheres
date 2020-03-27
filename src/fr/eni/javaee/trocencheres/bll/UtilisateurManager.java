@@ -3,12 +3,10 @@ package fr.eni.javaee.trocencheres.bll;
 import fr.eni.javaee.trocencheres.bo.Utilisateur;
 import fr.eni.javaee.trocencheres.dal.DAOFactory;
 import fr.eni.javaee.trocencheres.dal.UtilisateurDAO;
-import fr.eni.javaee.trocencheres.dal.UtilisateurDAOJdbcImpl;
 import fr.eni.javaee.trocencheres.exception.BusinessException;
 
 public class UtilisateurManager {
 	private UtilisateurDAO utilisateurDAO;
-	private UtilisateurDAOJdbcImpl utilisateurDAOJdbcImpl;
 	
 	public UtilisateurManager() {
 		utilisateurDAO = DAOFactory.getUtilisateurDAO();
