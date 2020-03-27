@@ -5,6 +5,8 @@
 
 <c:if test="${sessionScope.utilisateur != null }">
 	<h1 style="text-align: center;">Les objets sont nos amis</h1>
+	<a href="<%=request.getContextPath()%>/ServletXxx">Enchères</a>
+	<a href ="<%=request.getContextPath()%>/AjoutArticle">Vendre un article</a>
 	<a href="<%=request.getContextPath()%>/AffichProfil?pseudo=${sessionScope.utilisateur.pseudo}">Mon profil</a>
 	<a href="<%=request.getContextPath()%>/Deconnexion">Déconnexion</a>
 	
