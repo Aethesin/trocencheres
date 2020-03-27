@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,11 +35,18 @@ public class ServletConnexion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		Cookie[] cookies = request.getCookies();
+		
 		RequestDispatcher rd = null;
 		if(session.getAttribute("utilisateur") != null){
 			rd = request.getRequestDispatcher("/Accueil");
 			rd.forward(request, response);
 		}else{
+			if(cookies.length > 0){
+				for (Cookie cookie : cookies) {
+					request.setAttribute(cookie.getName(), cookie.getValue());				
+				}				
+			}
 			rd = this.getServletContext().getNamedDispatcher("login");
 			rd.forward(request, response);
 		}
@@ -50,16 +58,37 @@ public class ServletConnexion extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		HttpSession session = request.getSession();
+		Cookie[] cookies = request.getCookies();
 		try {
 			String pseudo = request.getParameter("pseudo");
 			String motDePasse = request.getParameter("motDePasse");
 			String checkbox = request.getParameter("seSouvenir");
+			if(checkbox == null){
+				checkbox = "off";
+			}
+			
 			System.out.println(checkbox);
 			umger = new UtilisateurManager();
 			Utilisateur user = new Utilisateur();
 			user = umger.getConnexion(pseudo);
 			if(user.getPseudo().equals(pseudo) && user.getMotDePasse().equals(motDePasse)){
 				System.out.println("Connexion en tant que " + pseudo);
+				if(checkbox.equals("on")){
+					System.out.println("SALUT");						
+					Cookie cookiePseudo = new Cookie("pseudo", pseudo);
+					cookiePseudo.setMaxAge(600);
+					Cookie cookieMDP = new Cookie("motDePasse", motDePasse);
+					cookieMDP.setMaxAge(600);
+					response.addCookie(cookiePseudo);
+					response.addCookie(cookieMDP);
+				}else{
+					Cookie cookiePseudo = new Cookie("pseudo", "");
+					cookiePseudo.setMaxAge(600);
+					Cookie cookieMDP = new Cookie("motDePasse", "");
+					cookieMDP.setMaxAge(600);
+					response.addCookie(cookiePseudo);
+					response.addCookie(cookieMDP);
+				}
 				session.setAttribute("utilisateur", user);
 				doGet(request, response);
 			}else {
