@@ -109,37 +109,11 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		}
 		return utilisateur;
 	}
-	
-	public Utilisateur selectVendeur(int idUtilisateur) throws BusinessException{
-		Utilisateur utilisateur = new Utilisateur();
-		
-		try (Connection cnx = ConnectionProvider.getConnection();
-				PreparedStatement pstmt = cnx.prepareStatement(SELECT_UTILISATEURS);){
-			pstmt.setInt(1, idUtilisateur);
-			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()){				
-				utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));			
-				utilisateur.setPseudo(rs.getString("pseudo"));
-			}
-		} catch (SQLException e) {
-			
-		}
-		return utilisateur;
-	}
-
-	@Override
-	public void updateUtilisateur(Utilisateur utilisateur) throws BusinessException {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public void supprimerUtilisateur(int noUtilisateur) throws BusinessException {
 		// TODO Auto-generated method stub
 
-	}
-
-}
 	}
 
 	@Override
@@ -166,12 +140,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		} catch (SQLException e) {
 			throw new BusinessException();
 		}
-	}
-
-	@Override
-	public void supprimerUtilisateur(int noUtilisateur) throws BusinessException {
-		// TODO Auto-generated method stub
-
 	}
 
 }
