@@ -53,107 +53,71 @@ public class ServletModifProfil extends HttpServlet {
 		Utilisateur user = null;
 		umger = new UtilisateurManager();
 		
-		String pseudo = request.getParameter("pseudo");
 		try {
+			String pseudo = request.getParameter("pseudo");
 			user = umger.getConnexion(pseudo);
+			if (pseudo != user.getPseudo()) {
+				user.setPseudo(pseudo);
+			}
+			//TODO verif pseudo unique
+			
+			String nom = request.getParameter("nom");
+			if (nom != user.getNom()) {
+				user.setNom(nom);
+			}
+			
+			String prenom = request.getParameter("prenom");
+			if (prenom != user.getPrenom()) {
+				user.setPrenom(prenom);
+			}
+			
+			String email = request.getParameter("email");
+			if (email != user.getEmail()) {
+				user.setEmail(email);
+			}
+			//TODO verif email unique
+			
+			String telephone = request.getParameter("telephone");
+			if (telephone != user.getTelephone()) {
+				user.setTelephone(telephone);
+			}
+			
+			String rue = request.getParameter("rue");
+			if (rue != user.getRue()) {
+				user.setRue(rue);
+			}
+			
+			String codePostal = request.getParameter("codePostal");
+			if (codePostal != user.getCodePostal()) {
+				user.setCodePostal(codePostal);
+			}
+			
+			String ville = request.getParameter("ville");
+			if (ville != user.getVille()) {
+				user.setVille(ville);
+			}
+			
+			String motDePasse = request.getParameter("motDePasse");
+			if(motDePasse.trim().length() == 0){
+				motDePasse = user.getMotDePasse();
+			}
+			
+			if (motDePasse != user.getMotDePasse()) {
+				user.setMotDePasse(motDePasse);
+			}
+			
+			int noUtilisateur = Integer.parseInt(request.getParameter("noUtilisateur"));
+			user.setNoUtilisateur(noUtilisateur);
+			
+			try {
+				umger.modifUtilisateur(user);
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			}
 		} catch (BusinessException e) {
 			// TODO message erreur qui va  bien
 			e.printStackTrace();
 		}
-		if (pseudo != user.getPseudo()) {
-			user.setPseudo(pseudo);
-		}
-		//TODO verif pseudo unique
-		
-		String nom = request.getParameter("nom");
-		try {
-			user = umger.getConnexion(nom);
-		} catch (BusinessException e) {
-			// TODO message erreur qui va  bien
-			e.printStackTrace();
-		}
-		if (nom != user.getNom()) {
-			user.setNom(nom);
-		}
-		
-		String prenom = request.getParameter("prenom");
-		try {
-			user = umger.getConnexion(prenom);
-		} catch (BusinessException e) {
-			// TODO message erreur qui va  bien
-			e.printStackTrace();
-		}
-		if (prenom != user.getPrenom()) {
-			user.setPrenom(prenom);
-		}
-		
-		String email = request.getParameter("email");
-		try {
-			user = umger.getConnexion(email);
-		} catch (BusinessException e) {
-			// TODO message erreur qui va  bien
-			e.printStackTrace();
-		}
-		if (email != user.getEmail()) {
-			user.setEmail(email);
-		}
-		//TODO verif email unique
-		
-		String telephone = request.getParameter("telephone");
-		try {
-			user = umger.getConnexion(telephone);
-		} catch (BusinessException e) {
-			// TODO message erreur qui va  bien
-			e.printStackTrace();
-		}
-		if (telephone != user.getTelephone()) {
-			user.setTelephone(telephone);
-		}
-		
-		String rue = request.getParameter("rue");
-		try {
-			user = umger.getConnexion(rue);
-		} catch (BusinessException e) {
-			// TODO message erreur qui va  bien
-			e.printStackTrace();
-		}
-		if (rue != user.getRue()) {
-			user.setRue(rue);
-		}
-		
-		String codePostal = request.getParameter("codePostal");
-		try {
-			user = umger.getConnexion(codePostal);
-		} catch (BusinessException e) {
-			// TODO message erreur qui va  bien
-			e.printStackTrace();
-		}
-		if (codePostal != user.getCodePostal()) {
-			user.setCodePostal(codePostal);
-		}
-		
-		String ville = request.getParameter("ville");
-		try {
-			user = umger.getConnexion(ville);
-		} catch (BusinessException e) {
-			// TODO message erreur qui va  bien
-			e.printStackTrace();
-		}
-		if (ville != user.getVille()) {
-			user.setVille(ville);
-		}
-		
-		String motDePasse = request.getParameter("motDePasse");
-		try {
-			user = umger.getConnexion(motDePasse);
-		} catch (BusinessException e) {
-			// TODO message erreur qui va  bien
-			e.printStackTrace();
-		}
-		if (motDePasse != user.getMotDePasse()) {
-			user.setMotDePasse(motDePasse);
-		}
-		
 	}
 
 }

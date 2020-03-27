@@ -14,8 +14,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String INSERT_UTILISATEUR = "insert into utilisateurs(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values (?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT, 0)";
 	private static final String SELECT_CONNEXION = "select no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur from utilisateurs where pseudo = ?;";
 	private static final String SELECT_UTILISATEURS = "select no_utilisateur, pseudo from utilisateurs where no_utilisateur = ?";
-	private static final String UPDATE_UTILISATEUR =	"update utilisateurs set pseudo = '?',set nom = '?',set prenom = '?',set email = '?',"
-			+ "set telephone = '?',set rue = '?',set code_postal = '?',set ville = '?',set mot_de_passe = '?' where no_utilisateur = ?;";
+	private static final String UPDATE_UTILISATEUR =	"update utilisateurs set pseudo = ?, nom = ?, prenom = ?, email = ?,"
+			+ " telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? where no_utilisateur = ?;";
 	private static final String DELETE_UTILISATEUR = "delete from UTILISATEURS where no_utilisateur = ?;";
 	
 	@Override

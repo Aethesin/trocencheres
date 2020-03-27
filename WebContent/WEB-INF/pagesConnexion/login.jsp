@@ -15,8 +15,8 @@
 		<input type="submit" value="Valider">
 		<div>
 			<input type="checkbox" name="seSouvenir" checked>
-			<label>Se souvenir de moi</label>
-			<a href="<%=request.getContextPath()%>/ResetPassword"></a>
+			<label>Se souvenir de moi</label><br>
+			<a href="<%=request.getContextPath()%>/Forgot">Mot de passe oublié</a>
 		</div>
 	</form>
 	<button><a href="<%=request.getContextPath()%>/Register">S'inscrire</a></button>
