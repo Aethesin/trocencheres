@@ -59,14 +59,13 @@ public class ServletAccueil extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		amger = new ArticleVenduManager();
 		HttpSession session = request.getSession();
+		request.setCharacterEncoding("UTF-8");
 		String motCle = request.getParameter("motCle");
 		String categorie = request.getParameter("categorie");
 		List<ArticleVendu> listeArticlesVendu = new ArrayList<ArticleVendu>();
 		List<Utilisateur> listeVendeurs = new ArrayList<>();
 		if(categorie != null || motCle != null){
-			if(request.getParameter("categorie").equals("VÃªtement")){
-				categorie = "Vêtement";
-			}
+			
 			if(motCle.trim().length() != 0 && !categorie.equals("toutes")){
 				try {
 					listeArticlesVendu  = amger.selectArticleVenduByMotCleAndCategorie(motCle, categorie);

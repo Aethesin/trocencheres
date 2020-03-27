@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -159,8 +160,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		articleVendu.setNoArticleVendu(rs.getInt("no_article"));
 		articleVendu.setNomArticleVendu(rs.getString("nom_article"));
 		articleVendu.setDescription(rs.getString("description"));
-		articleVendu.setDateDebutEncheres(rs.getTimestamp("date_debut_encheres").toLocalDateTime());
-		articleVendu.setDateFinEncheres(rs.getTimestamp("date_fin_encheres").toLocalDateTime());
+		articleVendu.setDateDebutEncheres(LocalDateTime.parse(rs.getTimestamp("date_debut_encheres").toLocalDateTime().toString()));
+		articleVendu.setDateFinEncheres(LocalDateTime.parse(rs.getTimestamp("date_fin_encheres").toLocalDateTime().toString()));
 		articleVendu.setMiseAPrix(rs.getInt("prix_initial"));
 		articleVendu.setPrixVente(rs.getInt("prix_vente"));
 		articleVendu.setNoUtilisateur(rs.getInt("no_utilisateur"));

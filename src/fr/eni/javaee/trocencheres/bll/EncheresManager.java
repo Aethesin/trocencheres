@@ -35,7 +35,7 @@ public class EncheresManager {
 	private void validerNoUtilisateur(Encheres enchere, BusinessException businessException) {
 		if (enchere.getNoUtilisateur() <=0) {
 			businessException.ajouterErreur(CodesResultatBLL.REGLE_NO_UTILISATEUR_ERREUR);
-		}			
+		}		
 	}
 
 	private void validerNoArticleVendu(Encheres enchere, BusinessException businessException) {

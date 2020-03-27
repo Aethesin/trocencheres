@@ -9,10 +9,16 @@
 <body>
 	<form action="<%=request.getContextPath()%>/Connexion" method="post">
 		<label>Pseudo : </label>
-		<input type="text" name="pseudo"><br>
+		<input type="text" name="pseudo" value="${pseudo }"><br>
 		<label>Mot de Passe : </label>
-		<input type="password" name="motDePasse">
+		<input type="password" name="motDePasse" value="${motDePasse }"><br>
 		<input type="submit" value="Valider">
+		<div>
+			<input type="checkbox" name="seSouvenir" checked>
+			<label>Se souvenir de moi</label>
+			<a href="<%=request.getContextPath()%>/ResetPassword"></a>
+		</div>
 	</form>
+	<button><a href="<%=request.getContextPath()%>/Register">S'inscrire</a></button>
 </body>
 </html>

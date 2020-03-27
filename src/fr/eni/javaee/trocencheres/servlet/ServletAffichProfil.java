@@ -35,7 +35,6 @@ public class ServletAffichProfil extends HttpServlet {
 		if(session.getAttribute("utilisateur") != null){
 			utilisateur =  (Utilisateur) session.getAttribute("utilisateur");
 			nomUtilisateur = utilisateur.getPseudo();
-			System.out.println(nomUtilisateur);
 		}
 		try {
 			umger = new UtilisateurManager();

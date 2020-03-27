@@ -14,7 +14,7 @@ public abstract class LecteurMessage {
 	{
 		try
 		{
-			rb = ResourceBundle.getBundle("fr.eni.javaee.suividesrepas.messages.messages_erreur");
+			rb = ResourceBundle.getBundle("fr.eni.javaee.trocencheres.messages.messages_erreur");
 		}
 		catch (Exception e) 
 		{

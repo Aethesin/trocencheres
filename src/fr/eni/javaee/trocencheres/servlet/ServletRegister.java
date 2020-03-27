@@ -1,6 +1,8 @@
 package fr.eni.javaee.trocencheres.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import fr.eni.javaee.trocencheres.bll.UtilisateurManager;
 import fr.eni.javaee.trocencheres.bo.Utilisateur;
 import fr.eni.javaee.trocencheres.exception.BusinessException;
+import fr.eni.javaee.trocencheres.messages.LecteurMessage;
 
 /**
  * Servlet implementation class ServletRegister
@@ -43,29 +46,92 @@ public class ServletRegister extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		umger = new UtilisateurManager();
 		HttpSession session = request.getSession();
-		try {
-			String pseudo = request.getParameter("pseudo");
-			String nom = request.getParameter("nom");
-			String prenom = request.getParameter("prenom");
-			String email = request.getParameter("email");
-			String rue = request.getParameter("rue");
-			String codePostal = request.getParameter("code_postal");
-			String ville = request.getParameter("ville");
-			String telephone = request.getParameter("telephone");
-			String motDePasse = request.getParameter("motDePasse");
-			String motDePasseVerif = request.getParameter("motDePasseVerif");
-			if(!motDePasse.equals(motDePasseVerif)){
-				doGet(request, response);
-			}else{
+		request.setCharacterEncoding("UTF-8");
+		List<Integer> listeCodesErreur = new ArrayList<>();
+		List<String> listeCodesErreurString = new ArrayList<>();
+		String pseudo = null;
+		String nom = null;
+		String prenom = null;
+		String email = null;
+		String rue = null;
+		String codePostal = null;
+		String ville = null;
+		String telephone = null;
+		String motDePasse = null;
+		String motDePasseVerif = null;
+		
+		if(request.getParameter("pseudo").trim().length() == 0){
+			listeCodesErreur.add(CodesResultatServlets.PSEUDO_ERREUR);
+		}else{
+			pseudo = request.getParameter("pseudo");			
+		}
+		if(request.getParameter("nom").trim().length() == 0){
+			listeCodesErreur.add(CodesResultatServlets.NOM_ERREUR);
+		}else{
+			nom = request.getParameter("nom");
+		}
+		if(request.getParameter("prenom").trim().length() == 0){
+			listeCodesErreur.add(CodesResultatServlets.PRENOM_ERREUR);
+		}else{
+			prenom = request.getParameter("prenom");
+		}
+		if(request.getParameter("email").trim().length() == 0){
+			listeCodesErreur.add(CodesResultatServlets.EMAIL_ERREUR);
+		}else{
+			email = request.getParameter("email");
+		}
+		if(request.getParameter("rue").trim().length() == 0){
+			listeCodesErreur.add(CodesResultatServlets.RUE_ERREUR);
+		}else{
+			rue = request.getParameter("rue");
+		}
+		if(request.getParameter("code_postal").trim().length() == 0){
+			listeCodesErreur.add(CodesResultatServlets.CODE_POSTAL_ERREUR);
+		}else{
+			codePostal = request.getParameter("code_postal");
+		}
+		if(request.getParameter("ville").trim().length() == 0){
+			listeCodesErreur.add(CodesResultatServlets.VILLE_ERREUR);
+		}else{
+			ville = request.getParameter("ville");
+		}
+		if(request.getParameter("telephone").trim().length() == 0){
+			telephone = null;
+		}else{
+			telephone = request.getParameter("telephone");
+		}
+		if(request.getParameter("motDePasse").trim().length() == 0){
+			listeCodesErreur.add(CodesResultatServlets.MDP_ERREUR);
+		}
+		if(!request.getParameter("motDePasse").equals(request.getParameter("motDePasseVerif"))){
+			listeCodesErreur.add(CodesResultatServlets.MDP_ERREUR);
+		}else{
+			motDePasse = request.getParameter("motDePasse");
+			motDePasseVerif = request.getParameter("motDePasseVerif");
+		}
+		for (Integer integer : listeCodesErreur) {
+			listeCodesErreurString.add(LecteurMessage.getMessageErreur(integer));
+		}
+		
+		if(listeCodesErreur.size() > 0){
+			Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse);
+			request.setAttribute("utilisateur", utilisateur);
+			request.setAttribute("listeCodesErreurString", listeCodesErreurString);
+			doGet(request, response);
+		}else{
+			try {
 				Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse);
 				umger.getInscription(utilisateur);
 				session.setAttribute("utilisateur", utilisateur);
 				RequestDispatcher rd = request.getRequestDispatcher("/Accueil");
 				rd.forward(request, response);				
-			}
-		} catch (BusinessException e) {
-			e.printStackTrace();
-			doGet(request, response);
+			} catch (BusinessException e) {
+				e.printStackTrace();
+				Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse);
+				request.setAttribute("utilisateur", utilisateur);
+				request.setAttribute("listeCodesErreurString", listeCodesErreurString);
+				doGet(request, response);
+			}			
 		}
 	}
 
