@@ -103,7 +103,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				utilisateur.setPseudo(rs.getString("pseudo"));
 			}
 		} catch (SQLException e) {
-			System.out.println("Ptdr");
+			
 		}
 		return utilisateur;
 	}
