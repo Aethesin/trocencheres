@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<jsp:include page="/WEB-INF/includes/headerDéconnecté.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/includes/header.jsp"></jsp:include>
 
 <h1>Détail du Profil</h1>
 

@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<jsp:include page="/WEB-INF/includes/headerConnecté.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/includes/header.jsp"></jsp:include>
 
 <h1>Modifier / supprimer mon Profil</h1>
 
