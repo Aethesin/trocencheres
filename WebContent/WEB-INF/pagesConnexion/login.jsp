@@ -11,8 +11,14 @@
 		<label>Pseudo : </label>
 		<input type="text" name="pseudo"><br>
 		<label>Mot de Passe : </label>
-		<input type="password" name="motDePasse">
+		<input type="password" name="motDePasse"><br>
 		<input type="submit" value="Valider">
+		<div>
+			<input type="checkbox" name="seSouvenir">
+			<label>Se souvenir de moi</label>
+			<a href="<%=request.getContextPath()%>/ResetPassword"></a>
+		</div>
 	</form>
+	<button><a href="<%=request.getContextPath()%>/Register">S'inscrire</a></button>
 </body>
 </html>

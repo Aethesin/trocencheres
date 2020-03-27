@@ -27,4 +27,5 @@ public class UtilisateurManager {
 		user = utilisateurDAO.selectVendeur(idUtilisateur);
 		return user;
 	}
+	
 }

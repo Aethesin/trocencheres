@@ -5,6 +5,7 @@ package fr.eni.javaee.trocencheres.servlet;
  */
 public abstract class CodesResultatServlets {
 	
+	//Code résultat pour l'ajout d'un article
 	public static final int FORMAT_NO_ARTICLE_ERREUR = 30000;
 
 	public static final int FORMAT_NOM_ARTICLE_ERREUR = 30001;
@@ -24,6 +25,21 @@ public abstract class CodesResultatServlets {
 	public static final int FORMAT_NO_CATEGORIE_ERREUR = 30008;
 	
 	
+	//Code résultat pour l'inscription
+	public static final int PSEUDO_ERREUR = 30100;
 	
+	public static final int NOM_ERREUR = 30101;
+	
+	public static final int PRENOM_ERREUR = 30102;
+	
+	public static final int EMAIL_ERREUR = 30103;
+	
+	public static final int RUE_ERREUR = 30105;
+	
+	public static final int CODE_POSTAL_ERREUR = 30106;
+	
+	public static final int VILLE_ERREUR = 30107;
+	
+	public static final int MDP_ERREUR = 30108;
 
 }
