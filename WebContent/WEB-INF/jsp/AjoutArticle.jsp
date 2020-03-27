@@ -113,7 +113,7 @@
 
 	<h4>
 
-		<a href="./acceuil.jsp">Retour à l'accueil</a>
+		<a href="<%=request.getContextPath()%>/">Retour à l'accueil</a>
 
 	</h4>
 
