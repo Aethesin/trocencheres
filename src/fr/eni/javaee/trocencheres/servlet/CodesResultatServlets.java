@@ -20,9 +20,6 @@ public abstract class CodesResultatServlets {
 
 	public static final int FORMAT_PRIX_VENTE_ERREUR = 30006;
 
-	public static final int FORMAT_NO_UTILISATEUR_ERREUR = 30007;
-	
-	public static final int FORMAT_NO_CATEGORIE_ERREUR = 30008;
 	
 	
 	//Code résultat pour l'inscription

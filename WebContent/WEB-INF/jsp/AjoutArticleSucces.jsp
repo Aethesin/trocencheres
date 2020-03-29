@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@page import="fr.eni.javaee.trocencheres.messages.LecteurMessage"%>
 <%@page import="fr.eni.javaee.trocencheres.bo.ArticleVendu"%>
 <!DOCTYPE html>
 <html>
@@ -12,6 +11,7 @@
 
 <body>
 	<c:if test="${articleVendu != null }">
+	
 		<p>L'article a été ajouté avec succès:</p>
 		<p>
 			Nom de l'article:
@@ -20,7 +20,11 @@
 		<p>
 			Description:
 			<c:out value="${description }"></c:out>
-		</p>
+		</p>		
+		<p>
+			Catégorie:
+			<c:out value="${categorie.libelle }"></c:out>
+		</p>	
 		<p>
 			Date de la mise aux enchères:
 			<c:out value="${dateDebutEncheres }"></c:out>
@@ -38,10 +42,17 @@
 			<c:out value="${prixVente }"></c:out>
 		</p>
 		<p>
-			Catégorie:
-			<c:out value="${noCategorie }"></c:out>
+			Rue :
+			<c:out value="${rue }"></c:out>
 		</p>
-
+		<p>
+			Code postal :
+			<c:out value="${codePostal }"></c:out>
+		</p>
+		<p>
+			Ville :
+			<c:out value="${ville }"></c:out>
+		</p>
 	</c:if>
 
 	<h4>

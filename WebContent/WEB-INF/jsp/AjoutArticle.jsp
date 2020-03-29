@@ -10,70 +10,84 @@
 </head>
 <body>
 
-		<h2>Ajoutez votre article</h2>
+	<h2>Ajoutez votre article</h2>
 
-		<form action="<%=request.getContextPath()%>/AjoutArticle"
-			method="post">
-			<div class="container-sm">
+	<form action="<%=request.getContextPath()%>/AjoutArticle" method="post">
+		<div class="container-sm">
 
 
-				<div class="ajout">
-					<label for="nomArticleVendu">Nom de l'article</label> <input
-						type="text" class="form-control" id="nomArticleVendu"
-						name="nomArticleVendu"
-						placeholder="Mettez le nom de votre article">
-				</div>
-
-				<div class="ajout">
-					<label for="description">Description</label> <input type="textarea"
-						class="form-control" id="description" name="description"
-						placeholder="Mettez la description de votre article">
-				</div>
-
-				<div class="ajout">
-					<label for="dateDebutEncheres">Date de la mise aux enchères</label>
-					<input type="datetime" class="form-control" id="dateDebutEncheres"
-						name="dateDebutEncheres"
-						placeholder="Mettez la date de début des enchères">
-				</div>
-
-				<div class="ajout">
-					<label for="dateFinEncheres">Date de la fin des enchères</label> <input
-						type="datetime" class="form-control" id="dateFinEncheres"
-						name="dateFinEncheres"
-						placeholder="Mettez la date de fin des enchères">
-				</div>
-
-				<div class="ajout">
-					<label for="miseAPrix">Prix proposé</label> <input type="number"
-						class="form-control" id="miseAPrix" name="piseAPrix"
-						placeholder="Mettez votre prix proposé">
-				</div>
-
-				<div class="ajout">
-					<label for="prixVente">Prix de vente</label> <input type="number"
-						class="form-control" id="prixVente" name="prixVente"
-						placeholder="Le prix de vente est initialement égal à votre prix proposé et augmentera avec les enchères">
-				</div>
-
-				<div class="form-group">
-					<label for="categorie">Catégorie</label> <select
-						class="form-control" id="categorie" name="noCategorie">
-						<option>Informatique</option>
-						<option>Ameublement</option>
-						<option>Vêtement</option>
-						<option>Sport&amp;Loisirs</option>
-					</select>
-				</div>
-
-				<div id="boutons">
-					<input type="reset" name="btAnnuler" value="Annuler"
-						title="Annuler" /> <input type="submit" name="btnValider"
-						value="Valider" title="Valider" />
-				</div>
-
+			<div class="ajout">
+				<label for="nomArticleVendu">Nom de l'article</label> <input
+					type="text" class="form-control" id="nomArticleVendu"
+					name="nomArticleVendu" placeholder="Nom de votre article">
 			</div>
-		</form>
+
+			<div class="ajout">
+				<label for="description">Description</label> <input type="textarea"
+					class="form-control" id="description" name="description"
+					placeholder="Description de votre article">
+			</div>
+
+			<div class="form-group">
+				<label for="categorie">Catégorie</label> <select
+					class="form-control" id="categorie" name="noCategorie">
+					<option>Informatique</option>
+					<option>Ameublement</option>
+					<option>Vêtement</option>
+					<option>Sport&amp;Loisirs</option>
+				</select>
+			</div>
+
+			<div class="ajout">
+				<label for="dateDebutEncheres">Date de la mise aux enchères</label>
+				<input type="datetime" class="form-control" id="dateDebutEncheres"
+					name="dateDebutEncheres" placeholder="Date de début des enchères">
+			</div>
+
+			<div class="ajout">
+				<label for="dateFinEncheres">Date de la fin des enchères</label> <input
+					type="datetime" class="form-control" id="dateFinEncheres"
+					name="dateFinEncheres" placeholder="Date de fin des enchères">
+			</div>
+
+			<div class="ajout">
+				<label for="miseAPrix">Prix proposé</label> <input type="number"
+					class="form-control" id="miseAPrix" name="piseAPrix"
+					placeholder="Prix proposé">
+			</div>
+
+			<div class="ajout">
+				<label for="prixVente">Prix de vente</label> <input type="number"
+					class="form-control" id="prixVente" name="prixVente"
+					placeholder="Initialement égal au prix proposé">
+			</div>
+
+			<div id="adresse">
+				<div class="ajout">
+					<label for="rue">Rue</label> <input type="text"
+						class="form-control" id="rue" name="rue" placeholder="Rue">
+				</div>
+
+				<div class="ajout">
+					<label for="codePostal">Code postal</label> <input type="number"
+						class="form-control" id="codePostal" name="codePostal"
+						placeholder="Code postal">
+				</div>
+
+				<div class="ajout">
+					<label for="ville">Ville</label> <input type="text"
+						class="form-control" id="ville" name="ville" placeholder="Ville">
+				</div>
+			</div>
+
+			<div id="boutons">
+				<input type="reset" name="btAnnuler" value="Annuler" title="Annuler" />
+				<input type="submit" name="btnValider" value="Valider"
+					title="Valider" />
+			</div>
+
+		</div>
+	</form>
 
 	<h4>
 		<a href="<%=request.getContextPath()%>/">Retour à l'accueil</a>

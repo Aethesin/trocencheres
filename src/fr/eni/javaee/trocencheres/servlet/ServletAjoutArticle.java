@@ -61,8 +61,6 @@ public class ServletAjoutArticle extends HttpServlet {
 		LocalDateTime dateFinEncheres = null;
 		int miseAPrix = 0;
 		int prixVente = 0;
-		int noUtilisateur = 0;
-		int noCategorie = 0;
 
 		List<Integer> listeCodesErreur = new ArrayList<>();
 		
@@ -111,19 +109,9 @@ public class ServletAjoutArticle extends HttpServlet {
 			listeCodesErreur.add(CodesResultatServlets.FORMAT_PRIX_VENTE_ERREUR);
 		}
 
-		try {
-			noUtilisateur = Integer.parseInt(request.getParameter("noUtilisateur"));
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-			listeCodesErreur.add(CodesResultatServlets.FORMAT_NO_UTILISATEUR_ERREUR);
-		}
+			int noUtilisateur = Integer.parseInt(request.getParameter("noUtilisateur"));
 
-		try {
-			noCategorie = Integer.parseInt(request.getParameter("noCategorie"));
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-			listeCodesErreur.add(CodesResultatServlets.FORMAT_NO_CATEGORIE_ERREUR);
-		}
+			int noCategorie = Integer.parseInt(request.getParameter("noCategorie"));
 
 		if (listeCodesErreur.size() > 0) {
 			request.setAttribute("listeCodesErreur", listeCodesErreur);
