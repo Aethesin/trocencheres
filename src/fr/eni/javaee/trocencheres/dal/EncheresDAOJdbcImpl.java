@@ -43,6 +43,8 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 						PreparedStatement.RETURN_GENERATED_KEYS);
 				pstmt.setString(1, enchere.getDateEnchere().format(formatter));
 				pstmt.setInt(2, enchere.getMontantEnchere());
+				
+				//TODO
 				pstmt.setInt(3, enchere.getNoArticleVendu());
 				pstmt.setInt(4, enchere.getNoUtilisateur());
 				
@@ -160,7 +162,7 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 		Encheres enchere = new Encheres();
 		try (Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = cnx.prepareStatement(SELECT_ENCHERE);) {
-			pstmt.setInt(1, noArticleVendu);
+			pstmt.setInt(1, articleVendu.getNoArticleVendu());
 			ResultSet rs = pstmt.executeQuery();
 			articleVendu.setNomArticleVendu(rs.getString("nomArticle"));
 			;

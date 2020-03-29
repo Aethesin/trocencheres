@@ -38,5 +38,13 @@ public abstract class CodesResultatServlets {
 	public static final int VILLE_ERREUR = 30107;
 	
 	public static final int MDP_ERREUR = 30108;
+	
+	
+	//Code résultat pour les enchères
+	public static final int ARTICLE_INTROUVE = 30200;
+	
+	public static final int MONTANT_ENCHERE_ERREUR = 30201;
+
+
 
 }
