@@ -18,9 +18,9 @@ import fr.eni.javaee.trocencheres.exception.BusinessException;
 public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	private static final String INSERT_ARTICLE_VENDU = "insert into ARTICLES_VENDUS"
-			+ "(no_article, nom_article, description,date_debut_encheres, "
+			+ "(nom_article, description,date_debut_encheres, "
 			+ "date_fin_encheres, prix_initial, prix_vente, "
-			+ "no_utilisateur, no_categorie) values (?, ?, ?, ?, ?, ?, ?, ?,?)";
+			+ "no_utilisateur, no_categorie) values (?, ?, ?, ?, ?, ?, ?,?)";
 	
 	private static final String SELECT_ARTICLES_BY_CATEGORIE = "select no_article, nom_article, description, date_debut_encheres, date_fin_encheres,"
 			+ " prix_initial, prix_vente, no_utilisateur, a.no_categorie as aNoCate, c.no_categorie as cNoCate, c.libelle from articles_vendus a "
@@ -54,15 +54,15 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 				PreparedStatement pstmt = cnx.prepareStatement(INSERT_ARTICLE_VENDU,
 						PreparedStatement.RETURN_GENERATED_KEYS);
-				pstmt.setInt(1, articleVendu.getNoArticleVendu());
-				pstmt.setString(2, articleVendu.getNomArticleVendu());
-				pstmt.setString(3, articleVendu.getDescription());
-				pstmt.setString(4, articleVendu.getDateDebutEncheres().format(formatter));
-				pstmt.setString(5, articleVendu.getDateFinEncheres().format(formatter));
-				pstmt.setInt(6, articleVendu.getMiseAPrix());
-				pstmt.setInt(7, articleVendu.getPrixVente());
-				pstmt.setInt(8, utilisateur.getNoUtilisateur());
-				pstmt.setInt(9, categorie.getNoCategorie());
+				
+				pstmt.setString(1, articleVendu.getNomArticleVendu());
+				pstmt.setString(2, articleVendu.getDescription());
+				pstmt.setString(3, articleVendu.getDateDebutEncheres().format(formatter));
+				pstmt.setString(4, articleVendu.getDateFinEncheres().format(formatter));
+				pstmt.setInt(5, articleVendu.getMiseAPrix());
+				pstmt.setInt(6, articleVendu.getPrixVente());
+				pstmt.setInt(7, utilisateur.getNoUtilisateur());
+				pstmt.setInt(8, categorie.getNoCategorie());
 				pstmt.executeUpdate();
 				ResultSet rs = pstmt.getGeneratedKeys();
 				if (rs.next()) {

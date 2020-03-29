@@ -54,7 +54,7 @@ public class ServletAjoutArticle extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		int noArticleVendu = 0;
+		
 		String nomArticleVendu = null;
 		String description = null;
 		LocalDateTime dateDebutEncheres = null;
@@ -66,12 +66,6 @@ public class ServletAjoutArticle extends HttpServlet {
 
 		List<Integer> listeCodesErreur = new ArrayList<>();
 		
-		try {
-			noArticleVendu = Integer.parseInt(request.getParameter("noArticle"));
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-			listeCodesErreur.add(CodesResultatServlets.FORMAT_NO_ARTICLE_ERREUR);
-		}
 
 		try {
 			nomArticleVendu = request.getParameter("nom");
@@ -138,18 +132,17 @@ public class ServletAjoutArticle extends HttpServlet {
 
 		} else {
 			ArticleVenduManager articleVenduManager = new ArticleVenduManager();
-			ArticleVendu articleVendu = new ArticleVendu();
 			try {
-				articleVendu.setNoArticleVendu(Integer.parseInt(request.getParameter("noArticleVendu")));
-				articleVenduManager.insertArticleVendu(noArticleVendu, nomArticleVendu, description, dateDebutEncheres, dateFinEncheres,
+				
+				articleVenduManager.insertArticleVendu(nomArticleVendu, description, dateDebutEncheres, dateFinEncheres,
 						miseAPrix, prixVente, noUtilisateur, noCategorie);
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/AjoutArticle.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/AjoutArticleSucces.jsp");
 				rd.forward(request, response);
 
 			} catch (BusinessException e) {
 				e.printStackTrace();
 				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/AjoutArticle.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/AjoutArticleEchec.jsp");
 				rd.forward(request, response);
 			}
 

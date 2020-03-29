@@ -19,7 +19,6 @@ public class ArticleVenduManager {
 	
 	/**
 	 * Méthode en charge de
-	 * @param noArticleVendu
 	 * @param nomArticleVendu
 	 * @param description
 	 * @param dateDebutEncheres
@@ -29,7 +28,7 @@ public class ArticleVenduManager {
 	 * @param noUtilisateur
 	 * @param noCategorie
 	 */
-	public void insertArticleVendu(int noArticleVendu, String nomArticleVendu, String description,
+	public void insertArticleVendu(String nomArticleVendu, String description,
 			LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres, int miseAPrix, int prixVente,
 			int noUtilisateur, int noCategorie) throws BusinessException {
 
