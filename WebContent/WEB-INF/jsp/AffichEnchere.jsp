@@ -39,8 +39,9 @@
 		<jsp:getProperty property="dateFinEncheres" name="articleVendu" /></h2>
 	<h2>
 		Retrait :
-		<jsp:getProperty property="rue" property="codePostal" property="ville"
-			name="articleVendu" /></h2>
+		<jsp:getProperty property="rue"	name="utilisateur" />
+		<jsp:getProperty property="codePostal" name="utilisateur" />
+		<jsp:getProperty property="ville" name="utilisateur" /></h2>
 	<h2>
 		Vendeur :
 		<jsp:getProperty property="pseudo" name="utilisateur" /></h2>

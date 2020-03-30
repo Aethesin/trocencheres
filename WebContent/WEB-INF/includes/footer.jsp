@@ -1,1 +1,1 @@
-<h3 style="text-align: center;">Copyright &copy; Duncan, Huiling, Laurentiu, Tristan a.k.a. <span style="font-style: italic;">D2WM2020_Team1</span></h3>
+<h3 class="container-liste" style="text-align: center;">Copyright &copy; Duncan, Huiling, Laurentiu, Tristan a.k.a. <span style="font-style: italic;">D2WM2020_Team1</span></h3>
