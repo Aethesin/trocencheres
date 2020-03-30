@@ -33,7 +33,7 @@ public class ServletAjoutArticle extends HttpServlet {
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public ServletAjoutArticle() {
-		super();
+		super(); 
 
 	}
 
@@ -100,13 +100,6 @@ public class ServletAjoutArticle extends HttpServlet {
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 			listeCodesErreur.add(CodesResultatServlets.FORMAT_MISE_A_PRIX_ERREUR);
-		}
-
-		try {
-			prixVente = Integer.parseInt(request.getParameter("prixVente"));
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-			listeCodesErreur.add(CodesResultatServlets.FORMAT_PRIX_VENTE_ERREUR);
 		}
 
 			int noUtilisateur = Integer.parseInt(request.getParameter("noUtilisateur"));

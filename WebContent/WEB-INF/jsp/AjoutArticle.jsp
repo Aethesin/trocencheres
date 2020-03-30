@@ -3,6 +3,7 @@
 <%@page import="fr.eni.javaee.trocencheres.bo.ArticleVendu"%>
 <%@page import="fr.eni.javaee.trocencheres.bo.Categorie"%>
 <%@page import="fr.eni.javaee.trocencheres.bo.Utilisateur"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,9 +12,13 @@
 </head>
 <body>
 
+	<jsp:useBean id="utilisateur" scope="application"
+		class="fr.eni.javaee.trocencheres.bo.Utilisateur"></jsp:useBean>
+
 	<h2>Ajoutez votre article</h2>
 
 	<form action="<%=request.getContextPath()%>/AjoutArticle" method="post">
+	
 		<div class="container-sm">
 
 
@@ -81,18 +86,12 @@
 				</div>
 			</div>
 
-			<div id="boutons">
-				<input type="reset" name="btAnnuler" value="Annuler" title="Annuler" />
-				<input type="submit" name="btnValider" value="Valider"
-					title="Valider" />
-			</div>
-
+		<div id="boutons">
+			<input type="submit" name="btnEnregistrer" value="Enregistrer" title="Enregistrer" /> 
+			<input type="reset" name="btAnnuler" value="Annuler" title="Annuler" />
 		</div>
+</div>
 	</form>
-
-	<h4>
-		<a href="<%=request.getContextPath()%>/">Retour à l'accueil</a>
-	</h4>
 
 </body>
 
