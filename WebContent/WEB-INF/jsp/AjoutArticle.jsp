@@ -3,7 +3,7 @@
 <%@page import="fr.eni.javaee.trocencheres.bo.ArticleVendu"%>
 <%@page import="fr.eni.javaee.trocencheres.bo.Categorie"%>
 <%@page import="fr.eni.javaee.trocencheres.bo.Utilisateur"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,8 +12,6 @@
 </head>
 <body>
 
-	<jsp:useBean id="utilisateur" scope="application"
-		class="fr.eni.javaee.trocencheres.bo.Utilisateur"></jsp:useBean>
 
 	<h2>Ajoutez votre article</h2>
 
@@ -57,18 +55,13 @@
 			</div>
 
 			<div class="ajout">
-				<label for="miseAPrix">Prix proposé</label> <input type="number"
+				<label for="miseAPrix">Mise à prix</label> <input type="number"
 					class="form-control" id="miseAPrix" name="piseAPrix"
 					placeholder="Prix proposé">
 			</div>
 
-			<div class="ajout">
-				<label for="prixVente">Prix de vente</label> <input type="number"
-					class="form-control" id="prixVente" name="prixVente"
-					placeholder="Initialement égal au prix proposé">
-			</div>
-
 			<div id="adresse">
+			<p>Retrait</p>
 				<div class="ajout">
 					<label for="rue">Rue</label> <input type="text"
 						class="form-control" id="rue" name="rue" placeholder="Rue">
