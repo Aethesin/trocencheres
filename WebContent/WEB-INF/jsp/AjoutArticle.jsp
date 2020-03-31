@@ -3,6 +3,7 @@
 <%@page import="fr.eni.javaee.trocencheres.bo.ArticleVendu"%>
 <%@page import="fr.eni.javaee.trocencheres.bo.Categorie"%>
 <%@page import="fr.eni.javaee.trocencheres.bo.Utilisateur"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html>
@@ -15,75 +16,79 @@
 
 	<h2>Ajoutez votre article</h2>
 
-	<form action="<%=request.getContextPath()%>/AjoutArticle" method="post">
-	
-		<div class="container-sm">
+	<form action="<c:url value="/AjoutArticle"/>" method="post">
 
 
-			<div class="ajout">
-				<label for="nomArticleVendu">Nom de l'article</label> <input
-					type="text" class="form-control" id="nomArticleVendu"
-					name="nomArticleVendu" placeholder="Nom de votre article">
-			</div>
+		<div class="ajout">
+			<label for="nomArticleVendu">Nom de l'article<span
+				class="requis"></span></label> <input type="text" id="nomArticleVendu"
+				name="nomArticleVendu" maxlength="30"
+				value="<c:out value="${nomAticle}"/>" />
+		</div>
 
-			<div class="ajout">
-				<label for="description">Description</label> <input type="textarea"
-					class="form-control" id="description" name="description"
-					placeholder="Description de votre article">
-			</div>
+		<div class="ajout">
+			<textarea name="description" rows=5 cols=60 required="required"
+				wrap="soft" placeholder="Description de votre article">Description</textarea>
+		</div>
 
-			<div class="form-group">
-				<label for="categorie">Catégorie</label> <select
-					class="form-control" id="categorie" name="noCategorie">
-					<option>Informatique</option>
-					<option>Ameublement</option>
-					<option>Vêtement</option>
-					<option>Sport&amp;Loisirs</option>
-				</select>
-			</div>
+		<div class="ajout">
+			<label for="categorie">Catégorie<span class="requis"></span></label>
+			<select id="categorie" name="noCategorie">
+				<option>Informatique</option>
+				<option>Ameublement</option>
+				<option>Vêtement</option>
+				<option>Sport&amp;Loisirs</option>
+			</select>
+		</div>
 
-			<div class="ajout">
-				<label for="dateDebutEncheres">Date de la mise aux enchères</label>
-				<input type="datetime" class="form-control" id="dateDebutEncheres"
-					name="dateDebutEncheres" placeholder="Date de début des enchères">
-			</div>
+		<div class="ajout">
+			<label for="dateDebutEncheres">Date de la mise aux enchères<span
+				class="requis"></span></label> <input type="datetime" id="dateDebutEncheres"
+				name="dateDebutEncheres" placeholder="Date de début des enchères"
+				value="<c:out value="${dateDebutEncheres }"/>" />
+		</div>
 
-			<div class="ajout">
-				<label for="dateFinEncheres">Date de la fin des enchères</label> <input
-					type="datetime" class="form-control" id="dateFinEncheres"
-					name="dateFinEncheres" placeholder="Date de fin des enchères">
-			</div>
+		<div class="ajout">
+			<label for="dateFinEncheres">Date de la fin des enchères<span
+				class="requis"></span></label> <input type="datetime" id="dateFinEncheres"
+				name="dateFinEncheres" placeholder="Date de fin des enchères"
+				value="<c:out value="${dateFinEncheres }"/>" />
+		</div>
 
-			<div class="ajout">
-				<label for="miseAPrix">Mise à prix</label> <input type="number"
-					class="form-control" id="miseAPrix" name="piseAPrix"
-					placeholder="Prix proposé">
-			</div>
+		<div class="ajout">
+			<label for="miseAPrix">Mise à prix<span class="requis"></span></label>
+			<input type="number" id="miseAPrix" name="piseAPrix"
+				placeholder="Prix proposé" value="<c:out value="${miseAPrix }"/>" />
+		</div>
 
-			<div id="adresse">
-			<p>Retrait</p>
+		<div>
+			<fieldSet>
+				<p>Retrait</p>
 				<div class="ajout">
-					<label for="rue">Rue</label> <input type="text"
-						class="form-control" id="rue" name="rue" placeholder="Rue">
+					<label for="rue">Rue</label> <input type="text" id="rue" name="rue"
+						placeholder="Rue" value="<c:out value="${rue }"/>" />
 				</div>
 
 				<div class="ajout">
-					<label for="codePostal">Code postal</label> <input type="number"
-						class="form-control" id="codePostal" name="codePostal"
-						placeholder="Code postal">
+					<label for="codePostal">Code postal</label> <input type="text"
+						id="codePostal" name="codePostal" placeholder="Code postal"
+						value="<c:out value="${codePostal }"/>" />
 				</div>
 
 				<div class="ajout">
-					<label for="ville">Ville</label> <input type="text"
-						class="form-control" id="ville" name="ville" placeholder="Ville">
+					<label for="ville">Ville</label> <input type="text" id="ville"
+						name="ville" placeholder="Ville"
+						value="<c:out value="${ville }"/>" />
 				</div>
-			</div>
+			</fieldSet>
+		</div>
 
 		<div id="boutons">
-			<input type="submit" name="btnEnregistrer" value="Enregistrer" title="Enregistrer" /> 
-			<input type="reset" name="btAnnuler" value="Annuler" title="Annuler" />
+			<input type="submit" name="btnEnregistrer" value="Enregistrer"
+				title="Enregistrer" /> <input type="reset" name="btAnnuler"
+				value="Annuler" title="Annuler" />
 		</div>
-</div>
+
 	</form>
 
 </body>
