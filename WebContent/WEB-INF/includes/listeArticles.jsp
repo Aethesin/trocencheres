@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <c:if test="${empty listeArticlesVendu}">
 		<p>Aucun article ne correspond à la demande actuelle</p>
 </c:if>
@@ -51,8 +50,8 @@
 </div>
 
 <c:if test="${sessionScope.utilisateur != null}">
-<h3>Achats</h3>
-	<div class="Achats container-liste">
+<h3 class="Achats container-liste">Achats</h3>
+	<div>
 		<div class="row">
 			<c:forEach var="lArt" items="${listeArticlesVendu}">
 			<c:if test="${sessionScope.utilisateur.noUtilisateur !=  lArt.noUtilisateur}">
@@ -94,8 +93,8 @@
 			</c:forEach>
 		</div>
 	</div>
-	<h3>Mes Ventes</h3>
-	<div class="MesVentes container-liste">
+	<h3 class="MesVentes container-liste">Mes Ventes</h3>
+	<div>
 		<div class="row">
 			<c:forEach var="lArt" items="${listeArticlesVendu}">
 			<c:if test="${sessionScope.utilisateur.noUtilisateur ==  lArt.noUtilisateur}">

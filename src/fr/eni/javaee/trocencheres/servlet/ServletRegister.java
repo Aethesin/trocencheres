@@ -123,8 +123,7 @@ public class ServletRegister extends HttpServlet {
 				Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse);
 				umger.getInscription(utilisateur);
 				session.setAttribute("utilisateur", utilisateur);
-				RequestDispatcher rd = request.getRequestDispatcher("/Accueil");
-				rd.forward(request, response);				
+				response.sendRedirect("accueil");			
 			} catch (BusinessException e) {
 				e.printStackTrace();
 				Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse);

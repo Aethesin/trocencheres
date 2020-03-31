@@ -39,8 +39,7 @@ public class ServletConnexion extends HttpServlet {
 		
 		RequestDispatcher rd = null;
 		if(session.getAttribute("utilisateur") != null){
-			rd = request.getRequestDispatcher("/Accueil");
-			rd.forward(request, response);
+			response.sendRedirect("accueil");
 		}else{
 			if(cookies.length > 0){
 				for (Cookie cookie : cookies) {
@@ -74,19 +73,20 @@ public class ServletConnexion extends HttpServlet {
 				System.out.println("Connexion en tant que " + pseudo);
 				if(checkbox.equals("on")){					
 					Cookie cookiePseudo = new Cookie("pseudo", pseudo);
-					cookiePseudo.setMaxAge(600);
+					cookiePseudo.setMaxAge(-1);
 					Cookie cookieMDP = new Cookie("motDePasse", motDePasse);
-					cookieMDP.setMaxAge(600);
+					cookieMDP.setMaxAge(-1);
 					response.addCookie(cookiePseudo);
 					response.addCookie(cookieMDP);
 				}else{
 					Cookie cookiePseudo = new Cookie("pseudo", "");
-					cookiePseudo.setMaxAge(600);
+					cookiePseudo.setMaxAge(-1);
 					Cookie cookieMDP = new Cookie("motDePasse", "");
-					cookieMDP.setMaxAge(600);
+					cookieMDP.setMaxAge(-1);
 					response.addCookie(cookiePseudo);
 					response.addCookie(cookieMDP);
 				}
+				session.setMaxInactiveInterval(300);
 				session.setAttribute("utilisateur", user);
 				doGet(request, response);
 			}else {
