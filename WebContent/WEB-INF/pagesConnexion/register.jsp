@@ -11,10 +11,13 @@
 
 <jsp:include page="/WEB-INF/includes/header.jsp"></jsp:include>
 
+
 <c:if test="${!empty listeCodesErreurString}">
-	<c:forEach var="l" items="${listeCodesErreurString}">
-		<p>${l}</p>
-	</c:forEach>
+	<div class="formulaire">
+		<c:forEach var="l" items="${listeCodesErreurString}">
+			<p>${l}</p>
+		</c:forEach>
+	</div>
 </c:if>
 
 <div class="formulaire d-flex justify-content-center">
@@ -109,7 +112,7 @@
 				</div>
 				<div class="row col-3">
 					<div class="col-3 d-flex justify-content-end">
-						<label>Confirmation : </label>
+						<label>Confirmation :</label>
 					</div>
 					<div class="col-6">
 						<input class="form-control" type="password" name="motDePasseVerif"><br>

@@ -8,7 +8,7 @@
 <link href="css/custom.css" rel="stylesheet">
 
 <c:if test="${sessionScope.utilisateur != null }">
-	<nav class="navbar navbar-expand-lg fixed-top navbar-light">
+	<nav class="navbar navbar-expand-lg fixed-top navbar-light navigation">
 		<div class="container">
 			<a class="navbar-brand" href="./"><p class="h2">Les objets sont nos amis</p></a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -36,7 +36,7 @@
 	</nav>
 </c:if>
 <c:if test="${sessionScope.utilisateur == null }">
-<nav class="navbar navbar-expand-lg fixed-top navbar-light">
+<nav class="navbar navbar-expand-lg fixed-top navbar-light navigation">
 	<div class="container">
 		<a class="navbar-brand" href="./"><p class="h2">Les objets sont nos amis</p></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"

@@ -21,7 +21,7 @@ import fr.eni.javaee.trocencheres.exception.BusinessException;
 /**
  * Servlet implementation class ServletAccueil
  */
-@WebServlet("/Accueil")
+@WebServlet("/accueil")
 public class ServletAccueil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private static ArticleVenduManager amger;
