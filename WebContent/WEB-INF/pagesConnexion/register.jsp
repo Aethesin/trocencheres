@@ -9,40 +9,127 @@
 </head>
 <body>
 
+<jsp:include page="/WEB-INF/includes/header.jsp"></jsp:include>
+
 <c:if test="${!empty listeCodesErreurString}">
 	<c:forEach var="l" items="${listeCodesErreurString}">
 		<p>${l}</p>
 	</c:forEach>
 </c:if>
 
-	<form action="<%=request.getContextPath()%>/Register" method="post">
-		<label>Pseudo : </label>
-		<input type="text" name="pseudo" value="${utilisateur.pseudo}"><br>
-		<label>Nom : </label>
-		<input type="text" name="nom" value="${utilisateur.nom}"><br>
-		<label>Prenom : </label>
-		<input type="text" name="prenom" value="${utilisateur.prenom}"><br>
-		<label>Email : </label>
-		<input type="text" name="email" value="${utilisateur.email}"><br>
-		<label>Telephone : </label>
-		<input type="text" name="telephone" value="${utilisateur.telephone}"><br>
-		<label>Rue : </label>
-		<input type="text" name="rue" value="${utilisateur.rue}"><br>
-		<label>Code postal : </label>
-		<input type="text" name="code_postal" value="${utilisateur.codePostal}"><br>
-		<label>Ville : </label>
-		<input type="text" name="ville" value="${utilisateur.ville}"><br>
-		<label>Mot de passe : </label>
-		<input type="password" name="motDePasse"><br>
-		<label>Vérifier mot de passe : </label>
-		<input type="password" name="motDePasseVerif"><br>
-		<input type="submit" value="Valider">
-	</form>
-	
-<h4>
+<div class="formulaire d-flex justify-content-center">
+		<h4>Inscription</h4>
+	</div>
+<div class="row">
+	<div class="col">
+		<form action="<%=request.getContextPath()%>/Register" method="post">
+		
+			<div class="row">
+				<div class="row col-6">
+					<div class="col-9 d-flex justify-content-end">
+						<label>Pseudo : </label>
+					</div>
+					<div class="col-3">
+						<input class="form-control" type="text" name="pseudo" value="${utilisateur.pseudo}"><br>
+					</div>
+				</div>
+				<div class="row col-3">
+					<div class="col-3 d-flex justify-content-end">
+						<label>Nom : </label>
+					</div>
+					<div class="col-6">
+						<input class="form-control" type="text" name="nom" value="${utilisateur.nom}"><br>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="row col-6">
+					<div class="col-9 d-flex justify-content-end">
+						<label>Prénom : </label>
+					</div>
+					<div class="col-3">
+						<input class="form-control" type="text" name="prenom" value="${utilisateur.prenom}"><br>
+					</div>
+				</div>
+				<div class="row col-3">
+					<div class="col-3 d-flex justify-content-end">
+						<label>Email : </label>
+					</div>
+					<div class="col-6">
+						<input class="form-control" type="text" name="email" value="${utilisateur.email}"><br>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="row col-6">
+					<div class="col-9 d-flex justify-content-end">
+						<label>Téléphone : </label>
+					</div>
+					<div class="col-3">
+						<input class="form-control" type="text" name="telephone" value="${utilisateur.telephone}"><br>
+					</div>
+				</div>
+				<div class="row col-3">
+					<div class="col-3 d-flex justify-content-end">
+						<label>Rue : </label>
+					</div>
+					<div class="col-6">
+						<input class="form-control" type="text" name="rue" value="${utilisateur.rue}"><br>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="row col-6">
+					<div class="col-9 d-flex justify-content-end">
+						<label>Code postal : </label>
+					</div>
+					<div class="col-3">
+						<input class="form-control" type="text" name="code_postal" value="${utilisateur.codePostal}"><br>
+					</div>
+				</div>
+				<div class="row col-3">
+					<div class="col-3 d-flex justify-content-end">
+						<label>Ville : </label>
+					</div>
+					<div class="col-6">
+						<input class="form-control" type="text" name="ville" value="${utilisateur.ville}"><br>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="row col-6">
+					<div class="col-9 d-flex justify-content-end">
+						<label>Mot de passe : </label>
+					</div>
+					<div class="col-3">
+						<input class="form-control" type="password" name="motDePasse"><br>
+					</div>
+				</div>
+				<div class="row col-3">
+					<div class="col-3 d-flex justify-content-end">
+						<label>Confirmation : </label>
+					</div>
+					<div class="col-6">
+						<input class="form-control" type="password" name="motDePasseVerif"><br>
+					</div>
+				</div>
+			</div>
+			<div class="row d-flex justify-content-center">
+				<div>
+					<input class="btn btn-light" type="submit" value="Valider">
+				</div>
+				<div>
+					<h4>
+						<a class="btn btn-dark" href="<%=request.getContextPath()%>/">Retour à l'accueil</a>
+					</h4>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
 
-	<a href="<%=request.getContextPath()%>/">Retour à l'accueil</a>
-
-</h4>
+<jsp:include page="/WEB-INF/includes/footer.jsp"></jsp:include>
 </body>
 </html>

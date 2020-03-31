@@ -1,0 +1,14 @@
+@charset "ISO-8859-1";
+
+.formulaire{
+	margin-top: 50px;
+}
+
+.container-liste{
+	margin-top: 35px;
+}
+
+.bouton{
+	height: 100px;
+	width: 300px;
+}

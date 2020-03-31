@@ -7,39 +7,60 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Détails de l'utilisateur</title>
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="css/4-col-portfolio.css" rel="stylesheet">
+<link href="css/custom.css" rel="stylesheet">
 </head>
 <body>
 
 <jsp:include page="/WEB-INF/includes/header.jsp"></jsp:include>
 
-<h1>Détail du Profil</h1>
+	<jsp:useBean id="utilisateur" scope="request" class="fr.eni.javaee.trocencheres.bo.Utilisateur"></jsp:useBean>
+	
+<div class="d-flex justify-content-center formulaire">
+	<h2>Pseudo : <jsp:getProperty property="pseudo" name="utilisateur"/></h2>
+</div>
 
-<jsp:useBean id="utilisateur" scope="request" class="fr.eni.javaee.trocencheres.bo.Utilisateur"></jsp:useBean>
+<div class="d-flex justify-content-center formulaire">
+	<h2>Nom : <jsp:getProperty property="nom" name="utilisateur"/></h2>
+</div>	
 
-<h2>Pseudo : <jsp:getProperty property="pseudo" name="utilisateur"/></h2>
+<div class="d-flex justify-content-center formulaire">
+	<h2>Prénom : <jsp:getProperty property="prenom" name="utilisateur"/></h2>
+</div>
 
-<h2>Nom : <jsp:getProperty property="nom" name="utilisateur"/></h2>
+<div class="d-flex justify-content-center formulaire">
+	<h2>Email  : <jsp:getProperty property="email" name="utilisateur"/></h2>
+</div>	
 
-<h2>Prénom : <jsp:getProperty property="prenom" name="utilisateur"/></h2>
+<div class="d-flex justify-content-center formulaire">
+	<h2>Téléphone : <jsp:getProperty property="telephone" name="utilisateur"/></h2>
+</div>	
 
-<h2>Email  : <jsp:getProperty property="email" name="utilisateur"/></h2>
+<div class="d-flex justify-content-center formulaire">
+	<h2>Adresse : <jsp:getProperty property="rue" name="utilisateur"/></h2>
+</div>	
 
-<h2>Téléphone : <jsp:getProperty property="telephone" name="utilisateur"/></h2>
+<div class="d-flex justify-content-center formulaire">
+	<h2>Code postal : <jsp:getProperty property="codePostal" name="utilisateur"/></h2>
+</div>	
 
-<h2>Adresse : <jsp:getProperty property="rue" name="utilisateur"/></h2>
+<div class="d-flex justify-content-center formulaire">
+	<h2>Ville : <jsp:getProperty property="ville" name="utilisateur"/></h2>
+</div>	
 
-<h2>Code postal : <jsp:getProperty property="codePostal" name="utilisateur"/></h2>
+<div class="d-flex justify-content-center formulaire">
+	<c:set var="u" value="${sessionScope.utilisateur}"/>
+	<c:if test="${(u != null) && (u.pseudo == utilisateur.pseudo)}"><div><a class="btn btn-light"href="<%=request.getContextPath()%>/ModifProfil">Modifier</a></div></c:if>
+</div>	
 
-<h2>Ville : <jsp:getProperty property="ville" name="utilisateur"/></h2>
-
-<c:set var="u" value="${sessionScope.utilisateur}"/>
-<c:if test="${(u != null) && (u.pseudo == utilisateur.pseudo)}"><div><a href="<%=request.getContextPath()%>/ModifProfil">bouton edit</a></div></c:if>
-
-<h4>
-
-	<a href="<%=request.getContextPath()%>/">Retour à l'accueil</a>
-
-</h4>
+<div class="d-flex justify-content-center formulaire">
+	<h4>
+	
+		<a class="btn btn-dark" href="<%=request.getContextPath()%>/">Retour à l'accueil</a>
+	
+	</h4>
+</div>	
 
 <!-- possible uniquement si user = session en cours -->
 

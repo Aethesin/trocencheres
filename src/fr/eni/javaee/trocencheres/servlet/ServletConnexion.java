@@ -67,14 +67,12 @@ public class ServletConnexion extends HttpServlet {
 				checkbox = "off";
 			}
 			
-			System.out.println(checkbox);
 			umger = new UtilisateurManager();
 			Utilisateur user = new Utilisateur();
 			user = umger.getConnexion(pseudo);
 			if(user.getPseudo().equals(pseudo) && user.getMotDePasse().equals(motDePasse)){
 				System.out.println("Connexion en tant que " + pseudo);
-				if(checkbox.equals("on")){
-					System.out.println("SALUT");						
+				if(checkbox.equals("on")){					
 					Cookie cookiePseudo = new Cookie("pseudo", pseudo);
 					cookiePseudo.setMaxAge(600);
 					Cookie cookieMDP = new Cookie("motDePasse", motDePasse);
