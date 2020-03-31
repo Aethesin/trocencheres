@@ -11,18 +11,23 @@
 
 <jsp:include page="/WEB-INF/includes/header.jsp"></jsp:include>
 
-
-<c:if test="${!empty listeCodesErreurString}">
-	<div class="formulaire">
-		<c:forEach var="l" items="${listeCodesErreurString}">
-			<p>${l}</p>
-		</c:forEach>
-	</div>
-</c:if>
+<div class="row">
+	<c:if test="${!empty listeCodesErreurString}">
+		<div class="col-4"></div>
+		<div class="formulaire col-4 row justify-content-center">
+			<c:forEach var="l" items="${listeCodesErreurString}">
+				<div class="col-12 text-center">
+					<p>${l}</p>
+				</div>
+			</c:forEach>
+		</div>
+		<div class="col-4"></div>
+	</c:if>
+</div>
 
 <div class="formulaire d-flex justify-content-center">
-		<h4>Inscription</h4>
-	</div>
+	<h4>Inscription</h4>
+</div>
 <div class="row">
 	<div class="col">
 		<form action="<%=request.getContextPath()%>/Register" method="post">
