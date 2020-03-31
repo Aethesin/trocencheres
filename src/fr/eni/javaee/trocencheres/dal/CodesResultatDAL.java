@@ -37,4 +37,6 @@ public abstract class CodesResultatDAL {
 	
 	public static final int SELECT_BY_NO_ARTICLE_ECHEC = 10006;
 	
+	public static final int SELECT_ENCHERE_MEILLEUR_OFFRE_ECHEC = 10007;
+	
 }

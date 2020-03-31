@@ -1,8 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="fr.eni.javaee.trocencheres.bo.ArticleVendu"%>
-<%@page import="fr.eni.javaee.trocencheres.bo.Categorie"%>
-<%@page import="fr.eni.javaee.trocencheres.bo.Utilisateur"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
@@ -13,7 +10,6 @@
 </head>
 <body>
 
-
 	<h2>Ajoutez votre article</h2>
 
 	<form action="<c:url value="/AjoutArticle"/>" method="post">
@@ -22,13 +18,15 @@
 		<div class="ajout">
 			<label for="nomArticleVendu">Nom de l'article<span
 				class="requis"></span></label> <input type="text" id="nomArticleVendu"
-				name="nomArticleVendu" maxlength="30"
+				name="nomArticleVendu" maxlength="30" placeholder="Nom de l'article"
 				value="<c:out value="${nomAticle}"/>" />
 		</div>
 
 		<div class="ajout">
+		<label for="description">Description<span
+				class="requis"></span></label>
 			<textarea name="description" rows=5 cols=60 required="required"
-				wrap="soft" placeholder="Description de votre article">Description</textarea>
+				wrap="soft" placeholder="Description de votre article"></textarea>
 		</div>
 
 		<div class="ajout">
@@ -62,8 +60,9 @@
 		</div>
 
 		<div>
+			<p>Retrait</p>
 			<fieldSet>
-				<p>Retrait</p>
+				
 				<div class="ajout">
 					<label for="rue">Rue</label> <input type="text" id="rue" name="rue"
 						placeholder="Rue" value="<c:out value="${rue }"/>" />

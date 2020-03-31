@@ -13,10 +13,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.javaee.trocencheres.bll.ArticleVenduManager;
 import fr.eni.javaee.trocencheres.bo.ArticleVendu;
+import fr.eni.javaee.trocencheres.bo.Utilisateur;
 import fr.eni.javaee.trocencheres.exception.BusinessException;
+import fr.eni.javaee.trocencheres.messages.LecteurMessage;;
 
 /**
  * Servlet implementation class ServletAjoutArticle
@@ -63,13 +66,14 @@ public class ServletAjoutArticle extends HttpServlet {
 		int prixVente = 0;
 
 		List<Integer> listeCodesErreur = new ArrayList<>();
+		List<String> listeCodesErreurString = new ArrayList<>();
 		
 
 		try {
 			nomArticleVendu = request.getParameter("nom");
 		} catch (StringIndexOutOfBoundsException e) {
-			e.printStackTrace();
 			listeCodesErreur.add(CodesResultatServlets.FORMAT_NOM_ARTICLE_ERREUR);
+			
 		}
 
 		try {
@@ -101,29 +105,42 @@ public class ServletAjoutArticle extends HttpServlet {
 			e.printStackTrace();
 			listeCodesErreur.add(CodesResultatServlets.FORMAT_MISE_A_PRIX_ERREUR);
 		}
-
-			int noUtilisateur = Integer.parseInt(request.getParameter("noUtilisateur"));
+		
+		HttpSession session = request.getSession();
+	
+			Utilisateur utilisateur =  (Utilisateur) session.getAttribute("utilisateur");
+			
+			int noUtilisateur = utilisateur.getNoUtilisateur();
+		
 
 			int noCategorie = Integer.parseInt(request.getParameter("noCategorie"));
 
+			
+			
+			
+			for(Integer integer : listeCodesErreur) {
+				listeCodesErreurString.add(LecteurMessage.getMessageErreur(integer));
+			}
+			
 		if (listeCodesErreur.size() > 0) {
-			request.setAttribute("listeCodesErreur", listeCodesErreur);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/AjoutArticle.jsp");
-			rd.forward(request, response);
+			ArticleVendu articleVendu = new ArticleVendu(nomArticleVendu, description, dateDebutEncheres, dateFinEncheres,
+					miseAPrix, prixVente, noUtilisateur, noCategorie);
+			request.setAttribute("article", articleVendu);
+			request.setAttribute("listeCodesErreurString", listeCodesErreurString);
+			doGet(request, response);
 
 		} else {
 			ArticleVenduManager articleVenduManager = new ArticleVenduManager();
-			try {
-				
+			try {			
 				articleVenduManager.insertArticleVendu(nomArticleVendu, description, dateDebutEncheres, dateFinEncheres,
 						miseAPrix, prixVente, noUtilisateur, noCategorie);
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/AjoutArticleSucces.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/AjoutArticleAvecSucces.jsp");
 				rd.forward(request, response);
 
 			} catch (BusinessException e) {
 				e.printStackTrace();
 				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/AjoutArticleEchec.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/AjoutArticleEnEchec.jsp");
 				rd.forward(request, response);
 			}
 

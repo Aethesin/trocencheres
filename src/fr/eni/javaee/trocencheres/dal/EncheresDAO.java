@@ -5,13 +5,17 @@ import fr.eni.javaee.trocencheres.exception.BusinessException;
 
 public interface EncheresDAO {
 	
+
+	
 	//2006 faire une enchère
-	public Encheres insertEnchere(Encheres enchere) throws BusinessException;
+	public void updateEnchere(Encheres enchere) throws BusinessException;
 	
 	//2007 remporter une vente
-	public void updateEnchere(Encheres enchere) throws BusinessException;
+	public Encheres selectEnchereByMeilleurOffre();
 	
 	//2009 afficher le détail d'une enchère
 	public Encheres selectEnchereByNoArticleVendu(int noArticleVendu);
+	
+
 	
 }

@@ -15,7 +15,7 @@ public class EncheresManager {
 		this.encheresDAO = DAOFactory.getEncheresDAO();
 	}
 	
-	public Encheres insertEnchere(LocalDateTime dateEnchere, int montantEnchere, int noArticleVendu, int noUtilisateur) throws BusinessException{
+	public void insertEnchere(LocalDateTime dateEnchere, int montantEnchere, int noArticleVendu, int noUtilisateur) throws BusinessException{
 		BusinessException businessException = new BusinessException();
 		Encheres enchere = new Encheres(dateEnchere, montantEnchere, noArticleVendu, noUtilisateur);
 		
@@ -28,7 +28,7 @@ public class EncheresManager {
 			throw businessException;
 		}
 		
-		return enchere;
+		
 		
 	}
 	
@@ -71,4 +71,9 @@ public class EncheresManager {
 		
 	}
 
+	public Encheres selectEnchereByMeilleurOffre() throws BusinessException{
+		Encheres enchere = encheresDAO.selectEnchereByMeilleurOffre();
+		return enchere;
+		
+	}
 }

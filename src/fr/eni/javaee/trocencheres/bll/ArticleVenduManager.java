@@ -96,14 +96,14 @@ public class ArticleVenduManager {
 	}
 
 	private void validerDescription(ArticleVendu articleVendu, BusinessException businessException) {
-		if (articleVendu.getDescription() == null || articleVendu.getDescription().length() > 300) {
+		if (articleVendu.getDescription() == null || articleVendu.getDescription().length() > 300 || articleVendu.getDescription().trim().length() == 0) {
 			businessException.ajouterErreur(CodesResultatBLL.REGLE_DESCRIPTION_ERREUR);
 		}
 
 	}
 
 	private void validerNomArticleVendu(ArticleVendu articleVendu, BusinessException businessException) {
-		if (articleVendu.getNomArticleVendu() == null || articleVendu.getNomArticleVendu().length() > 30) {
+		if (articleVendu.getNomArticleVendu() == null || articleVendu.getNomArticleVendu().length() > 30 || articleVendu.getNomArticleVendu().trim().length() == 0) {
 			businessException.ajouterErreur(CodesResultatBLL.REGLE_NOM_ARTICLE_ERREUR);
 		}
 	}

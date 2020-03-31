@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page import="fr.eni.javaee.trocencheres.bo.Utilisateur"%>
+<%@page import="fr.eni.javaee.trocencheres.bo.Encheres"%>
+<%@page import="fr.eni.javaee.trocencheres.bo.ArticleVendu"%>
+<%@page import="fr.eni.javaee.trocencheres.bo.Categorie"%>
 
 <!DOCTYPE html>
 <html>
@@ -46,7 +50,7 @@
 		Vendeur :
 		<jsp:getProperty property="pseudo" name="utilisateur" /></h2>
 		
-	<form action="<%=request.getContextPath()%>/AffichEnchere" methode="post">
+	<form action="<%=request.getContextPath()%>/AffichEnchere" method="post">
 		<div>
 			<label for="proosition">Ma proposition : </label> <input
 				type="number" id="proposition" name="proposition">
