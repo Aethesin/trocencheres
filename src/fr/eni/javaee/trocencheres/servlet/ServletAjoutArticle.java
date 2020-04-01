@@ -63,15 +63,17 @@ public class ServletAjoutArticle extends HttpServlet {
 		String description = null;
 		LocalDateTime dateDebutEncheres = null;
 		LocalDateTime dateFinEncheres = null;
-		int noUtilisateur = 0;
-		int noCategorie = 0;
 		int miseAPrix = 0;
 		int prixVente = 0;
+		int noUtilisateur;
+		int noCategorie;
 
 		List<Integer> listeCodesErreur = new ArrayList<>();
 		List<String> listeCodesErreurString = new ArrayList<>();
 		
-
+		HttpSession session = request.getSession();
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 		try {
 			nomArticleVendu = request.getParameter("nomArticleVendu");
 		} catch (StringIndexOutOfBoundsException e) {
@@ -109,12 +111,16 @@ public class ServletAjoutArticle extends HttpServlet {
 			listeCodesErreur.add(CodesResultatServlets.FORMAT_MISE_A_PRIX_ERREUR);
 		}
 		
-		HttpSession session = request.getSession();
+		
 	
-			Utilisateur utilisateur =  (Utilisateur) session.getAttribute("utilisateur");
-			noUtilisateur = utilisateur.getNoUtilisateur();
+//			Utilisateur utilisateur =  (Utilisateur) session.getAttribute("utilisateur");
+//			int noUtilisateur = utilisateur.getNoUtilisateur();
 			
+		
+			
+			noUtilisateur = utilisateur.getNoUtilisateur();
 			Categorie categorie = null;
+			
 			switch (request.getParameter("categorie")) {
 				case "Vêtement":
 					noCategorie = 1;
@@ -125,7 +131,7 @@ public class ServletAjoutArticle extends HttpServlet {
 				case "Ameublement":
 					noCategorie = 3;
 					break;
-				case "Sport&amp;Loisirs":
+				case "Sport &amp; Loisirs":
 					noCategorie = 4;
 					break;
 			}
