@@ -17,26 +17,26 @@ import fr.eni.javaee.trocencheres.exception.BusinessException;
 
 public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
-	private static final String INSERT_ARTICLE_VENDU = "insert into ARTICLES_VENDUS"
+	private static final String INSERT_ARTICLE_VENDU = "INSERT INTO ARTICLES_VENDUS"
 			+ "(nom_article, description,date_debut_encheres, "
 			+ "date_fin_encheres, prix_initial, prix_vente, "
-			+ "no_utilisateur, no_categorie) values (?, ?, ?, ?, ?, ?, ?,?)";
+			+ "no_utilisateur, no_categorie) VALUES (?, ?, ?, ?, ?, ?, ?,?)";
 	
-	private static final String SELECT_ARTICLES_BY_CATEGORIE = "select no_article, nom_article, description, date_debut_encheres, date_fin_encheres,"
-			+ " prix_initial, prix_vente, no_utilisateur, a.no_categorie as aNoCate, c.no_categorie as cNoCate, c.libelle from articles_vendus a "
-			+ "inner join categories c ON a.no_categorie = c.no_categorie"
+	private static final String SELECT_ARTICLES_BY_CATEGORIE = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres,"
+			+ " prix_initial, prix_vente, no_utilisateur, a.no_categorie AS aNoCate, c.no_categorie AS cNoCate, c.libelle FROM articles_vendus a "
+			+ "INNER JOIN categories c ON a.no_categorie = c.no_categorie"
 			+ " WHERE c.libelle = ? ORDER BY date_fin_encheres ASC;";
-	private static final String SELECT_ARTICLES_BY_CONTENU = "select no_article, nom_article, description, date_debut_encheres,"
-			+ " date_fin_encheres, prix_initial, prix_vente, no_utilisateur, a.no_categorie as aNoCate, c.no_categorie as cNoCate,"
-			+ " c.libelle from articles_vendus a inner join CATEGORIES c ON a.no_categorie = c.no_categorie WHERE a.nom_article LIKE ?"
+	private static final String SELECT_ARTICLES_BY_CONTENU = "SELECT no_article, nom_article, description, date_debut_encheres,"
+			+ " date_fin_encheres, prix_initial, prix_vente, no_utilisateur, a.no_categorie AS aNoCate, c.no_categorie AS cNoCate,"
+			+ " c.libelle FROM articles_vendus a INNER JOIN CATEGORIES c ON a.no_categorie = c.no_categorie WHERE a.nom_article LIKE ?"
 			+ " ORDER BY date_fin_encheres ASC;";
-	private static final String SELECT_ARTICLES_BY_CATEGORIE_AND_CONTENU = "select no_article, nom_article, description, date_debut_encheres,"
-			+ " date_fin_encheres, prix_initial, prix_vente, no_utilisateur, a.no_categorie as aNoCate, c.no_categorie as cNoCate, c.libelle "
-			+ "from articles_vendus a inner join CATEGORIES c ON a.no_categorie = c.no_categorie WHERE a.nom_article"
+	private static final String SELECT_ARTICLES_BY_CATEGORIE_AND_CONTENU = "SELECT no_article, nom_article, description, date_debut_encheres,"
+			+ " date_fin_encheres, prix_initial, prix_vente, no_utilisateur, a.no_categorie AS aNoCate, c.no_categorie AS cNoCate, c.libelle "
+			+ "FROM articles_vendus a INNER JOIN CATEGORIES c ON a.no_categorie = c.no_categorie WHERE a.nom_article"
 			+ " LIKE ? AND c.libelle = ? ORDER BY date_fin_encheres ASC;";
-	private static final String SELECT_ALL_ARTICLES = "select no_article, nom_article, description, date_debut_encheres, date_fin_encheres,"
-			+ " prix_initial, prix_vente, no_utilisateur, a.no_categorie as aNoCate, c.no_categorie as cNoCate, c.libelle from articles_vendus a "
-			+ "inner join CATEGORIES c ON a.no_categorie = c.no_categorie ORDER BY date_fin_encheres ASC;";
+	private static final String SELECT_ALL_ARTICLES = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres,"
+			+ " prix_initial, prix_vente, no_utilisateur, a.no_categorie AS aNoCate, c.no_categorie AS cNoCate, c.libelle FROM articles_vendus a "
+			+ "INNER JOIN CATEGORIES c ON a.no_categorie = c.no_categorie ORDER BY date_fin_encheres ASC;";
 
 	@Override
 	public void insertArticleVendu(ArticleVendu articleVendu) throws BusinessException {

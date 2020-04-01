@@ -17,20 +17,20 @@ import fr.eni.javaee.trocencheres.exception.BusinessException;
 public class EncheresDAOJdbcImpl implements EncheresDAO {
 	
 
-	private static final String UPDATE_ENCHERE = "update ENCHERES set no_utilisateur=?, no_article=?, date_enchere=?, montant_enchere=?";
-	private static final String SELECT_ENCHERE_BY_NO_ARTICLE = "select a.nom_article, a.description, a.prix_initial, a.prix_vente, a.date_debut_encheres, "
+	private static final String UPDATE_ENCHERE = "UPDATE ENCHERES SET no_utilisateur=?, no_article=?, date_enchere=?, montant_enchere=?";
+	private static final String SELECT_ENCHERE_BY_NO_ARTICLE = "SELECT a.nom_article, a.description, a.prix_initial, a.prix_vente, a.date_debut_encheres, "
 			+ "a.date_fin_encheres, r.rue, r.code_postal, r.ville, u.pseudo "
-			+ "from ARTICLES_VENDUS a inner join ENCHERES e on a.no_article = e.no_article "
-			+ "inner join UTILISATEURS u on u.no_utilisateur = e.no_utilisateur "
-			+ "inner join RETRAITS r on r.no_article = a.nom_article "
-			+ "where no_article = ?" 
-			+ "order by a.prix_vente desc";
-	private static final String SELECT_ENCHERE_MEILLEUR_OFFRE = "select top 1 a.nom_article, a.description, a.prix_initial, a.prix_vente, "
+			+ "FROM ARTICLES_VENDUS a INNER JOIN ENCHERES e on a.no_article = e.no_article "
+			+ "INNER JOIN UTILISATEURS u on u.no_utilisateur = e.no_utilisateur "
+			+ "INNER JOIN RETRAITS r on r.no_article = a.nom_article "
+			+ "WHERE no_article = ?" 
+			+ "ORDER BY a.prix_vente DESC";
+	private static final String SELECT_ENCHERE_MEILLEUR_OFFRE = "SELECT TOP 1 a.nom_article, a.description, a.prix_initial, a.prix_vente, "
 			+ "a.date_fin_encheres, r.rue, r.code_postal, r.ville, u.pseudo "
-			+ "from ARTICLES_VENDUS a inner join ENCHERES e on a.no_article = e.no_article "
-			+ "inner join UTILISATEURS u on u.no_utilisateur = e.no_utilisateur "
-			+ "inner join RETRAITS r on r.no_article = a.nom_article "
-			+ "order by a.prix_vente desc";
+			+ "FROM ARTICLES_VENDUS a INNER JOIN ENCHERES e on a.no_article = e.no_article "
+			+ "INNER JOIN UTILISATEURS u on u.no_utilisateur = e.no_utilisateur "
+			+ "INNER JOIN RETRAITS r on r.no_article = a.nom_article "
+			+ "ORDER BY a.prix_vente DESC";
 
 
 	@Override
