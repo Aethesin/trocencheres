@@ -3,7 +3,6 @@ package fr.eni.javaee.trocencheres.bo;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-
 public class ArticleVendu implements Serializable {
 	
 	private static final long serialVersionUID = -6998566428347980649L;

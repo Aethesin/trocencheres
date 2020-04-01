@@ -10,6 +10,8 @@
 </head>
 <body>
 
+<jsp:include page="/WEB-INF/includes/header.jsp"></jsp:include>
+
 	<h2>Ajoutez votre article</h2>
 
 	<form action="<c:url value="/AjoutArticle"/>" method="post">
@@ -31,7 +33,7 @@
 
 		<div class="ajout">
 			<label for="categorie">Catégorie<span class="requis"></span></label>
-			<select id="categorie" name="noCategorie">
+			<select id="categorie" name="categorie">
 				<option>Informatique</option>
 				<option>Ameublement</option>
 				<option>Vêtement</option>
@@ -41,21 +43,21 @@
 
 		<div class="ajout">
 			<label for="dateDebutEncheres">Date de la mise aux enchères<span
-				class="requis"></span></label> <input type="datetime" id="dateDebutEncheres"
+				class="requis"></span></label> <input type="datetime-local" id="dateDebutEncheres"
 				name="dateDebutEncheres" placeholder="Date de début des enchères"
 				value="<c:out value="${dateDebutEncheres }"/>" />
 		</div>
 
 		<div class="ajout">
 			<label for="dateFinEncheres">Date de la fin des enchères<span
-				class="requis"></span></label> <input type="datetime" id="dateFinEncheres"
+				class="requis"></span></label> <input type="datetime-local" id="dateFinEncheres"
 				name="dateFinEncheres" placeholder="Date de fin des enchères"
 				value="<c:out value="${dateFinEncheres }"/>" />
 		</div>
 
 		<div class="ajout">
 			<label for="miseAPrix">Mise à prix<span class="requis"></span></label>
-			<input type="number" id="miseAPrix" name="piseAPrix"
+			<input type="number" id="miseAPrix" name="miseAPrix"
 				placeholder="Prix proposé" value="<c:out value="${miseAPrix }"/>" />
 		</div>
 
@@ -89,6 +91,8 @@
 		</div>
 
 	</form>
+
+<jsp:include page="/WEB-INF/includes/footer.jsp"></jsp:include>
 
 </body>
 

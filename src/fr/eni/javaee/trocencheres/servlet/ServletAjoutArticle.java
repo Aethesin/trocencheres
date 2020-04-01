@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.javaee.trocencheres.bll.ArticleVenduManager;
 import fr.eni.javaee.trocencheres.bo.ArticleVendu;
+import fr.eni.javaee.trocencheres.bo.Categorie;
 import fr.eni.javaee.trocencheres.bo.Utilisateur;
 import fr.eni.javaee.trocencheres.exception.BusinessException;
 import fr.eni.javaee.trocencheres.messages.LecteurMessage;;
@@ -62,6 +63,8 @@ public class ServletAjoutArticle extends HttpServlet {
 		String description = null;
 		LocalDateTime dateDebutEncheres = null;
 		LocalDateTime dateFinEncheres = null;
+		int noUtilisateur = 0;
+		int noCategorie = 0;
 		int miseAPrix = 0;
 		int prixVente = 0;
 
@@ -70,7 +73,7 @@ public class ServletAjoutArticle extends HttpServlet {
 		
 
 		try {
-			nomArticleVendu = request.getParameter("nom");
+			nomArticleVendu = request.getParameter("nomArticleVendu");
 		} catch (StringIndexOutOfBoundsException e) {
 			listeCodesErreur.add(CodesResultatServlets.FORMAT_NOM_ARTICLE_ERREUR);
 			
@@ -109,14 +112,23 @@ public class ServletAjoutArticle extends HttpServlet {
 		HttpSession session = request.getSession();
 	
 			Utilisateur utilisateur =  (Utilisateur) session.getAttribute("utilisateur");
+			noUtilisateur = utilisateur.getNoUtilisateur();
 			
-			int noUtilisateur = utilisateur.getNoUtilisateur();
-		
-
-			int noCategorie = Integer.parseInt(request.getParameter("noCategorie"));
-
-			
-			
+			Categorie categorie = null;
+			switch (request.getParameter("categorie")) {
+				case "Vêtement":
+					noCategorie = 1;
+					break;
+				case "Informatique":
+					noCategorie = 2;
+					break;
+				case "Ameublement":
+					noCategorie = 3;
+					break;
+				case "Sport&amp;Loisirs":
+					noCategorie = 4;
+					break;
+			}
 			
 			for(Integer integer : listeCodesErreur) {
 				listeCodesErreurString.add(LecteurMessage.getMessageErreur(integer));
@@ -124,7 +136,7 @@ public class ServletAjoutArticle extends HttpServlet {
 			
 		if (listeCodesErreur.size() > 0) {
 			ArticleVendu articleVendu = new ArticleVendu(nomArticleVendu, description, dateDebutEncheres, dateFinEncheres,
-					miseAPrix, prixVente, noUtilisateur, noCategorie);
+					miseAPrix, prixVente, utilisateur, categorie);
 			request.setAttribute("article", articleVendu);
 			request.setAttribute("listeCodesErreurString", listeCodesErreurString);
 			doGet(request, response);
@@ -133,7 +145,7 @@ public class ServletAjoutArticle extends HttpServlet {
 			ArticleVenduManager articleVenduManager = new ArticleVenduManager();
 			try {			
 				articleVenduManager.insertArticleVendu(nomArticleVendu, description, dateDebutEncheres, dateFinEncheres,
-						miseAPrix, prixVente, noUtilisateur, noCategorie);
+						miseAPrix, prixVente, utilisateur, categorie);
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/AjoutArticleAvecSucces.jsp");
 				rd.forward(request, response);
 
