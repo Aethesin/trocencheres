@@ -13,7 +13,7 @@
 	<div class="formulaire d-flex justify-content-center">
 		<h1>Liste des enchères</h1>
 	</div>
-	<form action="<%=request.getContextPath()%>/Accueil" method="post">
+	<form action="<%=request.getContextPath()%>/accueil" method="post">
 		<div class="row">
 			<div class="col-6">
 				<div class="col-8">

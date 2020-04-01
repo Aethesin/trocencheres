@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.javaee.trocencheres.bo.ArticleVendu;
+import fr.eni.javaee.trocencheres.bo.Categorie;
+import fr.eni.javaee.trocencheres.bo.Utilisateur;
 import fr.eni.javaee.trocencheres.dal.ArticleVenduDAO;
 import fr.eni.javaee.trocencheres.dal.DAOFactory;
 import fr.eni.javaee.trocencheres.exception.BusinessException;
@@ -29,13 +31,13 @@ public class ArticleVenduManager {
 	 * @param noUtilisateur
 	 * @param noCategorie
 	 */
-	public void insertArticleVendu(String nomArticleVendu, String description, LocalDateTime dateDebutEncheres,
-			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, int noUtilisateur, int noCategorie)
-			throws BusinessException {
+	public void insertArticleVendu(String nomArticleVendu, String description,
+			LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres, int miseAPrix, int prixVente,
+			Utilisateur utilisateur, Categorie categorie) throws BusinessException {
 
 		BusinessException businessException = new BusinessException();
 		ArticleVendu articleVendu = new ArticleVendu(nomArticleVendu, description, dateDebutEncheres, dateFinEncheres,
-				miseAPrix, prixVente, noUtilisateur, noCategorie);
+				miseAPrix, prixVente, utilisateur, categorie);
 		this.validerNomArticleVendu(articleVendu, businessException);
 		this.validerDescription(articleVendu, businessException);
 		this.validerDateDebutEncheres(articleVendu, businessException);
@@ -44,21 +46,21 @@ public class ArticleVenduManager {
 		this.validerPrixVente(articleVendu, businessException);
 		this.validerVendeur(articleVendu, businessException);
 		this.validerCategorie(articleVendu, businessException);
-
-		if (businessException.hasErreurs()) {
+		
+		if(businessException.hasErreurs()) {
 			throw businessException;
 		}
 	}
 
 	private void validerCategorie(ArticleVendu articleVendu, BusinessException businessException) {
-		if (articleVendu.getNoCategorie() < 0) {
+		if (articleVendu.getCategorie().getNoCategorie() < 0) {
 			businessException.ajouterErreur(CodesResultatBLL.REGLE_CATEGORIE_ERREUR);
 		}
 
 	}
 
 	private void validerVendeur(ArticleVendu articleVendu, BusinessException businessException) {
-		if (articleVendu.getNoUtilisateur() < 0) {
+		if (articleVendu.getUtilisateur().getNoUtilisateur() < 0) {
 			businessException.ajouterErreur(CodesResultatBLL.REGLE_VENDEUR_ERREUR);
 		}
 
@@ -97,16 +99,14 @@ public class ArticleVenduManager {
 	}
 
 	private void validerDescription(ArticleVendu articleVendu, BusinessException businessException) {
-		if (articleVendu.getDescription() == null || articleVendu.getDescription().length() > 300
-				|| articleVendu.getDescription().trim().length() == 0) {
+		if (articleVendu.getDescription() == null || articleVendu.getDescription().length() > 300 || articleVendu.getDescription().trim().length() == 0) {
 			businessException.ajouterErreur(CodesResultatBLL.REGLE_DESCRIPTION_ERREUR);
 		}
 
 	}
 
 	private void validerNomArticleVendu(ArticleVendu articleVendu, BusinessException businessException) {
-		if (articleVendu.getNomArticleVendu() == null || articleVendu.getNomArticleVendu().length() > 30
-				|| articleVendu.getNomArticleVendu().trim().length() == 0) {
+		if (articleVendu.getNomArticleVendu() == null || articleVendu.getNomArticleVendu().length() > 30 || articleVendu.getNomArticleVendu().trim().length() == 0) {
 			businessException.ajouterErreur(CodesResultatBLL.REGLE_NOM_ARTICLE_ERREUR);
 		}
 	}
@@ -118,27 +118,26 @@ public class ArticleVenduManager {
 	public void setArticleVenduDAO(ArticleVenduDAO articleVenduDAO) {
 		this.articleVenduDAO = articleVenduDAO;
 	}
-
-	public List<ArticleVendu> selectAllArticleVendu() throws BusinessException {
+	
+	public List<ArticleVendu> selectAllArticleVendu() throws BusinessException{
 		List<ArticleVendu> listeArticlesVendu = new ArrayList<ArticleVendu>();
 		listeArticlesVendu = articleVenduDAO.selectAllArticleVendu();
 		return listeArticlesVendu;
 	}
-
-	public List<ArticleVendu> selectArticleVenduByCategorie(String categorie) throws BusinessException {
+	
+	public List<ArticleVendu> selectArticleVenduByCategorie(String categorie) throws BusinessException{
 		List<ArticleVendu> listeArticlesVendu = new ArrayList<ArticleVendu>();
 		listeArticlesVendu = articleVenduDAO.selectArticleVenduByCategorie(categorie);
 		return listeArticlesVendu;
 	}
 
-	public List<ArticleVendu> selectArticleVenduByMotCle(String motCle) throws BusinessException {
+	public List<ArticleVendu> selectArticleVenduByMotCle(String motCle) throws BusinessException{
 		List<ArticleVendu> listeArticlesVendu = new ArrayList<ArticleVendu>();
 		listeArticlesVendu = articleVenduDAO.selectArticleVenduByMotCle(motCle);
 		return listeArticlesVendu;
 	}
-
-	public List<ArticleVendu> selectArticleVenduByMotCleAndCategorie(String motCle, String categorie)
-			throws BusinessException {
+	
+	public List<ArticleVendu> selectArticleVenduByMotCleAndCategorie(String motCle, String categorie) throws BusinessException{
 		List<ArticleVendu> listeArticlesVendu = new ArrayList<ArticleVendu>();
 		listeArticlesVendu = articleVenduDAO.selectArticleVenduByMotCleAndCategorie(motCle, categorie);
 		return listeArticlesVendu;

@@ -3,33 +3,28 @@ package fr.eni.javaee.trocencheres.bo;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Encheres implements Serializable {
+public class Enchere implements Serializable {
 
 	
 	private static final long serialVersionUID = -5412137110359755740L;
 	
 	private LocalDateTime dateEnchere;
 	private int montantEnchere;
-	private int noArticleVendu;
-	private int noUtilisateur;
+	private ArticleVendu articleVendu;
+	private Utilisateur utilisateur;
 	
-	public Encheres() {
+	public Enchere() {
 		super();
 	}
 
-	
-
-	public Encheres(LocalDateTime dateEnchere, int montantEnchere, int noArticleVendu, int noUtilisateur) {
+	public Enchere(LocalDateTime dateEnchere, int montantEnchere, ArticleVendu articleVendu, Utilisateur utilisateur) {
 		super();
 		this.dateEnchere = dateEnchere;
 		this.montantEnchere = montantEnchere;
-		this.noArticleVendu = noArticleVendu;
-		this.noUtilisateur = noUtilisateur;
+		this.articleVendu = articleVendu;
+		this.utilisateur = utilisateur;
 	}
-
-
 	
-
 	public LocalDateTime getDateEnchere() {
 		return dateEnchere;
 	}
@@ -52,72 +47,28 @@ public class Encheres implements Serializable {
 		this.montantEnchere = montantEnchere;
 	}
 
+	
 
-
-	public int getNoArticleVendu() {
-		return noArticleVendu;
+	public ArticleVendu getArticleVendu() {
+		return articleVendu;
 	}
 
-
-
-	public void setNoArticleVendu(int noArticleVendu) {
-		this.noArticleVendu = noArticleVendu;
+	public void setArticleVendu(ArticleVendu articleVendu) {
+		this.articleVendu = articleVendu;
 	}
 
-
-
-	public int getNoUtilisateur() {
-		return noUtilisateur;
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
 	}
 
-
-
-	public void setNoUtilisateur(int noUtilisateur) {
-		this.noUtilisateur = noUtilisateur;
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
 	}
-
-
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + noArticleVendu;
-		result = prime * result + noUtilisateur;
-		return result;
-	}
-
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Encheres other = (Encheres) obj;
-		if (noArticleVendu != other.noArticleVendu)
-			return false;
-		if (noUtilisateur != other.noUtilisateur)
-			return false;
-		return true;
-	}
-
-
-
-	@Override
-	public String toString() {
-		return "Encheres [dateEnchere=" + dateEnchere + ", montantEnchere=" + montantEnchere + ", noArticleVendu="
-				+ noArticleVendu + ", noUtilisateur=" + noUtilisateur + "]\n";
-	}
 
 
 

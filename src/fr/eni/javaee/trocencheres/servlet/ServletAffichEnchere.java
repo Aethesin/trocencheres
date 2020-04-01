@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.javaee.trocencheres.bll.EncheresManager;
-import fr.eni.javaee.trocencheres.bo.Encheres;
+import fr.eni.javaee.trocencheres.bo.Enchere;
 import fr.eni.javaee.trocencheres.bo.Utilisateur;
 import fr.eni.javaee.trocencheres.exception.BusinessException;
 
@@ -41,7 +41,7 @@ public class ServletAffichEnchere extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		Encheres enchere = new Encheres();
+		Enchere enchere = new Enchere();
 		encheresManager = new EncheresManager();
 		int noArticleVendu = Integer.parseInt(request.getParameter("noArticleVendu"));
 

@@ -11,20 +11,19 @@ import fr.eni.javaee.trocencheres.exception.BusinessException;
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	
 
-	private static final String INSERT_UTILISATEUR = "insert into utilisateurs(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) values (?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT, 0)";
-	private static final String SELECT_CONNEXION = "select no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur from utilisateurs where pseudo = ?;";
-	private static final String SELECT_UTILISATEURS = "select no_utilisateur, pseudo from utilisateurs where no_utilisateur = ?";
-	private static final String UPDATE_UTILISATEUR =	"update utilisateurs set pseudo = ?, nom = ?, prenom = ?, email = ?,"
-			+ " telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? where no_utilisateur = ?;";
-	private static final String DELETE_UTILISATEUR = "delete from UTILISATEURS where no_utilisateur = ?;";
+	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, "
+			+ "mot_de_passe, credit, administrateur) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT, 0)";
+	private static final String SELECT_CONNEXION = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, "
+			+ "credit, administrateur FROM UTILISATEURS WHERE pseudo = ?;";
+	private static final String SELECT_UTILISATEURS = "SELECT no_utilisateur, pseudo FROM UTILISATEURS WHERE no_utilisateur = ?";
+	private static final String UPDATE_UTILISATEUR =	"UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?,"
+			+ " telephone = ?, rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?;";
+	private static final String DELETE_UTILISATEUR = "DELETE FROM UTILISATEURS WHERE no_utilisateur = ?;";
 	
 	@Override
 	public void insertUtilisateur(Utilisateur utilisateur) throws BusinessException {
-		Connection cnx = null;
-		try {
-			cnx = ConnectionProvider.getConnection();
-			cnx.setAutoCommit(false);
-			PreparedStatement psmt = cnx.prepareStatement(INSERT_UTILISATEUR , PreparedStatement.RETURN_GENERATED_KEYS);
+		try (Connection cnx = ConnectionProvider.getConnection();
+			PreparedStatement psmt = cnx.prepareStatement(INSERT_UTILISATEUR , PreparedStatement.RETURN_GENERATED_KEYS);){
 			psmt.setString(1, utilisateur.getPseudo());
 			psmt.setString(2, utilisateur.getNom());
 			psmt.setString(3, utilisateur.getPrenom());
@@ -41,23 +40,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 					utilisateur.setNoUtilisateur(rs.getInt(1));;
 				}
 				rs.close();
-				
 			}
-			psmt.close();
-			cnx.commit();
 		}catch (Exception e) {
 			e.printStackTrace();
-			try {
-				cnx.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-		}finally {
-			try {
-				cnx.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		
 
@@ -85,6 +70,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				utilisateur.setAdministrateur(rs.getShort("administrateur"));				
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return utilisateur;
 	}
@@ -101,7 +87,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				utilisateur.setPseudo(rs.getString("pseudo"));
 			}
 		} catch (SQLException e) {
-			System.out.println("Ptdr");
+			e.printStackTrace();
 		}
 		return utilisateur;
 	}
@@ -129,23 +115,18 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			pstmt.close();
 			cnx.commit();
 		} catch (SQLException e) {
-			throw new BusinessException();
+			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void supprimerUtilisateur(int noUtilisateur) throws BusinessException {
-		Connection cnx = null;
-		try {
-			cnx = ConnectionProvider.getConnection();
-			cnx.setAutoCommit(false);
-			PreparedStatement pstmt = cnx.prepareStatement(DELETE_UTILISATEUR);
+		try (Connection cnx = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cnx.prepareStatement(DELETE_UTILISATEUR);){
 			pstmt.setInt(1, noUtilisateur);
 			pstmt.executeUpdate();
-			pstmt.close();
-			cnx.commit();
 		} catch (SQLException e) {
-			throw new BusinessException();
+			e.printStackTrace();
 		}
 
 	}

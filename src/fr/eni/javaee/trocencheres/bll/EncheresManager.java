@@ -3,7 +3,8 @@ package fr.eni.javaee.trocencheres.bll;
 import java.time.LocalDateTime;
 
 import fr.eni.javaee.trocencheres.bo.ArticleVendu;
-import fr.eni.javaee.trocencheres.bo.Encheres;
+import fr.eni.javaee.trocencheres.bo.Enchere;
+import fr.eni.javaee.trocencheres.bo.Utilisateur;
 import fr.eni.javaee.trocencheres.dal.DAOFactory;
 import fr.eni.javaee.trocencheres.dal.EncheresDAO;
 import fr.eni.javaee.trocencheres.exception.BusinessException;
@@ -15,9 +16,9 @@ public class EncheresManager {
 		this.encheresDAO = DAOFactory.getEncheresDAO();
 	}
 	
-	public void insertEnchere(LocalDateTime dateEnchere, int montantEnchere, int noArticleVendu, int noUtilisateur) throws BusinessException{
+	public void insertEnchere(LocalDateTime dateEnchere, int montantEnchere, ArticleVendu articleVendu, Utilisateur utilisateur) throws BusinessException{
 		BusinessException businessException = new BusinessException();
-		Encheres enchere = new Encheres(dateEnchere, montantEnchere, noArticleVendu, noUtilisateur);
+		Enchere enchere = new Enchere(dateEnchere, montantEnchere, articleVendu, utilisateur);
 		
 		this.validerDateEnchere(enchere, businessException);
 		this.validerMontantEnchere(enchere, businessException);
@@ -32,19 +33,19 @@ public class EncheresManager {
 		
 	}
 	
-	private void validerNoUtilisateur(Encheres enchere, BusinessException businessException) {
-		if (enchere.getNoUtilisateur() <=0) {
+	private void validerNoUtilisateur(Enchere enchere, BusinessException businessException) {
+		if (enchere.getUtilisateur().getNoUtilisateur() <=0) {
 			businessException.ajouterErreur(CodesResultatBLL.REGLE_NO_UTILISATEUR_ERREUR);
 		}		
 	}
 
-	private void validerNoArticleVendu(Encheres enchere, BusinessException businessException) {
-		if (enchere.getNoArticleVendu() <=0) {
+	private void validerNoArticleVendu(Enchere enchere, BusinessException businessException) {
+		if (enchere.getArticleVendu().getNoArticleVendu() <=0) {
 			businessException.ajouterErreur(CodesResultatBLL.REGLE_NO_ARTICLE_ERREUR);
 		}		
 	}
 
-	private void validerMontantEnchere(Encheres enchere, BusinessException businessException) {
+	private void validerMontantEnchere(Enchere enchere, BusinessException businessException) {
 		ArticleVendu articleVendu = new ArticleVendu();
 		if (enchere.getMontantEnchere() < articleVendu.getPrixVente()) {
 			businessException.ajouterErreur(CodesResultatBLL.REGLE_MONTANT_ENCHERE_ERREUR);
@@ -52,7 +53,7 @@ public class EncheresManager {
 		
 	}
 
-	private void validerDateEnchere(Encheres enchere, BusinessException businessException) {
+	private void validerDateEnchere(Enchere enchere, BusinessException businessException) {
 		ArticleVendu articleVendu = new ArticleVendu();
 		if (enchere.getDateEnchere().isBefore(articleVendu.getDateDebutEncheres()) || enchere.getDateEnchere().isAfter(articleVendu.getDateFinEncheres()) || enchere.getDateEnchere() == null) {
 			businessException.ajouterErreur(CodesResultatBLL.REGLE_DATE_ENCHERE_ERREUR);
@@ -61,18 +62,18 @@ public class EncheresManager {
 		
 	}
 
-	public void updateEnchere(Encheres enchere) throws BusinessException{
+	public void updateEnchere(Enchere enchere) throws BusinessException{
 		encheresDAO.updateEnchere(enchere);
 	}
 	
-	public Encheres selectEnchereByNoArticleVendu(int noArticleVendu) throws BusinessException{
-		Encheres enchere = encheresDAO.selectEnchereByNoArticleVendu(noArticleVendu);
+	public Enchere selectEnchereByNoArticleVendu(int noArticleVendu) throws BusinessException{
+		Enchere enchere = encheresDAO.selectEnchereByNoArticleVendu(noArticleVendu);
 		return enchere;
 		
 	}
 
-	public Encheres selectEnchereByMeilleurOffre() throws BusinessException{
-		Encheres enchere = encheresDAO.selectEnchereByMeilleurOffre();
+	public Enchere selectEnchereByMeilleurOffre() throws BusinessException{
+		Enchere enchere = encheresDAO.selectEnchereByMeilleurOffre();
 		return enchere;
 		
 	}
