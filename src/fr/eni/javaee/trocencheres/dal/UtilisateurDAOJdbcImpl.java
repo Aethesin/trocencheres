@@ -22,11 +22,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	
 	@Override
 	public void insertUtilisateur(Utilisateur utilisateur) throws BusinessException {
-		Connection cnx = null;
-		try {
-			cnx = ConnectionProvider.getConnection();
-			cnx.setAutoCommit(false);
-			PreparedStatement psmt = cnx.prepareStatement(INSERT_UTILISATEUR , PreparedStatement.RETURN_GENERATED_KEYS);
+		try (Connection cnx = ConnectionProvider.getConnection();
+			PreparedStatement psmt = cnx.prepareStatement(INSERT_UTILISATEUR , PreparedStatement.RETURN_GENERATED_KEYS);){
 			psmt.setString(1, utilisateur.getPseudo());
 			psmt.setString(2, utilisateur.getNom());
 			psmt.setString(3, utilisateur.getPrenom());
@@ -43,23 +40,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 					utilisateur.setNoUtilisateur(rs.getInt(1));;
 				}
 				rs.close();
-				
 			}
-			psmt.close();
-			cnx.commit();
 		}catch (Exception e) {
 			e.printStackTrace();
-			try {
-				cnx.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-		}finally {
-			try {
-				cnx.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 		
 
@@ -87,6 +70,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				utilisateur.setAdministrateur(rs.getShort("administrateur"));				
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return utilisateur;
 	}
@@ -103,7 +87,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				utilisateur.setPseudo(rs.getString("pseudo"));
 			}
 		} catch (SQLException e) {
-			System.out.println("Ptdr");
+			e.printStackTrace();
 		}
 		return utilisateur;
 	}
@@ -131,23 +115,18 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			pstmt.close();
 			cnx.commit();
 		} catch (SQLException e) {
-			throw new BusinessException();
+			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void supprimerUtilisateur(int noUtilisateur) throws BusinessException {
-		Connection cnx = null;
-		try {
-			cnx = ConnectionProvider.getConnection();
-			cnx.setAutoCommit(false);
-			PreparedStatement pstmt = cnx.prepareStatement(DELETE_UTILISATEUR);
+		try (Connection cnx = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = cnx.prepareStatement(DELETE_UTILISATEUR);){
 			pstmt.setInt(1, noUtilisateur);
 			pstmt.executeUpdate();
-			pstmt.close();
-			cnx.commit();
 		} catch (SQLException e) {
-			throw new BusinessException();
+			e.printStackTrace();
 		}
 
 	}

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.javaee.trocencheres.bll.EncheresManager;
-import fr.eni.javaee.trocencheres.bo.Encheres;
+import fr.eni.javaee.trocencheres.bo.Enchere;
 import fr.eni.javaee.trocencheres.bo.Utilisateur;
 import fr.eni.javaee.trocencheres.exception.BusinessException;
 
@@ -39,13 +39,13 @@ public class ServletResultatEnchere extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		Encheres enchere = null;
+		Enchere enchere = null;
 		LocalDateTime now = LocalDateTime.now();
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 
 		try {
 			enchere = encheresManager.selectEnchereByMeilleurOffre();
-			if (enchere.getDateEnchere().isBefore(now)||utilisateur.getNoUtilisateur() == enchere.getNoUtilisateur()) {
+			if (enchere.getDateEnchere().isBefore(now)||utilisateur.getNoUtilisateur() == enchere.getUtilisateur().getNoUtilisateur()) {
 				RequestDispatcher rd = this.getServletContext().getNamedDispatcher("RemportEnchere");
 				rd.forward(request, response);
 			} else {

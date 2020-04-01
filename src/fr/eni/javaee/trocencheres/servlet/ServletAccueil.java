@@ -39,6 +39,7 @@ public class ServletAccueil extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		amger = new ArticleVenduManager();
+		RequestDispatcher rd = null;
 		try {
 			List<ArticleVendu> listeArticlesVendu = new ArrayList<ArticleVendu>();
 			List<Utilisateur> listeVendeurs = new ArrayList<>();
@@ -46,7 +47,7 @@ public class ServletAccueil extends HttpServlet {
 			listeVendeurs = selectVendeurs(listeArticlesVendu);
 			request.setAttribute("listeArticlesVendu", listeArticlesVendu);
 			request.setAttribute("listeVendeurs", listeVendeurs);
-			RequestDispatcher rd = this.getServletContext().getNamedDispatcher("accueil");
+			rd = this.getServletContext().getNamedDispatcher("accueil");
 			rd.forward(request, response);
 		} catch (BusinessException e) {
 			e.printStackTrace();
@@ -58,53 +59,52 @@ public class ServletAccueil extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		amger = new ArticleVenduManager();
+		RequestDispatcher rd = null;
 		HttpSession session = request.getSession();
 		request.setCharacterEncoding("UTF-8");
 		String motCle = request.getParameter("motCle");
 		String categorie = request.getParameter("categorie");
 		List<ArticleVendu> listeArticlesVendu = new ArrayList<ArticleVendu>();
 		List<Utilisateur> listeVendeurs = new ArrayList<>();
-		if(categorie != null || motCle != null){
-			
-			if(motCle.trim().length() != 0 && !categorie.equals("toutes")){
-				try {
-					listeArticlesVendu  = amger.selectArticleVenduByMotCleAndCategorie(motCle, categorie);
-					listeVendeurs = selectVendeurs(listeArticlesVendu);
-					request.setAttribute("listeArticlesVendu", listeArticlesVendu);
-					request.setAttribute("listeVendeurs", listeVendeurs);
-					RequestDispatcher rd = this.getServletContext().getNamedDispatcher("accueil");
-					rd.forward(request, response);
-				} catch (BusinessException e) {
-					e.printStackTrace();
-				}			
-			}else if(motCle.trim().length() != 0 && categorie.equals("toutes")){
-				try {
-					listeArticlesVendu  = amger.selectArticleVenduByMotCle(motCle);
-					listeVendeurs = selectVendeurs(listeArticlesVendu);
-					request.setAttribute("listeArticlesVendu", listeArticlesVendu);
-					request.setAttribute("listeVendeurs", listeVendeurs);
-					RequestDispatcher rd = this.getServletContext().getNamedDispatcher("accueil");
-					rd.forward(request, response);
-				} catch (BusinessException e) {
-					e.printStackTrace();
-				}	
-			}else if(motCle.trim().length() == 0 && !categorie.equals("toutes")){
-				try {
-					listeArticlesVendu  = amger.selectArticleVenduByCategorie(categorie);
-					listeVendeurs = selectVendeurs(listeArticlesVendu);
-					request.setAttribute("listeArticlesVendu", listeArticlesVendu);
-					request.setAttribute("listeVendeurs", listeVendeurs);
-					RequestDispatcher rd = this.getServletContext().getNamedDispatcher("accueil");
-					rd.forward(request, response);
-				} catch (BusinessException e) {
-					e.printStackTrace();
-				}	
-			}else{
-				doGet(request, response);			
+		
+		if(motCle.trim().length() != 0 && !categorie.equals("toutes")){
+			try {
+				listeArticlesVendu  = amger.selectArticleVenduByMotCleAndCategorie(motCle, categorie);
+				listeVendeurs = selectVendeurs(listeArticlesVendu);
+				request.setAttribute("listeArticlesVendu", listeArticlesVendu);
+				request.setAttribute("listeVendeurs", listeVendeurs);
+				rd = this.getServletContext().getNamedDispatcher("accueil");
+				rd.forward(request, response);
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			}			
+		}else if(motCle.trim().length() != 0 && categorie.equals("toutes")){
+			try {
+				listeArticlesVendu  = amger.selectArticleVenduByMotCle(motCle);
+				listeVendeurs = selectVendeurs(listeArticlesVendu);
+				request.setAttribute("listeArticlesVendu", listeArticlesVendu);
+				request.setAttribute("listeVendeurs", listeVendeurs);
+				rd = this.getServletContext().getNamedDispatcher("accueil");
+				rd.forward(request, response);
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			}	
+		}else if(motCle.trim().length() == 0 && !categorie.equals("toutes")){
+			try {
+				listeArticlesVendu  = amger.selectArticleVenduByCategorie(categorie);
+				listeVendeurs = selectVendeurs(listeArticlesVendu);
+				request.setAttribute("listeArticlesVendu", listeArticlesVendu);
+				request.setAttribute("listeVendeurs", listeVendeurs);
+				rd = this.getServletContext().getNamedDispatcher("accueil");
+				rd.forward(request, response);
+			} catch (BusinessException e) {
+				e.printStackTrace();
 			}	
 		}else{
-			doGet(request, response);
-		}
+			doGet(request, response);			
+		}	
+
+		
 	}
 	
 	private List<Utilisateur> selectVendeurs(List<ArticleVendu> listeArticlesVendu){
@@ -113,7 +113,7 @@ public class ServletAccueil extends HttpServlet {
 		Utilisateur utilisateur = null;
 		for (ArticleVendu articleVendu : listeArticlesVendu) {
 			try {
-				utilisateur = umger.selectVendeurs(articleVendu.getNoUtilisateur());
+				utilisateur = umger.selectVendeurs(articleVendu.getUtilisateur().getNoUtilisateur());
 				listeVendeurs.add(utilisateur);
 			} catch (BusinessException e) {
 				e.printStackTrace();

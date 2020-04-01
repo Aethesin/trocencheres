@@ -40,48 +40,28 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	@Override
 	public void insertArticleVendu(ArticleVendu articleVendu) throws BusinessException {
-		if (articleVendu == null) {
-			BusinessException businesseException = new BusinessException();
-			businesseException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_NULL);
-			throw businesseException;
-		}
-
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-			try {
-				cnx.setAutoCommit(false);
-				Utilisateur utilisateur = new Utilisateur();
-				Categorie categorie = new Categorie();
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-				PreparedStatement pstmt = cnx.prepareStatement(INSERT_ARTICLE_VENDU,
-						PreparedStatement.RETURN_GENERATED_KEYS);
-				
-				pstmt.setString(1, articleVendu.getNomArticleVendu());
-				pstmt.setString(2, articleVendu.getDescription());
-				pstmt.setString(3, articleVendu.getDateDebutEncheres().format(formatter));
-				pstmt.setString(4, articleVendu.getDateFinEncheres().format(formatter));
-				pstmt.setInt(5, articleVendu.getMiseAPrix());
-				pstmt.setInt(6, articleVendu.getPrixVente());
-				pstmt.setInt(7, utilisateur.getNoUtilisateur());
-				pstmt.setInt(8, categorie.getNoCategorie());
-				pstmt.executeUpdate();
-				ResultSet rs = pstmt.getGeneratedKeys();
-				if (rs.next()) {
-					articleVendu.setNoArticleVendu(rs.getInt(1));
-				}
-				rs.close();
-				pstmt.close();
-				cnx.commit();
-
-			} catch (Exception e) {
-				e.printStackTrace();
-				cnx.rollback();
-				throw e;
+			Utilisateur utilisateur = new Utilisateur();
+			Categorie categorie = new Categorie();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			PreparedStatement pstmt = cnx.prepareStatement(INSERT_ARTICLE_VENDU,
+					PreparedStatement.RETURN_GENERATED_KEYS);
+			
+			pstmt.setString(1, articleVendu.getNomArticleVendu());
+			pstmt.setString(2, articleVendu.getDescription());
+			pstmt.setString(3, articleVendu.getDateDebutEncheres().format(formatter));
+			pstmt.setString(4, articleVendu.getDateFinEncheres().format(formatter));
+			pstmt.setInt(5, articleVendu.getMiseAPrix());
+			pstmt.setInt(6, articleVendu.getPrixVente());
+			pstmt.setInt(7, utilisateur.getNoUtilisateur());
+			pstmt.setInt(8, categorie.getNoCategorie());
+			pstmt.executeUpdate();
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				articleVendu.setNoArticleVendu(rs.getInt(1));
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			BusinessException businessException = new BusinessException();
-			businessException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_ECHEC);
-			throw businessException;
 		}
 	}
 
@@ -95,11 +75,10 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			while(rs.next()){
 				listeArticlesVendu.add(mappingArticleVendu(rs));
 			}
-			return listeArticlesVendu;
 		} catch (SQLException e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
-		return null;
+		return listeArticlesVendu;
 	}
 
 	@Override
@@ -112,11 +91,10 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			while(rs.next()){
 				listeArticlesVendu.add(mappingArticleVendu(rs));
 			}
-			return listeArticlesVendu;
 		} catch (SQLException e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
-		return null;
+		return listeArticlesVendu;
 	}
 	
 	public List<ArticleVendu> selectArticleVenduByMotCleAndCategorie(String motCle, String categorie) throws BusinessException {
@@ -129,11 +107,10 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			while(rs.next()){
 				listeArticlesVendu.add(mappingArticleVendu(rs));
 			}
-			return listeArticlesVendu;
 		} catch (SQLException e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
-		return null;
+		return listeArticlesVendu;
 	} 
 
 	@Override
@@ -148,7 +125,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				articleVendu = mappingArticleVendu(rs);
 				listeArticlesVendu.add(articleVendu);
 			}
-			return listeArticlesVendu;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -157,6 +133,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	
 	private ArticleVendu mappingArticleVendu(ResultSet rs) throws SQLException{
 		ArticleVendu articleVendu = new ArticleVendu();
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
 		articleVendu.setNoArticleVendu(rs.getInt("no_article"));
 		articleVendu.setNomArticleVendu(rs.getString("nom_article"));
 		articleVendu.setDescription(rs.getString("description"));
@@ -164,8 +142,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		articleVendu.setDateFinEncheres(LocalDateTime.parse(rs.getTimestamp("date_fin_encheres").toLocalDateTime().toString()));
 		articleVendu.setMiseAPrix(rs.getInt("prix_initial"));
 		articleVendu.setPrixVente(rs.getInt("prix_vente"));
-		articleVendu.setNoUtilisateur(rs.getInt("no_utilisateur"));
-		articleVendu.setNoCategorie(rs.getInt("aNoCate"));
+		articleVendu.setUtilisateur(utilisateur);
 		return articleVendu;
 	}
 	

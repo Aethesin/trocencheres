@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.javaee.trocencheres.bo.ArticleVendu;
+import fr.eni.javaee.trocencheres.bo.Categorie;
+import fr.eni.javaee.trocencheres.bo.Utilisateur;
 import fr.eni.javaee.trocencheres.dal.ArticleVenduDAO;
 import fr.eni.javaee.trocencheres.dal.DAOFactory;
 import fr.eni.javaee.trocencheres.exception.BusinessException;
@@ -25,16 +27,16 @@ public class ArticleVenduManager {
 	 * @param dateFinEncheres
 	 * @param miseAPrix
 	 * @param prixVente
-	 * @param noUtilisateur
-	 * @param noCategorie
+	 * @param utilisateur
+	 * @param categorie
 	 */
 	public void insertArticleVendu(String nomArticleVendu, String description,
 			LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres, int miseAPrix, int prixVente,
-			int noUtilisateur, int noCategorie) throws BusinessException {
+			Utilisateur utilisateur, Categorie categorie) throws BusinessException {
 
 		BusinessException businessException = new BusinessException();
 		ArticleVendu articleVendu = new ArticleVendu(nomArticleVendu, description, dateDebutEncheres, dateFinEncheres,
-				miseAPrix, prixVente, noUtilisateur, noCategorie);
+				miseAPrix, prixVente, utilisateur, categorie);
 		this.validerNomArticleVendu(articleVendu, businessException);
 		this.validerDescription(articleVendu, businessException);
 		this.validerDateDebutEncheres(articleVendu, businessException);
@@ -50,14 +52,14 @@ public class ArticleVenduManager {
 	}
 
 	private void validerCategorie(ArticleVendu articleVendu, BusinessException businessException) {
-		if (articleVendu.getNoCategorie() < 0) {
+		if (articleVendu.getCategorie().getNoCategorie() < 0) {
 			businessException.ajouterErreur(CodesResultatBLL.REGLE_CATEGORIE_ERREUR);
 		}
 
 	}
 
 	private void validerVendeur(ArticleVendu articleVendu, BusinessException businessException) {
-		if (articleVendu.getNoUtilisateur() < 0) {
+		if (articleVendu.getUtilisateur().getNoUtilisateur() < 0) {
 			businessException.ajouterErreur(CodesResultatBLL.REGLE_VENDEUR_ERREUR);
 		}
 

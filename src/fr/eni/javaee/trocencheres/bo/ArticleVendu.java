@@ -15,18 +15,15 @@ public class ArticleVendu implements Serializable {
 	private LocalDateTime dateFinEncheres;
 	private int miseAPrix;
 	private int prixVente;
-	private int noUtilisateur;
-	private int noCategorie;
+	private Utilisateur utilisateur;
+	private Categorie categorie;
 	
 	public ArticleVendu() {
 		super();
 	}
-
 	
-	
-
 	public ArticleVendu(String nomArticleVendu, String description, LocalDateTime dateDebutEncheres,
-			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, int noUtilisateur, int noCategorie) {
+			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, Utilisateur utilisateur, Categorie categorie) {
 		super();
 		this.nomArticleVendu = nomArticleVendu;
 		this.description = description;
@@ -34,16 +31,12 @@ public class ArticleVendu implements Serializable {
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
-		this.noUtilisateur = noUtilisateur;
-		this.noCategorie = noCategorie;
+		this.utilisateur = utilisateur;
+		this.categorie = categorie;
 	}
 
-
-
-
-	public ArticleVendu(int noArticleVendu, String nomArticleVendu, String description,
-			LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres, int miseAPrix, int prixVente,
-			int noUtilisateur, int noCategorie) {
+	public ArticleVendu(int noArticleVendu, String nomArticleVendu, String description, LocalDateTime dateDebutEncheres,
+			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, Utilisateur utilisateur, Categorie categorie) {
 		super();
 		this.noArticleVendu = noArticleVendu;
 		this.nomArticleVendu = nomArticleVendu;
@@ -52,12 +45,9 @@ public class ArticleVendu implements Serializable {
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
-		this.noUtilisateur = noUtilisateur;
-		this.noCategorie = noCategorie;
+		this.utilisateur = utilisateur;
+		this.categorie = categorie;
 	}
-
-
-
 
 	public int getNoArticleVendu() {
 		return noArticleVendu;
@@ -153,36 +143,22 @@ public class ArticleVendu implements Serializable {
 	public void setPrixVente(int prixVente) {
 		this.prixVente = prixVente;
 	}
-
-
-
-
-	public int getNoUtilisateur() {
-		return noUtilisateur;
+	
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
 	}
 
-
-
-
-	public void setNoUtilisateur(int noUtilisateur) {
-		this.noUtilisateur = noUtilisateur;
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
 	}
 
-
-
-
-	public int getNoCategorie() {
-		return noCategorie;
+	public Categorie getCategorie() {
+		return categorie;
 	}
 
-
-
-
-	public void setNoCategorie(int noCategorie) {
-		this.noCategorie = noCategorie;
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
 	}
-
-
 
 
 	public static long getSerialversionuid() {
@@ -191,39 +167,6 @@ public class ArticleVendu implements Serializable {
 
 
 
-
-
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + noArticleVendu;
-		result = prime * result + noCategorie;
-		result = prime * result + noUtilisateur;
-		return result;
-	}
-
-
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ArticleVendu other = (ArticleVendu) obj;
-		if (noArticleVendu != other.noArticleVendu)
-			return false;
-		if (noCategorie != other.noCategorie)
-			return false;
-		if (noUtilisateur != other.noUtilisateur)
-			return false;
-		return true;
-	}
 
 
 

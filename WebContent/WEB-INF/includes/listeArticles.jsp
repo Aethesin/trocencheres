@@ -10,7 +10,6 @@
 	<div class="row">
 		<c:if test="${sessionScope.utilisateur == null}">
 			<c:forEach var="lArt" items="${listeArticlesVendu}">
-				<c:set var="idUser" value="${lArt.noUtilisateur}"/>
 				<c:set var="i" value="0"/>
 					<div class="col-6 container-liste">
 						<ul class="list-group-item" style="list-style: none;">
@@ -33,8 +32,8 @@
 						  	<h2>PROBLEME</h2>
 						  </c:if>
 						  <c:forEach var="u" items="${listeVendeurs}">
-							  <c:set var="idArtUser" value="${u.noUtilisateur }"></c:set>
-							  <c:if test="${(lArt.noUtilisateur == u.noUtilisateur) && (i == 0)}">
+							  <c:set var="user" value="${lArt.utilisateur}"></c:set>
+							  <c:if test="${(user.noUtilisateur == u.noUtilisateur) && (i == 0)}">
 								  <li>
 								  	Vendeur : ${u.pseudo}
 								  </li>
@@ -54,8 +53,7 @@
 	<div>
 		<div class="row">
 			<c:forEach var="lArt" items="${listeArticlesVendu}">
-			<c:if test="${sessionScope.utilisateur.noUtilisateur !=  lArt.noUtilisateur}">
-				<c:set var="idUser" value="${lArt.noUtilisateur}"/>
+			<c:if test="${sessionScope.utilisateur !=  lArt.utilisateur}">
 				<c:set var="i" value="0"/>
 				<div class="col-6 container-liste">
 					<ul class="list-group-item" style="list-style: none;">
@@ -78,8 +76,8 @@
 					  	<h2>Liste de vendeur vide</h2>
 					  </c:if>
 					  <c:forEach var="u" items="${listeVendeurs}">
-						  <c:set var="idArtUser" value="${u.noUtilisateur }"></c:set>
-						  <c:if test="${(lArt.noUtilisateur == u.noUtilisateur) && (i == 0)}">
+					  <c:set var="user" value="${lArt.utilisateur}"></c:set>
+						  <c:if test="${(user.noUtilisateur == u.noUtilisateur) && (i == 0)}">
 							  <li>
 							  	Vendeur : <a href="<%=request.getContextPath()%>/AffichProfil?pseudo=${u.pseudo}">${u.pseudo}</a>
 							  </li>
@@ -97,8 +95,7 @@
 	<div>
 		<div class="row">
 			<c:forEach var="lArt" items="${listeArticlesVendu}">
-			<c:if test="${sessionScope.utilisateur.noUtilisateur ==  lArt.noUtilisateur}">
-				<c:set var="idUser" value="${lArt.noUtilisateur}"/>
+			<c:if test="${sessionScope.utilisateur ==  lArt.utilisateur}">
 				<c:set var="i" value="0"/>
 				<div class="col-6 container-liste">
 					<ul class="list-group-item" style="list-style: none;">
@@ -121,8 +118,8 @@
 					  	<h2>Liste de vendeur vide</h2>
 					  </c:if>
 					  <c:forEach var="u" items="${listeVendeurs}">
-						  <c:set var="idArtUser" value="${u.noUtilisateur }"></c:set>
-						  <c:if test="${(lArt.noUtilisateur == u.noUtilisateur) && (i == 0)}">
+					  <c:set var="user" value="${lArt.utilisateur}"></c:set>
+						  <c:if test="${(user.noUtilisateur == u.noUtilisateur) && (i == 0)}">
 							  <li>
 							  	Vendeur : <a href="<%=request.getContextPath()%>/AffichProfil?pseudo=${u.pseudo}">${u.pseudo}</a>
 							  </li>

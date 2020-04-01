@@ -33,14 +33,15 @@ public class ServletModifProfil extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher rd = null;
 		HttpSession session = request.getSession();
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 		if(utilisateur != null){
 			request.setAttribute("utilisateur", utilisateur);
-			RequestDispatcher rd = this.getServletContext().getNamedDispatcher("ModifProfil");
+			rd = this.getServletContext().getNamedDispatcher("ModifProfil");
 			rd.forward(request, response);
 		}else{
-			RequestDispatcher rd = request.getRequestDispatcher("Connexion");
+			rd = request.getRequestDispatcher("Connexion");
 			rd.forward(request, response);
 		}
 	}
@@ -49,7 +50,7 @@ public class ServletModifProfil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		RequestDispatcher rq = null;
 		Utilisateur user = null;
 		umger = new UtilisateurManager();
 		
@@ -114,7 +115,7 @@ public class ServletModifProfil extends HttpServlet {
 			} catch (BusinessException e) {
 				e.printStackTrace();
 			}
-			RequestDispatcher rq = request.getRequestDispatcher("/AffichProfil");
+			rq = request.getRequestDispatcher("/AffichProfil");
 			rq.forward(request, response);
 		} catch (BusinessException e) {
 			// TODO message erreur qui va  bien

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import fr.eni.javaee.trocencheres.bo.ArticleVendu;
-import fr.eni.javaee.trocencheres.bo.Encheres;
+import fr.eni.javaee.trocencheres.bo.Enchere;
 import fr.eni.javaee.trocencheres.bo.Retrait;
 import fr.eni.javaee.trocencheres.bo.Utilisateur;
 import fr.eni.javaee.trocencheres.exception.BusinessException;
@@ -34,7 +34,7 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 
 
 	@Override
-	public void updateEnchere(Encheres enchere) throws BusinessException {
+	public void updateEnchere(Enchere enchere) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			try {
 				cnx.setAutoCommit(false);
@@ -80,7 +80,7 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 
 	}
 
-	private void setParameter(PreparedStatement pstmt, Encheres enchere) throws BusinessException {
+	private void setParameter(PreparedStatement pstmt, Enchere enchere) throws BusinessException {
 		Utilisateur utilisateur = new Utilisateur();
 		ArticleVendu articleVendu = new ArticleVendu();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -112,11 +112,11 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 	}
 
 	@Override
-	public Encheres selectEnchereByNoArticleVendu(int noArticleVendu) {
+	public Enchere selectEnchereByNoArticleVendu(int noArticleVendu) {
 		Utilisateur vendeur = new Utilisateur();
 		ArticleVendu articleVendu = new ArticleVendu();
 		Retrait retrait = new Retrait();
-		Encheres enchere = new Encheres();
+		Enchere enchere = new Enchere();
 		try (Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = cnx.prepareStatement(SELECT_ENCHERE_BY_NO_ARTICLE);) {
 			pstmt.setInt(1, articleVendu.getNoArticleVendu());
@@ -149,11 +149,11 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 	 * @see fr.eni.javaee.trocencheres.dal.EncheresDAO#selectEnchereByMeilleurOffre()
 	 */
 	@Override
-	public Encheres selectEnchereByMeilleurOffre() {
+	public Enchere selectEnchereByMeilleurOffre() {
 		Utilisateur vendeur = new Utilisateur();
 		ArticleVendu articleVendu = new ArticleVendu();
 		Retrait retrait = new Retrait();
-		Encheres enchere = new Encheres();
+		Enchere enchere = new Enchere();
 		try (Connection cnx = ConnectionProvider.getConnection();
 				Statement stmt = cnx.createStatement();) {
 			ResultSet rs = stmt.executeQuery(SELECT_ENCHERE_MEILLEUR_OFFRE);
