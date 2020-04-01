@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.javaee.trocencheres.bll.ArticleVenduManager;
+import fr.eni.javaee.trocencheres.bll.CategorieManager;
 import fr.eni.javaee.trocencheres.bo.ArticleVendu;
+import fr.eni.javaee.trocencheres.bo.Categorie;
 import fr.eni.javaee.trocencheres.bo.Utilisateur;
 import fr.eni.javaee.trocencheres.exception.BusinessException;
 import fr.eni.javaee.trocencheres.messages.LecteurMessage;;
@@ -108,14 +110,9 @@ public class ServletAjoutArticle extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 	
-			Utilisateur utilisateur =  (Utilisateur) session.getAttribute("utilisateur");
-			
-			int noUtilisateur = utilisateur.getNoUtilisateur();
-		
+			Utilisateur utilisateur =  (Utilisateur) session.getAttribute("utilisateur");	
 
-			int noCategorie = Integer.parseInt(request.getParameter("noCategorie"));
-
-			
+			Categorie categorie = (Categorie)request.getAttribute("categorie");
 			
 			
 			for(Integer integer : listeCodesErreur) {
@@ -124,7 +121,7 @@ public class ServletAjoutArticle extends HttpServlet {
 			
 		if (listeCodesErreur.size() > 0) {
 			ArticleVendu articleVendu = new ArticleVendu(nomArticleVendu, description, dateDebutEncheres, dateFinEncheres,
-					miseAPrix, prixVente, noUtilisateur, noCategorie);
+					miseAPrix, prixVente,utilisateur, categorie);
 			request.setAttribute("article", articleVendu);
 			request.setAttribute("listeCodesErreurString", listeCodesErreurString);
 			doGet(request, response);
@@ -133,7 +130,7 @@ public class ServletAjoutArticle extends HttpServlet {
 			ArticleVenduManager articleVenduManager = new ArticleVenduManager();
 			try {			
 				articleVenduManager.insertArticleVendu(nomArticleVendu, description, dateDebutEncheres, dateFinEncheres,
-						miseAPrix, prixVente, noUtilisateur, noCategorie);
+						miseAPrix, prixVente, utilisateur, categorie);
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/AjoutArticleAvecSucces.jsp");
 				rd.forward(request, response);
 

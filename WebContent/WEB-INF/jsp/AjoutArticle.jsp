@@ -41,14 +41,14 @@
 
 		<div class="ajout">
 			<label for="dateDebutEncheres">Date de la mise aux enchères<span
-				class="requis"></span></label> <input type="datetime" id="dateDebutEncheres"
+				class="requis"></span></label> <input type="datetime-local" id="dateDebutEncheres"
 				name="dateDebutEncheres" placeholder="Date de début des enchères"
 				value="<c:out value="${dateDebutEncheres }"/>" />
 		</div>
 
 		<div class="ajout">
 			<label for="dateFinEncheres">Date de la fin des enchères<span
-				class="requis"></span></label> <input type="datetime" id="dateFinEncheres"
+				class="requis"></span></label> <input type="datetime-local" id="dateFinEncheres"
 				name="dateFinEncheres" placeholder="Date de fin des enchères"
 				value="<c:out value="${dateFinEncheres }"/>" />
 		</div>

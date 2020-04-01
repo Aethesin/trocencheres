@@ -40,7 +40,6 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 				cnx.setAutoCommit(false);
 				Utilisateur utilisateur = new Utilisateur();
 				ArticleVendu articleVendu = new ArticleVendu();
-				LocalDateTime now = LocalDateTime.now();
 
 				PreparedStatement pstmt = cnx.prepareStatement(UPDATE_ENCHERE);
 				setParameter(pstmt, enchere);
@@ -83,6 +82,7 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 	private void setParameter(PreparedStatement pstmt, Enchere enchere) throws BusinessException {
 		Utilisateur utilisateur = new Utilisateur();
 		ArticleVendu articleVendu = new ArticleVendu();
+		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		try {
 			pstmt.setInt(1, utilisateur.getNoUtilisateur());
@@ -101,7 +101,7 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 			throw businessException;
 		}
 		try {
-			pstmt.setString(3, articleVendu.getDateDebutEncheres().format(formatter));
+			pstmt.setString(3, now.format(formatter));
 		} catch (SQLException e) {
 			e.printStackTrace();
 			BusinessException businessException = new BusinessException();

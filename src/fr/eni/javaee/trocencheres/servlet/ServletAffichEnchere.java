@@ -11,9 +11,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import fr.eni.javaee.trocencheres.bll.ArticleVenduManager;
 import fr.eni.javaee.trocencheres.bll.EncheresManager;
+import fr.eni.javaee.trocencheres.bo.ArticleVendu;
 import fr.eni.javaee.trocencheres.bo.Enchere;
 import fr.eni.javaee.trocencheres.bo.Utilisateur;
 import fr.eni.javaee.trocencheres.exception.BusinessException;
@@ -24,8 +25,9 @@ import fr.eni.javaee.trocencheres.exception.BusinessException;
 @WebServlet("/AffichEnchere")
 public class ServletAffichEnchere extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static EncheresManager encheresManager;
-	private static List<Integer> listeCodesErreur = new ArrayList<>();
+	private ArticleVenduManager articleVenduManager;
+	private EncheresManager encheresManager;
+	private static List<Integer> listeCodesErreur;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -40,39 +42,32 @@ public class ServletAffichEnchere extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		Enchere enchere = new Enchere();
-		encheresManager = new EncheresManager();
-		int noArticleVendu = Integer.parseInt(request.getParameter("noArticleVendu"));
+		ArticleVendu articleVendu = null;
+		Enchere enchere = null;
+		Utilisateur vendeur = null;
+		listeCodesErreur = new ArrayList<>();
 
 		try {
-			enchere = encheresManager.selectEnchereByNoArticleVendu(noArticleVendu);
-		} catch (BusinessException e) {
-			listeCodesErreur.add(CodesResultatServlets.ARTICLE_INTROUVE);
-			e.printStackTrace();
-		}
+			int noArticleVendu = Integer.parseInt(request.getParameter("noArticle"));
+			articleVendu = articleVenduManager.selectArticleVenduByID(noArticleVendu);
+			vendeur = articleVendu.getUtilisateur();
+			LocalDateTime now = LocalDateTime.now();
+			int montantEnchere = Integer.parseInt(request.getParameter("proposition"));
+			request.setAttribute("proposition", montantEnchere);
+			enchere = new Enchere(now, montantEnchere, articleVendu, vendeur);
+			encheresManager.updateEnchere(enchere);
+			request.setAttribute("enchere", enchere);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/AffichEnchere.jsp");
+			rd.forward(request, response);
 
-		if (listeCodesErreur.size() > 0) {
-			request.setAttribute("listeCodesErreur", listeCodesErreur);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			listeCodesErreur.add(CodesResultatServlets.FORMAT_PRIX_VENTE_ERREUR);
+
+		} catch (BusinessException e) {
+			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/ParticipEnchere.jsp");
 			rd.forward(request, response);
-		} else {
-			LocalDateTime dateEnchere = LocalDateTime.now();
-			int montantEnchere = Integer.parseInt(request.getParameter("proposition"));
-			HttpSession session = request.getSession();
-			Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
-			int noUtilisateur = utilisateur.getNoUtilisateur();
-			try {
-				encheresManager.insertEnchere(dateEnchere, montantEnchere, noArticleVendu, noUtilisateur);
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/ParticipEnchereAvecSucces.jsp");
-				rd.forward(request, response);
-
-			} catch (BusinessException e) {
-				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/ParticipEnchereEnEchec.jsp");
-				rd.forward(request, response);
-			}
-
 		}
 
 	}
@@ -84,12 +79,6 @@ public class ServletAffichEnchere extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		try {
-			int montantEnchere = Integer.parseInt(request.getParameter("proposition"));
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-			listeCodesErreur.add(CodesResultatServlets.MONTANT_ENCHERE_ERREUR);
-		}
 		doGet(request, response);
 	}
 

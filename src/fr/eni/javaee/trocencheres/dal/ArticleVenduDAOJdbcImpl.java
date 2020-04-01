@@ -173,7 +173,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			pstmt.setInt(1, noArticleVendu);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				articleVendu.setNoArticleVendu(rs.getInt("no_article"));
+				articleVendu = mappingArticleVendu(rs);
 			}
 			rs.close();
 		} catch (SQLException e) {
