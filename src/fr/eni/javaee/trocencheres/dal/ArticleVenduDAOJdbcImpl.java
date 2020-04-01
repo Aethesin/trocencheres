@@ -12,16 +12,17 @@ import java.util.List;
 
 import fr.eni.javaee.trocencheres.bo.ArticleVendu;
 import fr.eni.javaee.trocencheres.bo.Categorie;
+import fr.eni.javaee.trocencheres.bo.Enchere;
+import fr.eni.javaee.trocencheres.bo.Retrait;
 import fr.eni.javaee.trocencheres.bo.Utilisateur;
 import fr.eni.javaee.trocencheres.exception.BusinessException;
 
 public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
-
+	BusinessException businesseException = new BusinessException();
 	private static final String INSERT_ARTICLE_VENDU = "insert into ARTICLES_VENDUS"
-			+ "(nom_article, description,date_debut_encheres, "
-			+ "date_fin_encheres, prix_initial, prix_vente, "
+			+ "(nom_article, description,date_debut_encheres, " + "date_fin_encheres, prix_initial, prix_vente, "
 			+ "no_utilisateur, no_categorie) values (?, ?, ?, ?, ?, ?, ?,?)";
-	
+
 	private static final String SELECT_ARTICLES_BY_CATEGORIE = "select no_article, nom_article, description, date_debut_encheres, date_fin_encheres,"
 			+ " prix_initial, prix_vente, no_utilisateur, a.no_categorie as aNoCate, c.no_categorie as cNoCate, c.libelle from articles_vendus a "
 			+ "inner join categories c ON a.no_categorie = c.no_categorie"
@@ -37,11 +38,14 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private static final String SELECT_ALL_ARTICLES = "select no_article, nom_article, description, date_debut_encheres, date_fin_encheres,"
 			+ " prix_initial, prix_vente, no_utilisateur, a.no_categorie as aNoCate, c.no_categorie as cNoCate, c.libelle from articles_vendus a "
 			+ "inner join CATEGORIES c ON a.no_categorie = c.no_categorie ORDER BY date_fin_encheres ASC;";
+	private static final String SELECT_ARTICLE_BY_NO_ARTICLE = "select a.nom_article, a.description, a.prix_initial, a.prix_vente, a.date_debut_encheres, "
+			+ "a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo "
+			+ "from ARTICLES_VENDUS a inner join ENCHERES e on a.no_article = e.no_article "
+			+ "inner join UTILISATEURS u on u.no_utilisateur = e.no_utilisateur " + "where no_article = ?";
 
 	@Override
 	public void insertArticleVendu(ArticleVendu articleVendu) throws BusinessException {
-		if (articleVendu == null) {
-			BusinessException businesseException = new BusinessException();
+		if (articleVendu == null) {		
 			businesseException.ajouterErreur(CodesResultatDAL.INSERT_OBJET_NULL);
 			throw businesseException;
 		}
@@ -54,7 +58,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 				PreparedStatement pstmt = cnx.prepareStatement(INSERT_ARTICLE_VENDU,
 						PreparedStatement.RETURN_GENERATED_KEYS);
-				
+
 				pstmt.setString(1, articleVendu.getNomArticleVendu());
 				pstmt.setString(2, articleVendu.getDescription());
 				pstmt.setString(3, articleVendu.getDateDebutEncheres().format(formatter));
@@ -89,10 +93,10 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	public List<ArticleVendu> selectArticleVenduByCategorie(String categorie) throws BusinessException {
 		List<ArticleVendu> listeArticlesVendu = new ArrayList<ArticleVendu>();
 		try (Connection cnx = ConnectionProvider.getConnection();
-				PreparedStatement psmt = cnx.prepareStatement(SELECT_ARTICLES_BY_CATEGORIE)){
+				PreparedStatement psmt = cnx.prepareStatement(SELECT_ARTICLES_BY_CATEGORIE)) {
 			psmt.setString(1, categorie);
 			ResultSet rs = psmt.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				listeArticlesVendu.add(mappingArticleVendu(rs));
 			}
 			return listeArticlesVendu;
@@ -106,10 +110,10 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	public List<ArticleVendu> selectArticleVenduByMotCle(String motCle) throws BusinessException {
 		List<ArticleVendu> listeArticlesVendu = new ArrayList<ArticleVendu>();
 		try (Connection cnx = ConnectionProvider.getConnection();
-				PreparedStatement psmt = cnx.prepareStatement(SELECT_ARTICLES_BY_CONTENU)){
-			psmt.setString(1, "%"+motCle+"%");
+				PreparedStatement psmt = cnx.prepareStatement(SELECT_ARTICLES_BY_CONTENU)) {
+			psmt.setString(1, "%" + motCle + "%");
 			ResultSet rs = psmt.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				listeArticlesVendu.add(mappingArticleVendu(rs));
 			}
 			return listeArticlesVendu;
@@ -118,15 +122,16 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		}
 		return null;
 	}
-	
-	public List<ArticleVendu> selectArticleVenduByMotCleAndCategorie(String motCle, String categorie) throws BusinessException {
+
+	public List<ArticleVendu> selectArticleVenduByMotCleAndCategorie(String motCle, String categorie)
+			throws BusinessException {
 		List<ArticleVendu> listeArticlesVendu = new ArrayList<ArticleVendu>();
 		try (Connection cnx = ConnectionProvider.getConnection();
-				PreparedStatement psmt = cnx.prepareStatement(SELECT_ARTICLES_BY_CATEGORIE_AND_CONTENU)){
-			psmt.setString(1, "%"+motCle+"%");
+				PreparedStatement psmt = cnx.prepareStatement(SELECT_ARTICLES_BY_CATEGORIE_AND_CONTENU)) {
+			psmt.setString(1, "%" + motCle + "%");
 			psmt.setString(2, categorie);
 			ResultSet rs = psmt.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				listeArticlesVendu.add(mappingArticleVendu(rs));
 			}
 			return listeArticlesVendu;
@@ -134,17 +139,16 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			// TODO: handle exception
 		}
 		return null;
-	} 
+	}
 
 	@Override
 	public List<ArticleVendu> selectAllArticleVendu() throws BusinessException {
 		List<ArticleVendu> listeArticlesVendu = new ArrayList<ArticleVendu>();
-		try (Connection cnx = ConnectionProvider.getConnection(); 
-				Statement st = cnx.createStatement();){
+		try (Connection cnx = ConnectionProvider.getConnection(); Statement st = cnx.createStatement();) {
 			ResultSet rs = st.executeQuery(SELECT_ALL_ARTICLES);
 			ArticleVendu articleVendu = new ArticleVendu();
 			Categorie categorie = new Categorie();
-			while(rs.next()){
+			while (rs.next()) {
 				articleVendu = mappingArticleVendu(rs);
 				listeArticlesVendu.add(articleVendu);
 			}
@@ -154,26 +158,60 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		}
 		return listeArticlesVendu;
 	}
-	
-	private ArticleVendu mappingArticleVendu(ResultSet rs) throws SQLException{
+
+	private ArticleVendu mappingArticleVendu(ResultSet rs) throws SQLException {
 		ArticleVendu articleVendu = new ArticleVendu();
 		articleVendu.setNoArticleVendu(rs.getInt("no_article"));
 		articleVendu.setNomArticleVendu(rs.getString("nom_article"));
 		articleVendu.setDescription(rs.getString("description"));
-		articleVendu.setDateDebutEncheres(LocalDateTime.parse(rs.getTimestamp("date_debut_encheres").toLocalDateTime().toString()));
-		articleVendu.setDateFinEncheres(LocalDateTime.parse(rs.getTimestamp("date_fin_encheres").toLocalDateTime().toString()));
+		articleVendu.setDateDebutEncheres(
+				LocalDateTime.parse(rs.getTimestamp("date_debut_encheres").toLocalDateTime().toString()));
+		articleVendu.setDateFinEncheres(
+				LocalDateTime.parse(rs.getTimestamp("date_fin_encheres").toLocalDateTime().toString()));
 		articleVendu.setMiseAPrix(rs.getInt("prix_initial"));
 		articleVendu.setPrixVente(rs.getInt("prix_vente"));
 		articleVendu.setNoUtilisateur(rs.getInt("no_utilisateur"));
 		articleVendu.setNoCategorie(rs.getInt("aNoCate"));
 		return articleVendu;
 	}
-	
-	private Categorie mappingCategorie(ResultSet rs) throws SQLException{
+
+	private Categorie mappingCategorie(ResultSet rs) throws SQLException {
 		Categorie categorie = new Categorie();
 		categorie.setNoCategorie(rs.getInt("cNoCate"));
 		categorie.setLibelle(rs.getString("libelle"));
 		return categorie;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see fr.eni.javaee.trocencheres.dal.ArticleVenduDAO#selectArticleVenduByID(java.lang.String)
+	 */
+	@Override
+	public ArticleVendu selectArticleVenduByID(int noArticleVendu) throws BusinessException {
+		Utilisateur vendeur = new Utilisateur();
+		ArticleVendu articleVendu = new ArticleVendu();
+		try (Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = cnx.prepareStatement(SELECT_ARTICLE_BY_NO_ARTICLE);) {
+			pstmt.setInt(1, articleVendu.getNoArticleVendu());
+			ResultSet rs = pstmt.executeQuery();
+			articleVendu.setNomArticleVendu(rs.getString("nomArticle"));
+			articleVendu.setDescription(rs.getString("description"));
+			articleVendu.setPrixVente(rs.getInt("prixVente"));
+			articleVendu.setMiseAPrix(rs.getInt("miseAPrix"));
+			articleVendu.setDateFinEncheres(LocalDateTime.parse(rs.getDate("dateFinEncheres").toString(),
+					DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
+			vendeur.setRue(rs.getString("rue"));
+			vendeur.setCodePostal(rs.getString("codePostal"));
+			vendeur.setVille(rs.getString("ville"));
+			vendeur.setPseudo(rs.getString("pseudo"));
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodesResultatDAL.SELECT_BY_NO_ARTICLE_ECHEC);
+		}
+
+		return articleVendu;
+	}
 }
