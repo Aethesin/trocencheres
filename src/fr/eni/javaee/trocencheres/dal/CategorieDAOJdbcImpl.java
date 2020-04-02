@@ -7,13 +7,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-<<<<<<< HEAD
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-=======
->>>>>>> branch 'master' of https://github.com/Aethesin/trocencheres
-
 import fr.eni.javaee.trocencheres.bo.Categorie;
 import fr.eni.javaee.trocencheres.exception.BusinessException;
 
@@ -24,11 +20,12 @@ import fr.eni.javaee.trocencheres.exception.BusinessException;
  * @version trocencheres - v1.0
  * @date 31 mars 2020
  */
-<<<<<<< HEAD
+
 public class CategorieDAOJdbcImpl implements CategorieDAO {
 
 	private static final String INSERT_CATEGORIE = "INSERT INTO CATEGORIES (libelle) VALUES(?)";
 	private static final String SELECT_ALL_CATEGORIE = "SELECT no_categorie, libelle FROM CATEGORIES ORDER BY no_categorie";
+	private static final String SELECT_CATEGORIE_BY_ID = "SELECT no_categorie, libelle FROM CATEGORIES WHERE no_categorie = ?;";
 
 	/**
 	 * {@inheritDoc}
@@ -82,10 +79,10 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 	private Categorie mappingCategorie(ResultSet rs) throws SQLException{
 		Categorie categorie = new Categorie();
 		categorie.setLibelle(rs.getString("libelle"));
-=======
-public class CategorieDAOJdbcImpl implements CategorieDAO{
+		return categorie;
+
+	}
 	
-	private static final String SELECT_CATEGORIE_BY_ID = "SELECT no_categorie, libelle FROM CATEGORIES WHERE no_categorie = ?;";
 	
 	@Override
 	public Categorie selectCategorieById(int idCategorie) throws BusinessException {
@@ -101,7 +98,6 @@ public class CategorieDAOJdbcImpl implements CategorieDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
->>>>>>> branch 'master' of https://github.com/Aethesin/trocencheres
 		return categorie;
 	}
 
