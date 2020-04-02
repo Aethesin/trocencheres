@@ -1,8 +1,6 @@
 package fr.eni.javaee.trocencheres.servlet;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,16 +13,17 @@ import fr.eni.javaee.trocencheres.bo.Utilisateur;
 import fr.eni.javaee.trocencheres.exception.BusinessException;
 
 /**
- * Servlet implementation class ServletSupprimProfil
+ * Servlet implementation class ServletDesactiverCompte
  */
-@WebServlet("/SupprimProfil")
-public class ServletSupprimProfil extends HttpServlet {
+@WebServlet("/DesactiverCompte")
+public class ServletDesactiverCompte extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private static UtilisateurManager umger;
+	private static UtilisateurManager utilisateurManager;
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletSupprimProfil() {
+    public ServletDesactiverCompte() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,35 +32,25 @@ public class ServletSupprimProfil extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		umger = new UtilisateurManager();
-		HttpSession session = request.getSession();
-		RequestDispatcher rq = null;
-		try {
-			int noUtilisateur = Integer.parseInt(request.getParameter("noUtilisateur"));
-			umger.supprUtilisateur(noUtilisateur);
-			session.invalidate();
-			rq= request.getRequestDispatcher("/Accueil");
-			rq.forward(request, response);
-		} catch (BusinessException e) {
-			rq = request.getRequestDispatcher("/ModifProfil");
-			rq.forward(request, response);
-			e.printStackTrace();
-		}
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		umger = new UtilisateurManager();
+		utilisateurManager = new UtilisateurManager();
 		HttpSession session = request.getSession();
 		Utilisateur utilisateurSession = (Utilisateur) session.getAttribute("utilisateur");
+		Utilisateur utilisateur = null;
 		if(utilisateurSession.getStatut() != 1){
 			response.sendRedirect("accueil");
 		}else{
 			int noUtilisateur = Integer.parseInt(request.getParameter("idUtilisateur"));
 			try {
-				umger.supprUtilisateur(noUtilisateur);
+				utilisateur = utilisateurManager.selectUtilisateurById(noUtilisateur);
+				utilisateur.setStatut((short) 2);
+				utilisateurManager.modifUtilisateur(utilisateur);
 				response.sendRedirect("GestionAdmin");
 			} catch (BusinessException e) {
 				e.printStackTrace();

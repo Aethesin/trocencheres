@@ -68,4 +68,12 @@
     <servlet-name>forgot</servlet-name>
     <url-pattern>/forgot.jsp</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>GestionAdmin</servlet-name>
+    <jsp-file>/WEB-INF/jsp/GestionAdmin.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GestionAdmin</servlet-name>
+    <url-pattern>/GestionAdmin.jsp</url-pattern>
+  </servlet-mapping>
 </web-app>

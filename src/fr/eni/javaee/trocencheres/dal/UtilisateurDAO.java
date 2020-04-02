@@ -14,12 +14,15 @@ public interface UtilisateurDAO {
 	public Utilisateur afficherUtilisateurPseudo(String pseudo) throws BusinessException;
 	
 	//2004/2005 Afficher les vendeurs
-	public Utilisateur selectVendeur(int idUtilisateur) throws BusinessException;
+	public Utilisateur selectUtilisateurById(int idUtilisateur) throws BusinessException;
 		
 	//1007 modifier mon profile
 	public void updateUtilisateur(Utilisateur utilisateur) throws BusinessException;
 	
 	//1004 supprimer mon compte
 	public void supprimerUtilisateur(int noUtilisateur) throws BusinessException;
+	
+	//3001/3002 gestion des comptes côté Administrateur
+	public List<Utilisateur> selectToutLeMonde() throws BusinessException;
 	
 }

@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page import="fr.eni.javaee.trocencheres.bo.Utilisateur"%>
-<%@page import="fr.eni.javaee.trocencheres.bo.Encheres"%>
+<%@page import="fr.eni.javaee.trocencheres.bo.Enchere"%>
 <%@page import="fr.eni.javaee.trocencheres.bo.ArticleVendu"%>
 <%@page import="fr.eni.javaee.trocencheres.bo.Categorie"%>
 

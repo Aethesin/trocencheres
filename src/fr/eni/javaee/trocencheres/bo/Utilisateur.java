@@ -2,6 +2,10 @@ package fr.eni.javaee.trocencheres.bo;
 
 import java.io.Serializable;
 
+/**
+ * @author Duncan
+ *
+ */
 public class Utilisateur implements Serializable {
 	
 
@@ -18,16 +22,16 @@ public class Utilisateur implements Serializable {
 	private String ville;
 	private String motDePasse;
 	private int credit;
-	private short administrateur;
+	private short statut;
 
 	public Utilisateur() {
 		super();
 	}
 
 	
-
+	
 	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, String codePostal, String ville, String motDePasse, int credit, short administrateur) {
+			String rue, String codePostal, String ville, String motDePasse, int credit, short statut) {
 		super();
 		this.noUtilisateur = noUtilisateur;
 		this.pseudo = pseudo;
@@ -40,7 +44,7 @@ public class Utilisateur implements Serializable {
 		this.ville = ville;
 		this.motDePasse = motDePasse;
 		this.credit = credit;
-		this.administrateur = administrateur;
+		this.statut = statut;
 	}
 
 
@@ -190,12 +194,12 @@ public class Utilisateur implements Serializable {
 		this.credit = credit;
 	}
 
-	public short isAdministrateur() {
-		return administrateur;
+	public short getStatut() {
+		return statut;
 	}
 
-	public void setAdministrateur(short administrateur) {
-		this.administrateur = administrateur;
+	public void setStatut(short statut) {
+		this.statut = statut;
 	}
 
 	public static long getSerialversionuid() {

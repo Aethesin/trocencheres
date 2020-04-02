@@ -7,7 +7,9 @@
 <link href="css/4-col-portfolio.css" rel="stylesheet">
 <link href="css/custom.css" rel="stylesheet">
 
-<c:if test="${sessionScope.utilisateur != null }">
+<c:set var="user" value="${sessionScope.utilisateur }"></c:set>
+
+<c:if test="${user != null }">
 	<nav class="navbar navbar-expand-lg fixed-top navbar-light navigation">
 		<div class="container">
 			<a class="navbar-brand" href="./"><p class="h2">Les objets sont nos amis</p></a>
@@ -18,6 +20,11 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<ul class="navbar-nav ml-auto">
+						<c:if test="${user.statut == 1 }">
+							<li class="nav-item active">
+								<a class="nav-link" href="<%=request.getContextPath()%>/GestionAdmin">Gestion Administrateur</a>
+							</li>
+						</c:if>
 						<li class="nav-item active">
 							<a class="nav-link" href="<%=request.getContextPath()%>/AffichEnchere">Enchères</a>
 						</li>
@@ -35,7 +42,7 @@
 		</div>
 	</nav>
 </c:if>
-<c:if test="${sessionScope.utilisateur == null }">
+<c:if test="${user == null }">
 <nav class="navbar navbar-expand-lg fixed-top navbar-light navigation">
 	<div class="container">
 		<a class="navbar-brand" href="./"><p class="h2">Les objets sont nos amis</p></a>

@@ -113,7 +113,7 @@ public class ServletAccueil extends HttpServlet {
 		Utilisateur utilisateur = null;
 		for (ArticleVendu articleVendu : listeArticlesVendu) {
 			try {
-				utilisateur = umger.selectVendeurs(articleVendu.getUtilisateur().getNoUtilisateur());
+				utilisateur = umger.selectUtilisateurById(articleVendu.getUtilisateur().getNoUtilisateur());
 				listeVendeurs.add(utilisateur);
 			} catch (BusinessException e) {
 				e.printStackTrace();
