@@ -1,5 +1,8 @@
 package fr.eni.javaee.trocencheres.bll;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.eni.javaee.trocencheres.bo.Utilisateur;
 import fr.eni.javaee.trocencheres.dal.DAOFactory;
 import fr.eni.javaee.trocencheres.dal.UtilisateurDAO;
@@ -22,9 +25,9 @@ public class UtilisateurManager {
 		utilisateurDAO.insertUtilisateur(utilisateur);	
 	}
 	
-	public Utilisateur selectVendeurs(int idUtilisateur) throws BusinessException{
+	public Utilisateur selectUtilisateurById(int idUtilisateur) throws BusinessException{
 		Utilisateur user = null;
-		user = utilisateurDAO.selectVendeur(idUtilisateur);
+		user = utilisateurDAO.selectUtilisateurById(idUtilisateur);
 		return user;
 	}
 	
@@ -34,6 +37,12 @@ public class UtilisateurManager {
 	
 	public void supprUtilisateur(int noUtilisateur) throws BusinessException {
 		utilisateurDAO.supprimerUtilisateur(noUtilisateur);
+	}
+	
+	public List<Utilisateur> selectToutLeMonde() throws BusinessException{
+		List<Utilisateur> listesUtilisateurs = new ArrayList<Utilisateur>();
+		listesUtilisateurs = utilisateurDAO.selectToutLeMonde();
+		return listesUtilisateurs;
 	}
 	
 }
