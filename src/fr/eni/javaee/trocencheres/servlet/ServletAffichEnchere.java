@@ -31,7 +31,6 @@ public class ServletAffichEnchere extends HttpServlet {
 	private UtilisateurManager utilisateurManager;
 	private ArticleVenduManager articleVenduManager;
 	private EncheresManager encheresManager;
-	private static List<Integer> listeCodesErreur;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -55,7 +54,7 @@ public class ServletAffichEnchere extends HttpServlet {
 		Enchere enchere = null;
 		Utilisateur vendeur = null;
 		Categorie categorie = null;
-		listeCodesErreur = new ArrayList<>();
+	
 		
 		int noArticleVendu = Integer.parseInt(request.getParameter("noArticle"));
 		articleVendu.setNoArticleVendu(noArticleVendu);
@@ -68,6 +67,7 @@ public class ServletAffichEnchere extends HttpServlet {
 			vendeur = utilisateurManager.selectUtilisateurById(vendeur.getNoUtilisateur());
 			categorie = articleVendu.getCategorie();
 			enchere = encheresManager.selectEnchereByMeilleurOffre(articleVendu.getNoArticleVendu());
+			
 			// Aller chercher en base de données les informations de l'article
 			String nomArticleVendu = articleVendu.getNomArticleVendu();
 			String description = articleVendu.getDescription();
@@ -87,7 +87,7 @@ public class ServletAffichEnchere extends HttpServlet {
 			request.setAttribute("articleVendu", articleVendu);
 			request.setAttribute("nomArticle", nomArticleVendu);
 			request.setAttribute("description", description);
-			//request.setAttribute("categorie", categorie);
+			request.setAttribute("categorie", categorie);
 			request.setAttribute("prixVente", prixVente);
 			request.setAttribute("miseAPrix", miseAPrix);
 			request.setAttribute("dateFinEnchere", dateFinEnchere);

@@ -43,7 +43,7 @@
 		</h2>
 		<h2>
 			Mise à prix :
-			<c:out value="${ miseAPrix}"> points</c:out>
+			<c:out value="${ miseAPrix}"> points </c:out>
 
 		</h2>
 		<h2>
