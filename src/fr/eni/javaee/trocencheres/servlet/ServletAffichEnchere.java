@@ -2,6 +2,7 @@ package fr.eni.javaee.trocencheres.servlet;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.javaee.trocencheres.bll.ArticleVenduManager;
+import fr.eni.javaee.trocencheres.bll.CategorieManager;
 import fr.eni.javaee.trocencheres.bll.EncheresManager;
 import fr.eni.javaee.trocencheres.bll.UtilisateurManager;
 import fr.eni.javaee.trocencheres.bo.ArticleVendu;
@@ -31,6 +33,7 @@ public class ServletAffichEnchere extends HttpServlet {
 	private UtilisateurManager utilisateurManager;
 	private ArticleVenduManager articleVenduManager;
 	private EncheresManager encheresManager;
+	private CategorieManager categorieManager;
 	private static List<Integer> listeCodesErreur;
 
 	/**
@@ -51,6 +54,7 @@ public class ServletAffichEnchere extends HttpServlet {
 		// Permet d'afficher la page AfficherEnchere
 		utilisateurManager = new UtilisateurManager();
 		encheresManager = new EncheresManager();
+		categorieManager = new CategorieManager();
 		ArticleVendu articleVendu = new ArticleVendu();
 		Enchere enchere = null;
 		Utilisateur vendeur = null;
@@ -62,10 +66,8 @@ public class ServletAffichEnchere extends HttpServlet {
 		
 		if(request.getParameter("noArticle") == null){
 			noArticleVendu = (int) session.getAttribute("noArticle");
-			System.out.println("No article session attribut : " + noArticleVendu);
 		}else{
 			noArticleVendu = Integer.parseInt(request.getParameter("noArticle"));
-			System.out.println("No article paramètre : " + noArticleVendu);
 		}
 		articleVendu.setNoArticleVendu(noArticleVendu);
 		
@@ -76,30 +78,39 @@ public class ServletAffichEnchere extends HttpServlet {
 			vendeur = articleVendu.getUtilisateur();
 			vendeur = utilisateurManager.selectUtilisateurById(vendeur.getNoUtilisateur());
 			categorie = articleVendu.getCategorie();
+			categorie = categorieManager.selectCategorieById(categorie.getNoCategorie());
+			String libelle = categorie.getLibelle();
 			enchere = encheresManager.selectEnchereByMeilleurOffre(articleVendu.getNoArticleVendu());
 			// Aller chercher en base de données les informations de l'article
 			String nomArticleVendu = articleVendu.getNomArticleVendu();
 			String description = articleVendu.getDescription();
 			int prixVente = 0;
+			String pseudoEnchereur = null;
+			System.out.println("Pseudo de l'enchereur : " + enchere.getUtilisateur().getPseudo());
+			System.out.println("Pseudo de du vendeur : " + vendeur.getPseudo());
 			if(enchere.getMontantEnchere() > articleVendu.getMiseAPrix()){
 				prixVente = enchere.getMontantEnchere();
+				pseudoEnchereur = enchere.getUtilisateur().getPseudo();
 			}else{
 				prixVente = articleVendu.getMiseAPrix();
+				pseudoEnchereur = vendeur.getPseudo();
 			}
 			int miseAPrix = articleVendu.getMiseAPrix();
 			LocalDateTime dateFinEnchere = articleVendu.getDateFinEncheres();
 			String rue = vendeur.getRue();
 			String codePostal = vendeur.getCodePostal();
 			String ville = vendeur.getVille();
-
+			DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+			String dateFinEnchereString = formatter.format(dateFinEnchere);
 			// Afficher les données à l'écran
 			request.setAttribute("articleVendu", articleVendu);
 			request.setAttribute("nomArticle", nomArticleVendu);
 			request.setAttribute("description", description);
-			//request.setAttribute("categorie", categorie);
+			request.setAttribute("libelle", libelle);
 			request.setAttribute("prixVente", prixVente);
+			request.setAttribute("pseudoEnchereur", pseudoEnchereur);			
 			request.setAttribute("miseAPrix", miseAPrix);
-			request.setAttribute("dateFinEnchere", dateFinEnchere);
+			request.setAttribute("dateFinEnchere", dateFinEnchereString);
 			request.setAttribute("rue", rue);
 			request.setAttribute("codePostal", codePostal);
 			request.setAttribute("ville", ville);
@@ -129,7 +140,6 @@ public class ServletAffichEnchere extends HttpServlet {
 		ArticleVendu articleVendu = new ArticleVendu();
 		articleVendu.setNoArticleVendu(Integer.parseInt(request.getParameter("noArticle")));
 		int valeurProposition = Integer.parseInt(request.getParameter("proposition"));
-		System.out.println(valeurProposition);
 		enchere.setMontantEnchere(valeurProposition);
 		enchere.setArticleVendu(articleVendu);
 		enchere.setDateEnchere(LocalDateTime.now());

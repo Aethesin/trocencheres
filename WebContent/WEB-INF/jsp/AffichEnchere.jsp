@@ -24,59 +24,85 @@
 	<jsp:useBean id="utilisateur" scope="request"
 		class="fr.eni.javaee.trocencheres.bo.Utilisateur"></jsp:useBean>
 
-	<h1>Détail vente</h1>
-		<h2>
-			${articleVendu.nomArticleVendu}
+<div>
+	<div class="text-center">
+		<h1 class="formulaire">Détail vente</h1>
+	</div>
+	<div class="row">
+		<div class="col-3"></div>
+		<div class="col-9">
+			<h2>
+				<c:out value="${nomArticle}"></c:out>
+			</h2>
+			<div class="row h2-affichArt">
+				<h2 class="col-2">
+					Description :
+				</h2>
+				<div>
+					<h2><c:out value="${description}"></c:out></h2>
+				</div>
+			</div>
+			<div class="row h2-affichArt">
+				<h2 class="col-2">
+					Catégorie :
+				</h2>
+				<h2><c:out value="${libelle}"></c:out></h2>
+			</div>
+			<div class="row h2-affichArt">
+				<h2 class="col-2">
+					Meilleur offre :		
+				</h2>
+				<h2><c:out value="${ prixVente}"></c:out> points par <c:out value="${ pseudoEnchereur}"></c:out></h2>
+			</div>
+			<div class="row h2-affichArt">
+				<h2 class="col-2">
+					Mise à prix :
+		
+				</h2>
+				<h2><c:out value="${ miseAPrix}"></c:out> points</h2>
+			</div>
+			<div class="row h2-affichArt">
+				<h2 class="col-2">
+					Fin de l'enchère :		
+				</h2>
+				<h2><c:out value="${ dateFinEnchere}"></c:out></h2>
+			</div>
+			<div class="row h2-affichArt">
+				<h2 class="col-2">
+					Retrait :
+				</h2>
+				<h2>
+					<c:out value="${ rue}"></c:out>
+					<c:out value="${ codePostal}"></c:out>
+					<p>
+						<c:out value="${ ville}"></c:out>
+					</p>
+				</h2>
+			</div>
+			<div class="row h2-affichArt">
+				<h2 class="col-2">
+					Vendeur :
+				</h2>
+				<h2><c:out value="${ nomVendeur}"></c:out></h2>
+			</div>
 			
-		</h2>
-		<h2>
-			Description : ${articleVendu.description}
-		</h2>
-		<h2>
-			Catégorie :
-			<c:out value="${categorie}"></c:out>
-		</h2>
-		<h2>
-			Meilleur offre :
-			<c:out value="${ prixVente}"> pts </c:out>
-
-		</h2>
-		<h2>
-			Mise à prix :
-			<c:out value="${ miseAPrix}"> points</c:out>
-
-		</h2>
-		<h2>
-			Fin de l'enchère :
-			<c:out value="${ dateFinEnchere}"></c:out>
-
-		</h2>
-		<h2>
-			Retrait :
-			<c:out value="${ rue}"></c:out>
-			<c:out value="${ codePostal}"></c:out>
-			<p>
-				<c:out value="${ ville}"></c:out>
-			</p>
-		</h2>
-		<h2>
-			Vendeur :
-			<c:out value="${ nomVendeur}"></c:out>
-		</h2>
-
-	<form action="<%=request.getContextPath()%>/AffichEnchere?noArticle=${articleVendu.noArticleVendu}" method="post">
-		<input type="text" value="${articleVendu.noArticleVendu}" name="noArticle">
-		<c:set var="user" value="${articleVendu.utilisateur }"></c:set>
-		<input type="text" hidden value="${user.noUtilisateur}" name="noUtilisateur">
-		<h2>
-			<label for="proposition">Ma proposition : </label> <input
-				type="number" id="proposition" name="proposition">
-		</h2>
-
-		<div id="bouton">
-			<input type="submit" name="btnEncherir" value="Enchérir" />
+			<form action="<%=request.getContextPath()%>/AffichEnchere?noArticle=${articleVendu.noArticleVendu}" method="post">
+				<div class="row h2-affichArt">
+					<h2 class="col-2">
+						<label for="proposition">Ma proposition : </label> 
+					</h2>
+					<div class="col-1">
+						<input class="form-control col-8" type="number" id="proposition" name="proposition">
+					</div>
+			
+					<div id="bouton text-center">
+						<input class="btn btn-primary" type="submit" name="btnEncherir" value="Enchérir" />
+					</div>
+				</div>
+			</form>
 		</div>
-	</form>
+	</div>
+</div>
 
 	<c:if test="${listeCodesErreur != null }">
 		<p style="color: red;">Erreur, votre participation est échouée :</p>
