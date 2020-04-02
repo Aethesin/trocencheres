@@ -25,20 +25,23 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			+ " a.prix_initial as prixInit, a.prix_vente as prixVente, a.no_utilisateur as articleNoU, a.no_categorie AS aNoCate, c.no_categorie AS cNoCate, c.libelle FROM articles_vendus a "
 			+ "INNER JOIN categories c ON a.no_categorie = c.no_categorie"
 			+ " WHERE c.libelle = ? ORDER BY a.date_fin_encheres ASC;";
+	
 	private static final String SELECT_ARTICLES_BY_CONTENU = "SELECT a.no_article as noArticle, a.nom_article as nomArticle, a.description as descArticle, a.date_debut_encheres as debutEnch,"
 			+ " a.date_fin_encheres as finEnch, a.prix_initial as prixInit, a.prix_vente as prixVente, a.no_utilisateur as articleNoU, a.no_categorie AS aNoCate, c.no_categorie AS cNoCate,"
 			+ " c.libelle FROM articles_vendus a INNER JOIN CATEGORIES c ON a.no_categorie = c.no_categorie WHERE a.nom_article LIKE ?"
 			+ " ORDER BY a.date_fin_encheres ASC;";
+	
 	private static final String SELECT_ARTICLES_BY_CATEGORIE_AND_CONTENU = "SELECT a.no_article as noArticle, a.nom_article as nomArticle, a.description as descArticle, a.date_debut_encheres as debutEnch,"
 			+ " a.date_fin_encheres as finEnch, a.prix_initial as prixInit, a.prix_vente as prixVente, a.no_utilisateur as articleNoU, a.no_categorie AS aNoCate, c.no_categorie AS cNoCate, c.libelle "
 			+ "FROM articles_vendus a INNER JOIN CATEGORIES c ON a.no_categorie = c.no_categorie WHERE a.nom_article"
 			+ " LIKE ? AND c.libelle = ? ORDER BY a.date_fin_encheres ASC;";
+	
 	private static final String SELECT_ALL_ARTICLES = "SELECT a.no_article as noArticle, a.nom_article as nomArticle, a.description as descArticle, a.date_debut_encheres as debutEnch, a.date_fin_encheres as finEnch,"
 			+ " a.prix_initial as prixInit, a.prix_vente as prixVente, a.no_utilisateur as articleNoU, a.no_categorie AS aNoCate, c.no_categorie AS cNoCate, c.libelle FROM articles_vendus a "
 			+ "INNER JOIN CATEGORIES c ON a.no_categorie = c.no_categorie ORDER BY a.date_fin_encheres ASC;";
 	
 	private static final String SELECT_ARTICLE_BY_NO_ARTICLE = "SELECT a.no_article as noArticle, a.nom_article as nomArticle, a.description as descArticle, a.prix_initial as prixInit, a.prix_vente as prixVente, a.date_debut_encheres as debutEnch, "
-			+ "a.date_fin_encheres as finEnch, a.no_utilisateur  as articleNoU, u.rue, u.code_postal, u.ville, u.pseudo "
+			+ "a.date_fin_encheres as finEnch, a.no_utilisateur  as articleNoU, a.no_categorie as noCategorie, u.rue, u.code_postal, u.ville, u.pseudo "
 			+ "FROM ARTICLES_VENDUS a "
 			+ "INNER JOIN UTILISATEURS u on u.no_utilisateur = a.no_utilisateur " + "WHERE a.no_article = ?";
 
@@ -137,6 +140,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private ArticleVendu mappingArticleVendu(ResultSet rs) throws SQLException {
 		ArticleVendu articleVendu = new ArticleVendu();
 		Utilisateur utilisateur = new Utilisateur();
+		
 		utilisateur.setNoUtilisateur(rs.getInt("articleNoU"));
 		articleVendu.setNoArticleVendu(rs.getInt("noArticle"));
 		articleVendu.setNomArticleVendu(rs.getString("nomArticle"));
@@ -151,13 +155,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		return articleVendu;
 	}
 
-	private Categorie mappingCategorie(ResultSet rs) throws SQLException {
-		Categorie categorie = new Categorie();
-		categorie.setNoCategorie(rs.getInt("cNoCate"));
-		categorie.setLibelle(rs.getString("c.libelle"));
-		return categorie;
-	}
-
 	/**
 	 * {@inheritDoc}
 	 * 
@@ -166,12 +163,15 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	@Override
 	public ArticleVendu selectArticleVenduByID(int noArticleVendu) throws BusinessException {
 		ArticleVendu articleVendu = new ArticleVendu();
+		Categorie categorie = new Categorie();
 		try (Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = cnx.prepareStatement(SELECT_ARTICLE_BY_NO_ARTICLE);) {
 			pstmt.setInt(1, noArticleVendu);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
+				categorie.setNoCategorie(rs.getInt("noCategorie"));
 				articleVendu = mappingArticleVendu(rs);
+				articleVendu.setCategorie(categorie);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

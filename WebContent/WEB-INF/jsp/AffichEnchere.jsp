@@ -85,7 +85,6 @@
 				</h2>
 				<h2><c:out value="${ nomVendeur}"></c:out></h2>
 			</div>
-			
 			<form action="<%=request.getContextPath()%>/AffichEnchere?noArticle=${articleVendu.noArticleVendu}" method="post">
 				<div class="row h2-affichArt">
 					<h2 class="col-2">
@@ -100,6 +99,7 @@
 					</div>
 				</div>
 			</form>
+
 		</div>
 	</div>
 </div>

@@ -59,7 +59,7 @@ public class ServletAffichEnchere extends HttpServlet {
 		Enchere enchere = null;
 		Utilisateur vendeur = null;
 		Categorie categorie = null;
-		listeCodesErreur = new ArrayList<>();
+	
 		
 		int noArticleVendu = 0;
 		
@@ -81,6 +81,7 @@ public class ServletAffichEnchere extends HttpServlet {
 			categorie = categorieManager.selectCategorieById(categorie.getNoCategorie());
 			String libelle = categorie.getLibelle();
 			enchere = encheresManager.selectEnchereByMeilleurOffre(articleVendu.getNoArticleVendu());
+			
 			// Aller chercher en base de données les informations de l'article
 			String nomArticleVendu = articleVendu.getNomArticleVendu();
 			String description = articleVendu.getDescription();

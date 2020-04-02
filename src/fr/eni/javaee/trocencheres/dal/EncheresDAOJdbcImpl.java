@@ -25,8 +25,10 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 			+ "INNER JOIN RETRAITS r on r.no_article = a.nom_article "
 			+ "WHERE no_article = ? " 
 			+ "ORDER BY a.prix_vente DESC";
-	private static final String SELECT_ENCHERE_MEILLEUR_OFFRE = "SELECT TOP 1 no_utilisateur, no_article, date_enchere, montant_enchere "
-			+ "FROM ENCHERES "
+	private static final String SELECT_ENCHERE_MEILLEUR_OFFRE = "SELECT TOP 1 e.no_utilisateur as noUtilEnch, e.no_article as noArtEnch, e.date_enchere as dateEnch, e.montant_enchere as montantEnch, "
+			+ "u.pseudo as pseudoUtil "
+			+ "FROM ENCHERES e "
+			+ "INNER JOIN UTILISATEURS u ON u.no_utilisateur = e.no_utilisateur "
 			+ "WHERE no_article = ? "
 			+ "ORDER BY montant_enchere DESC";
 	
@@ -158,12 +160,13 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 			pstmt.setInt(1, noArticleVendu);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()){
-				enchere.setDateEnchere(LocalDateTime.parse(rs.getTimestamp("date_enchere").toLocalDateTime().toString()));
-				vendeur.setNoUtilisateur(rs.getInt("no_utilisateur"));
-				articleVendu.setNoArticleVendu(rs.getInt("no_article"));
+				vendeur.setNoUtilisateur(rs.getInt("noUtilEnch"));
+				vendeur.setPseudo(rs.getString("pseudoUtil"));
+				articleVendu.setNoArticleVendu(rs.getInt("noArtEnch"));
+				enchere.setDateEnchere(LocalDateTime.parse(rs.getTimestamp("dateEnch").toLocalDateTime().toString()));
+				enchere.setMontantEnchere(rs.getInt("montantEnch"));
 				enchere.setArticleVendu(articleVendu);
 				enchere.setUtilisateur(vendeur);
-				enchere.setMontantEnchere(rs.getInt("montant_enchere"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -1,25 +1,22 @@
+
 package fr.eni.javaee.trocencheres.dal;
 
 public abstract class DAOFactory {
-	
-	public static UtilisateurDAO getUtilisateurDAO()
-	{
+
+	public static UtilisateurDAO getUtilisateurDAO() {
 		return new UtilisateurDAOJdbcImpl();
 	}
-	
-	public static ArticleVenduDAO getArticleVenduDAO()
-	{
+
+	public static ArticleVenduDAO getArticleVenduDAO() {
 		return new ArticleVenduDAOJdbcImpl();
 	}
 
-	public static EncheresDAO getEncheresDAO() 
-	{
+	public static EncheresDAO getEncheresDAO() {
 		return new EncheresDAOJdbcImpl();
 	}
-	
-	public static CategorieDAO getCategorieDAO()
-	{
+
+	public static CategorieDAO getCategorieDAO() {
 		return new CategorieDAOJdbcImpl();
 	}
 }
-	
+

@@ -13,7 +13,9 @@
 <jsp:include page="/WEB-INF/includes/header.jsp"></jsp:include>
 
 <br>
-	<h2>Ajoutez votre article</h2>
+	<div class="text-center formulaire">
+		<h1>Ajoutez votre article</h1>
+	</div>
 
 	<form action="<c:url value="/AjoutArticle"/>" method="post">
 
