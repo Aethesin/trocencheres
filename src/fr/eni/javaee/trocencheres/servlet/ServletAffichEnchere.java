@@ -58,6 +58,7 @@ public class ServletAffichEnchere extends HttpServlet {
 		ArticleVendu articleVendu = new ArticleVendu();
 		Enchere enchere = null;
 		Utilisateur vendeur = null;
+		Utilisateur sessionUser = null;
 		Categorie categorie = null;
 	
 		
@@ -70,8 +71,6 @@ public class ServletAffichEnchere extends HttpServlet {
 			noArticleVendu = Integer.parseInt(request.getParameter("noArticle"));
 		}
 		articleVendu.setNoArticleVendu(noArticleVendu);
-		
-		
 		try {
 			articleVenduManager = new ArticleVenduManager();
 			articleVendu = articleVenduManager.selectArticleVenduByID(noArticleVendu);
@@ -85,25 +84,42 @@ public class ServletAffichEnchere extends HttpServlet {
 			// Aller chercher en base de données les informations de l'article
 			String nomArticleVendu = articleVendu.getNomArticleVendu();
 			String description = articleVendu.getDescription();
+			String telephone = null;
+			
 			int prixVente = 0;
 			String pseudoEnchereur = null;
-			System.out.println("Pseudo de l'enchereur : " + enchere.getUtilisateur().getPseudo());
-			System.out.println("Pseudo de du vendeur : " + vendeur.getPseudo());
+			String pseudoSession = null;
+			sessionUser = (Utilisateur) session.getAttribute("utilisateur");
 			if(enchere.getMontantEnchere() > articleVendu.getMiseAPrix()){
 				prixVente = enchere.getMontantEnchere();
 				pseudoEnchereur = enchere.getUtilisateur().getPseudo();
+				pseudoSession = sessionUser.getPseudo();
+				telephone = vendeur.getTelephone();
 			}else{
 				prixVente = articleVendu.getMiseAPrix();
 				pseudoEnchereur = vendeur.getPseudo();
 			}
+			
 			int miseAPrix = articleVendu.getMiseAPrix();
 			LocalDateTime dateFinEnchere = articleVendu.getDateFinEncheres();
 			String rue = vendeur.getRue();
 			String codePostal = vendeur.getCodePostal();
 			String ville = vendeur.getVille();
+			
+			//Vérification de la date de fin enchère pour affichage du gagnant
+			Boolean verifDate = false;
+			LocalDateTime dateAujourdhui = LocalDateTime.now();
+			if(dateAujourdhui.isBefore(dateFinEnchere)){
+				verifDate = false;
+			}else{
+				verifDate = true;
+			}
 			DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 			String dateFinEnchereString = formatter.format(dateFinEnchere);
 			// Afficher les données à l'écran
+			request.setAttribute("telephone", telephone);
+			request.setAttribute("pseudoSession", pseudoSession);
+			request.setAttribute("verifDate", verifDate);
 			request.setAttribute("articleVendu", articleVendu);
 			request.setAttribute("nomArticle", nomArticleVendu);
 			request.setAttribute("description", description);
@@ -118,7 +134,7 @@ public class ServletAffichEnchere extends HttpServlet {
 			request.setAttribute("nomVendeur", vendeur.getPseudo());
 			rd = request.getRequestDispatcher("/WEB-INF/jsp/AffichEnchere.jsp");
 			rd.forward(request, response);
-
+			
 		} catch (BusinessException e) {
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 			rd = request.getRequestDispatcher("/WEB-INF/jsp/AffichEnchere.jsp");
@@ -135,24 +151,52 @@ public class ServletAffichEnchere extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// Permet de gerer une proposition d'enchere
+		int valeurProposition = Integer.parseInt(request.getParameter("proposition"));
+		int prixVente = Integer.parseInt(request.getParameter("prixVente"));
+		utilisateurManager = new UtilisateurManager();
 		HttpSession session = request.getSession();
+		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+		Utilisateur utilisateurMeilleur = null;
 		RequestDispatcher rd = null;
 		Enchere enchere = new Enchere();
 		ArticleVendu articleVendu = new ArticleVendu();
-		articleVendu.setNoArticleVendu(Integer.parseInt(request.getParameter("noArticle")));
-		int valeurProposition = Integer.parseInt(request.getParameter("proposition"));
-		enchere.setMontantEnchere(valeurProposition);
-		enchere.setArticleVendu(articleVendu);
-		enchere.setDateEnchere(LocalDateTime.now());
-		enchere.setUtilisateur((Utilisateur) session.getAttribute("utilisateur"));
-		try {
-			encheresManager.insertEnchere(enchere);
-			request.setAttribute("noArticle", articleVendu.getNoArticleVendu());
-			rd = request.getRequestDispatcher("/WEB-INF/jsp/AffichEnchere.jsp");
-			doGet(request, response);
-		} catch (BusinessException e) {
-			e.printStackTrace();
+		if(valeurProposition <= utilisateur.getCredit()){
+			if(valeurProposition > prixVente){
+				articleVendu.setNoArticleVendu(Integer.parseInt(request.getParameter("noArticle")));
+				String pseudo = request.getParameter("pseudoMeilleur");
+				System.out.println(pseudo);
+				try {
+					
+					utilisateurMeilleur = utilisateurManager.getConnexion(pseudo);
+					if(utilisateur.getNoUtilisateur() == utilisateurMeilleur.getNoUtilisateur()){
+						utilisateur.setCredit(utilisateur.getCredit() - valeurProposition + prixVente);
+						utilisateurManager.modifUtilisateur(utilisateur);
+					}else{
+						utilisateurMeilleur.setCredit(utilisateurMeilleur.getCredit() + prixVente);
+						utilisateurManager.modifUtilisateur(utilisateurMeilleur);						
+						utilisateur.setCredit(utilisateur.getCredit() - valeurProposition);
+						utilisateurManager.modifUtilisateur(utilisateur);	
+					}
+					enchere.setMontantEnchere(valeurProposition);
+					enchere.setArticleVendu(articleVendu);
+					enchere.setDateEnchere(LocalDateTime.now());
+					enchere.setUtilisateur((Utilisateur) session.getAttribute("utilisateur"));
+					encheresManager.insertEnchere(enchere);
+					request.setAttribute("noArticle", articleVendu.getNoArticleVendu());
+					rd = request.getRequestDispatcher("/WEB-INF/jsp/AffichEnchere.jsp");
+					doGet(request, response);
+				} catch (BusinessException e1) {
+					e1.printStackTrace();
+				}
+			}else{
+				System.out.println("Proposition inférieur");
+				doGet(request, response);
+			}
+		}else{
+			System.out.println("Pas assez de crédit");
+			doGet(request, response);			
 		}
+		
 	}
 
 }

@@ -26,7 +26,17 @@
 
 <div>
 	<div class="text-center">
-		<h1 class="formulaire">Détail vente</h1>
+		<c:if test="${!verifDate}">
+			<h1 class="formulaire">Détail vente</h1>
+		</c:if>
+		<c:if test="${verifDate}">
+			<c:if test="${pseudoEnchereur ==  pseudoSession}">
+				<h1 class="formulaire">Bravo vous avez remporté la vente</h1>
+			</c:if>
+			<c:if test="${pseudoEnchereur !=  pseudoSession}">
+				<h1 class="formulaire">${pseudoEnchereur } a remporté la vente</h1>
+			</c:if>
+		</c:if>
 	</div>
 	<div class="row">
 		<div class="col-3"></div>
@@ -85,20 +95,38 @@
 				</h2>
 				<h2><c:out value="${ nomVendeur}"></c:out></h2>
 			</div>
-			<form action="<%=request.getContextPath()%>/AffichEnchere?noArticle=${articleVendu.noArticleVendu}" method="post">
-				<div class="row h2-affichArt">
-					<h2 class="col-2">
-						<label for="proposition">Ma proposition : </label> 
-					</h2>
-					<div class="col-1">
-						<input class="form-control col-8" type="number" id="proposition" name="proposition">
+			<c:if test="${verifDate}">
+				<c:if test="${pseudoEnchereur ==  pseudoSession}">
+					<div class="row h2-affichArt">
+						<h2 class="col-2">
+							Téléphone :
+						</h2>
+						<h2><c:out value="${ telephone}"></c:out></h2>
 					</div>
-			
-					<div id="bouton text-center">
-						<input class="btn btn-primary" type="submit" name="btnEncherir" value="Enchérir" />
+					<a class="btn btn-primary" href="<%=request.getContextPath()%>/accueil">Retrait effectué</a>
+				</c:if>
+				<c:if test="${pseudoEnchereur !=  pseudoSession}">
+					<a class="btn btn-primary" href="<%=request.getContextPath()%>/accueil">Back</a>
+				</c:if>
+			</c:if>
+			<c:if test="${!verifDate}">
+				<form action="<%=request.getContextPath()%>/AffichEnchere?noArticle=${articleVendu.noArticleVendu}" method="post">
+					<input name="pseudoMeilleur" value="${pseudoEnchereur}" hidden>
+					<input name="prixVente" value="${prixVente}" hidden>
+					<div class="row h2-affichArt">
+						<h2 class="col-2">
+							<label for="proposition">Ma proposition : </label> 
+						</h2>
+						<div class="col-1">
+							<input class="form-control col-8" type="number" id="proposition" name="proposition">
+						</div>
+				
+						<div id="bouton text-center">
+							<input class="btn btn-primary" type="submit" name="btnEncherir" value="Enchérir" />
+						</div>
 					</div>
-				</div>
-			</form>
+				</form>
+			</c:if>
 
 		</div>
 	</div>
