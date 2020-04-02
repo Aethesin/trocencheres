@@ -23,37 +23,45 @@
 		class="fr.eni.javaee.trocencheres.bo.Utilisateur"></jsp:useBean>
 
 	<h1>Détail vente</h1>
-	<form action="<%=request.getContextPath()%>/AffichEnchere?"
-		method="get">
-		<h2><jsp:getProperty property="nomArticleVendu"
-				name="articleVendu" /></h2>
+	<form action="<%=request.getContextPath()%>/AffichEnchere" method="get">
+		<h2>
+			<c:out value="${ nomArticle}"></c:out>
+		</h2>
 		<h2>
 			Description :
-			<jsp:getProperty property="description" name="articleVendu" /></h2>
+			<c:out value="${ description}"></c:out>
+		</h2>
 		<h2>
 			Catégorie :
-			<jsp:getProperty property="libelle" name="categorie" /></h2>
+			<c:out value="${ categorie}"></c:out>
+		</h2>
 		<h2>
 			Meilleur offre :
-			<jsp:getProperty property="prixVente" name="articleVendu" />
-			pts
+			<c:out value="${ prixVente}"> pts </c:out>
+
 		</h2>
 		<h2>
 			Mise à prix :
-			<jsp:getProperty property="miseAPrix" name="articleVendu" />
-			points
+			<c:out value="${ miseAPrix}"> points</c:out>
+
 		</h2>
 		<h2>
 			Fin de l'enchère :
-			<jsp:getProperty property="dateFinEncheres" name="articleVendu" /></h2>
+			<c:out value="${ dateFinEnchere}"></c:out>
+
+		</h2>
 		<h2>
 			Retrait :
-			<jsp:getProperty property="rue" name="utilisateur" />
-			<jsp:getProperty property="codePostal" name="utilisateur" />
-			<jsp:getProperty property="ville" name="utilisateur" /></h2>
+			<c:out value="${ rue}"></c:out>
+			<c:out value="${ codePostal}"></c:out>
+			<p>
+				<c:out value="${ ville}"></c:out>
+			</p>
+		</h2>
 		<h2>
 			Vendeur :
-			<jsp:getProperty property="pseudo" name="utilisateur" /></h2>
+			<c:out value="${ nomVendeur}"></c:out>
+		</h2>
 
 		<h2>
 			<label for="prop osition">Ma proposition : </label> <input

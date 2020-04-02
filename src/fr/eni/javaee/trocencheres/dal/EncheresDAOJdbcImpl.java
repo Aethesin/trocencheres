@@ -122,14 +122,13 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 			pstmt.setInt(1, articleVendu.getNoArticleVendu());
 			ResultSet rs = pstmt.executeQuery();
 			articleVendu.setNomArticleVendu(rs.getString("nomArticle"));
-			;
 			articleVendu.setDescription(rs.getString("description"));
 			articleVendu.setPrixVente(rs.getInt("prixVente"));
-			articleVendu.setMiseAPrix(rs.getInt("miseAPrix"));
-			articleVendu.setDateDebutEncheres(LocalDateTime.parse(rs.getDate("dateDebutEncheres").toString(),
-					DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
-			articleVendu.setDateFinEncheres(LocalDateTime.parse(rs.getDate("dateFinEncheres").toString(),
-					DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
+			articleVendu.setMiseAPrix(rs.getInt("miseAPrix"));		
+			articleVendu.setDateDebutEncheres(
+					LocalDateTime.parse(rs.getTimestamp("date_debut_encheres").toLocalDateTime().toString()));
+			articleVendu.setDateFinEncheres(
+					LocalDateTime.parse(rs.getTimestamp("date_fin_encheres").toLocalDateTime().toString()));	
 			retrait.setRue(rs.getString("rue"));
 			retrait.setCodePostal(rs.getString("codePostal"));
 			retrait.setVille(rs.getString("ville"));

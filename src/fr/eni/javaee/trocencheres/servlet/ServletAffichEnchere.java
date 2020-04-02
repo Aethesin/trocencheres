@@ -42,23 +42,49 @@ public class ServletAffichEnchere extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		ArticleVendu articleVendu = null;
-		Enchere enchere = null;
-		Utilisateur vendeur = null;
+
+		// Permet d'afficher la page AfficherEnchere
+		articleVenduManager = new ArticleVenduManager();
+		ArticleVendu articleVendu;
+		Enchere enchere;
+		Utilisateur vendeur;
 		listeCodesErreur = new ArrayList<>();
 
 		try {
-			int noArticleVendu = Integer.parseInt(request.getParameter("noArticle"));
-			articleVendu = articleVenduManager.selectArticleVenduByID(noArticleVendu);
-			vendeur = articleVendu.getUtilisateur();
-			LocalDateTime now = LocalDateTime.now();
-			int montantEnchere = Integer.parseInt(request.getParameter("proposition"));
-			request.setAttribute("proposition", montantEnchere);
-			enchere = new Enchere(now, montantEnchere, articleVendu, vendeur);
-			encheresManager.updateEnchere(enchere);
-			request.setAttribute("enchere", enchere);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/AffichEnchere.jsp");
-			rd.forward(request, response);
+
+			// Permet de gerer une proposition d'enchere
+			if (request.getParameter("btnEncherir") != null) {
+				int valeurProposition = Integer.parseInt(request.getParameter("proposition"));
+
+				int noArticleVendu = Integer.parseInt(request.getParameter("noArticle"));
+				articleVendu = articleVenduManager.selectArticleVenduByID(noArticleVendu);
+				vendeur = articleVendu.getUtilisateur();
+
+				// Aller chercher en base de données les informations de l'article
+				String nomArticleVendu = articleVendu.getNomArticleVendu();
+				String description = articleVendu.getDescription();
+				String categorie = articleVendu.getCategorie().getLibelle();
+				int prixVente = articleVendu.getPrixVente();
+				int miseAPrix = articleVendu.getMiseAPrix();
+				LocalDateTime dateFinEnchere = articleVendu.getDateFinEncheres();
+				String rue = vendeur.getRue();
+				String codePostal = vendeur.getCodePostal();
+				String ville = vendeur.getVille();
+
+				// Afficher les données à l'écran
+				request.setAttribute("nomArticle", nomArticleVendu);
+				request.setAttribute("description", description);
+				request.setAttribute("categorie", categorie);
+				request.setAttribute("prixVente", prixVente);
+				request.setAttribute("miseAPrix", miseAPrix);
+				request.setAttribute("dateFinEnchere", dateFinEnchere);
+				request.setAttribute("rue", rue);
+				request.setAttribute("codePostal", codePostal);
+				request.setAttribute("ville", ville);
+
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/AffichEnchere.jsp");
+				rd.forward(request, response);
+			}
 
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
@@ -66,7 +92,7 @@ public class ServletAffichEnchere extends HttpServlet {
 
 		} catch (BusinessException e) {
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/ParticipEnchere.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/AffichEnchere.jsp");
 			rd.forward(request, response);
 		}
 

@@ -48,7 +48,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			Utilisateur utilisateur = new Utilisateur();
 			Categorie categorie = new Categorie();
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd HH:mm.ss");
 			PreparedStatement pstmt = cnx.prepareStatement(INSERT_ARTICLE_VENDU,
 					PreparedStatement.RETURN_GENERATED_KEYS);
 
