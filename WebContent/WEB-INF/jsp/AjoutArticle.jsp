@@ -10,6 +10,9 @@
 </head>
 <body>
 
+<jsp:include page="/WEB-INF/includes/header.jsp"></jsp:include>
+
+<br>
 	<h2>Ajoutez votre article</h2>
 
 	<form action="<c:url value="/AjoutArticle"/>" method="post">
@@ -17,45 +20,48 @@
 
 		<div class="ajout">
 			<label for="nomArticleVendu">Nom de l'article<span
-				class="requis"></span></label> <input type="text" id="nomArticleVendu"
+				class="requis"></span></label>
+			<input type="text" id="nomArticleVendu" required="required"
 				name="nomArticleVendu" maxlength="30" placeholder="Nom de l'article"
-				value="<c:out value="${nomAticle}"/>" />
+				value="<c:out value="${nomArticleVendu}"/>" />
 		</div>
 
 		<div class="ajout">
 		<label for="description">Description<span
 				class="requis"></span></label>
-			<textarea name="description" rows=5 cols=60 required="required"
+		<textarea name="description" rows=5 cols=60 required="required"
 				wrap="soft" placeholder="Description de votre article"></textarea>
 		</div>
 
 		<div class="ajout">
 			<label for="categorie">Catégorie<span class="requis"></span></label>
-			<select id="categorie" name="noCategorie">
+			<select id="categorie" name="categorie">
 				<option>Informatique</option>
 				<option>Ameublement</option>
 				<option>Vêtement</option>
-				<option>Sport&amp;Loisirs</option>
+				<option>Sport &amp; Loisirs</option>
 			</select>
 		</div>
 
 		<div class="ajout">
 			<label for="dateDebutEncheres">Date de la mise aux enchères<span
-				class="requis"></span></label> <input type="datetime" id="dateDebutEncheres"
+				class="requis"></span></label>
+			<input type="datetime-local" id="dateDebutEncheres"
 				name="dateDebutEncheres" placeholder="Date de début des enchères"
 				value="<c:out value="${dateDebutEncheres }"/>" />
 		</div>
 
 		<div class="ajout">
 			<label for="dateFinEncheres">Date de la fin des enchères<span
-				class="requis"></span></label> <input type="datetime" id="dateFinEncheres"
+				class="requis"></span></label>
+			<input type="datetime-local" id="dateFinEncheres"
 				name="dateFinEncheres" placeholder="Date de fin des enchères"
 				value="<c:out value="${dateFinEncheres }"/>" />
 		</div>
 
 		<div class="ajout">
 			<label for="miseAPrix">Mise à prix<span class="requis"></span></label>
-			<input type="number" id="miseAPrix" name="piseAPrix"
+			<input type="number" id="miseAPrix" name="miseAPrix"
 				placeholder="Prix proposé" value="<c:out value="${miseAPrix }"/>" />
 		</div>
 
@@ -65,30 +71,33 @@
 				
 				<div class="ajout">
 					<label for="rue">Rue</label> <input type="text" id="rue" name="rue"
-						placeholder="Rue" value="<c:out value="${rue }"/>" />
+						placeholder="Rue" value="<c:out value="${utilisateur.rue }"/>" />
 				</div>
 
 				<div class="ajout">
 					<label for="codePostal">Code postal</label> <input type="text"
 						id="codePostal" name="codePostal" placeholder="Code postal"
-						value="<c:out value="${codePostal }"/>" />
+						value="<c:out value="${utilisateur.codePostal }"/>" />
 				</div>
 
 				<div class="ajout">
 					<label for="ville">Ville</label> <input type="text" id="ville"
 						name="ville" placeholder="Ville"
-						value="<c:out value="${ville }"/>" />
+						value="<c:out value="${utilisateur.ville }"/>" />
 				</div>
 			</fieldSet>
 		</div>
 
 		<div id="boutons">
 			<input type="submit" name="btnEnregistrer" value="Enregistrer"
-				title="Enregistrer" /> <input type="reset" name="btAnnuler"
+				title="Enregistrer" />
+			<input type="reset" name="btAnnuler"
 				value="Annuler" title="Annuler" />
 		</div>
 
 	</form>
+
+<jsp:include page="/WEB-INF/includes/footer.jsp"></jsp:include>
 
 </body>
 
