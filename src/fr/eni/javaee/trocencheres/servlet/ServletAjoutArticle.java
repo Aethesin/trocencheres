@@ -62,6 +62,7 @@ public class ServletAjoutArticle extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		RequestDispatcher rd = null;
 		categorieManager = new CategorieManager();
 		String nomArticleVendu = null;
 		String description = null;
@@ -70,7 +71,6 @@ public class ServletAjoutArticle extends HttpServlet {
 		int miseAPrix = 0;
 		int prixVente = 0;
 		int noUtilisateur;
-		int noCategorie;
 
 		List<Integer> listeCodesErreur = new ArrayList<>();
 		List<String> listeCodesErreurString = new ArrayList<>();
@@ -94,19 +94,9 @@ public class ServletAjoutArticle extends HttpServlet {
 
 		String dateDebutEnchereString = request.getParameter("dateDebutEncheresDate")+"T"+request.getParameter("dateDebutEncheresTime");
 		dateDebutEncheres = LocalDateTime.parse(dateDebutEnchereString);
-		try {
-		} catch (DateTimeParseException e) {
-			e.printStackTrace();
-			listeCodesErreur.add(CodesResultatServlets.FORMAT_DATE_DEBUT_ENCHERES_ERREUR);
-		}
 		
 		String dateFinEnchereString = request.getParameter("dateFinEncheresDate")+"T"+request.getParameter("dateFinEncheresTime");
 		dateFinEncheres = LocalDateTime.parse(dateFinEnchereString);
-		try {
-		} catch (DateTimeParseException e) {
-			e.printStackTrace();
-			listeCodesErreur.add(CodesResultatServlets.FORMAT_DATE_FIN_ENCHERES_ERREUR);
-		}
 
 		try {
 			miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
@@ -136,10 +126,9 @@ public class ServletAjoutArticle extends HttpServlet {
 			for(Integer integer : listeCodesErreur) {
 				listeCodesErreurString.add(LecteurMessage.getMessageErreur(integer));
 			}
-		ArticleVendu articleVendu = null;
-		if (listeCodesErreur.size() > 0) {
-			articleVendu = new ArticleVendu(nomArticleVendu, description, dateDebutEncheres, dateFinEncheres,
-					miseAPrix, prixVente, utilisateur, categorie);
+		ArticleVendu articleVendu = new ArticleVendu(nomArticleVendu, description, dateDebutEncheres, dateFinEncheres,
+				miseAPrix, prixVente, utilisateur, categorie);
+		if (listeCodesErreur.size() > 0) {			
 			request.setAttribute("article", articleVendu);
 			request.setAttribute("listeCodesErreurString", listeCodesErreurString);
 			doGet(request, response);
@@ -147,16 +136,14 @@ public class ServletAjoutArticle extends HttpServlet {
 		} else {
 			ArticleVenduManager articleVenduManager = new ArticleVenduManager();
 			try {
-				articleVendu = new ArticleVendu(nomArticleVendu, description, dateDebutEncheres, dateFinEncheres,
-						miseAPrix, prixVente, utilisateur, categorie);
 				articleVendu = articleVenduManager.insertArticleVendu(articleVendu);
 				session.setAttribute("noArticle", articleVendu.getNoArticleVendu());
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/AffichEnchere.jsp");
+				rd = request.getRequestDispatcher("/WEB-INF/jsp/AffichEnchere.jsp");
 				response.sendRedirect("AffichEnchere");
 			} catch (BusinessException e) {
 				e.printStackTrace();
 				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/AjoutArticle.jsp");
+				rd = request.getRequestDispatcher("/WEB-INF/jsp/AjoutArticle.jsp");
 				rd.forward(request, response);
 			}
 
