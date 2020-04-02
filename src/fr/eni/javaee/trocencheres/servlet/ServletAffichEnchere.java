@@ -76,6 +76,8 @@ public class ServletAffichEnchere extends HttpServlet {
 			articleVendu = articleVenduManager.selectArticleVenduByID(noArticleVendu);
 			vendeur = articleVendu.getUtilisateur();
 			vendeur = utilisateurManager.selectUtilisateurById(vendeur.getNoUtilisateur());
+			String pseudoVendeur = vendeur.getPseudo();
+			
 			categorie = articleVendu.getCategorie();
 			categorie = categorieManager.selectCategorieById(categorie.getNoCategorie());
 			String libelle = categorie.getLibelle();
@@ -90,6 +92,7 @@ public class ServletAffichEnchere extends HttpServlet {
 			String pseudoEnchereur = null;
 			String pseudoSession = null;
 			sessionUser = (Utilisateur) session.getAttribute("utilisateur");
+			
 			if(enchere.getMontantEnchere() > articleVendu.getMiseAPrix()){
 				prixVente = enchere.getMontantEnchere();
 				pseudoEnchereur = enchere.getUtilisateur().getPseudo();
@@ -97,6 +100,7 @@ public class ServletAffichEnchere extends HttpServlet {
 				telephone = vendeur.getTelephone();
 			}else{
 				prixVente = articleVendu.getMiseAPrix();
+				pseudoSession = sessionUser.getPseudo();
 				pseudoEnchereur = vendeur.getPseudo();
 			}
 			
@@ -117,6 +121,7 @@ public class ServletAffichEnchere extends HttpServlet {
 			DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 			String dateFinEnchereString = formatter.format(dateFinEnchere);
 			// Afficher les données à l'écran
+			request.setAttribute("pseudoVendeur", pseudoVendeur);
 			request.setAttribute("telephone", telephone);
 			request.setAttribute("pseudoSession", pseudoSession);
 			request.setAttribute("verifDate", verifDate);

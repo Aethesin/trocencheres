@@ -24,113 +24,207 @@
 	<jsp:useBean id="utilisateur" scope="request"
 		class="fr.eni.javaee.trocencheres.bo.Utilisateur"></jsp:useBean>
 
-<div>
-	<div class="text-center">
-		<c:if test="${!verifDate}">
-			<h1 class="formulaire">Détail vente</h1>
-		</c:if>
-		<c:if test="${verifDate}">
-			<c:if test="${pseudoEnchereur ==  pseudoSession}">
-				<h1 class="formulaire">Bravo vous avez remporté la vente</h1>
+
+
+<c:if test="${pseudoSession != pseudoVendeur }">	
+
+	<div>
+		<div class="text-center">
+			<c:if test="${!verifDate}">
+				<h1 class="formulaire">Détail vente</h1>
 			</c:if>
-			<c:if test="${pseudoEnchereur !=  pseudoSession}">
-				<h1 class="formulaire">${pseudoEnchereur } a remporté la vente</h1>
-			</c:if>
-		</c:if>
-	</div>
-	<div class="row">
-		<div class="col-3"></div>
-		<div class="col-9">
-			<h2>
-				<c:out value="${nomArticle}"></c:out>
-			</h2>
-			<div class="row h2-affichArt">
-				<h2 class="col-2">
-					Description :
-				</h2>
-				<div>
-					<h2><c:out value="${description}"></c:out></h2>
-				</div>
-			</div>
-			<div class="row h2-affichArt">
-				<h2 class="col-2">
-					Catégorie :
-				</h2>
-				<h2><c:out value="${libelle}"></c:out></h2>
-			</div>
-			<div class="row h2-affichArt">
-				<h2 class="col-2">
-					Meilleur offre :		
-				</h2>
-				<h2><c:out value="${ prixVente}"></c:out> points par <c:out value="${ pseudoEnchereur}"></c:out></h2>
-			</div>
-			<div class="row h2-affichArt">
-				<h2 class="col-2">
-					Mise à prix :
-		
-				</h2>
-				<h2><c:out value="${ miseAPrix}"></c:out> points</h2>
-			</div>
-			<div class="row h2-affichArt">
-				<h2 class="col-2">
-					Fin de l'enchère :		
-				</h2>
-				<h2><c:out value="${ dateFinEnchere}"></c:out></h2>
-			</div>
-			<div class="row h2-affichArt">
-				<h2 class="col-2">
-					Retrait :
-				</h2>
-				<h2>
-					<c:out value="${ rue}"></c:out>
-					<c:out value="${ codePostal}"></c:out>
-					<p>
-						<c:out value="${ ville}"></c:out>
-					</p>
-				</h2>
-			</div>
-			<div class="row h2-affichArt">
-				<h2 class="col-2">
-					Vendeur :
-				</h2>
-				<h2><c:out value="${ nomVendeur}"></c:out></h2>
-			</div>
 			<c:if test="${verifDate}">
 				<c:if test="${pseudoEnchereur ==  pseudoSession}">
-					<div class="row h2-affichArt">
-						<h2 class="col-2">
-							Téléphone :
-						</h2>
-						<h2><c:out value="${ telephone}"></c:out></h2>
-					</div>
-					<a class="btn btn-primary" href="<%=request.getContextPath()%>/accueil">Retrait effectué</a>
+					<h1 class="formulaire">Bravo vous avez remporté la vente</h1>
 				</c:if>
 				<c:if test="${pseudoEnchereur !=  pseudoSession}">
-					<a class="btn btn-primary" href="<%=request.getContextPath()%>/accueil">Back</a>
+					<h1 class="formulaire">${pseudoEnchereur } a remporté la vente</h1>
 				</c:if>
 			</c:if>
-			<c:if test="${!verifDate}">
-				<form action="<%=request.getContextPath()%>/AffichEnchere?noArticle=${articleVendu.noArticleVendu}" method="post">
-					<input name="pseudoMeilleur" value="${pseudoEnchereur}" hidden>
-					<input name="prixVente" value="${prixVente}" hidden>
-					<div class="row h2-affichArt">
-						<h2 class="col-2">
-							<label for="proposition">Ma proposition : </label> 
-						</h2>
-						<div class="col-1">
-							<input class="form-control col-8" type="number" id="proposition" name="proposition">
-						</div>
-				
-						<div id="bouton text-center">
-							<input class="btn btn-primary" type="submit" name="btnEncherir" value="Enchérir" />
-						</div>
+		</div>
+		<div class="row">
+			<div class="col-3"></div>
+			<div class="col-9">
+				<h2>
+					<c:out value="${nomArticle}"></c:out>
+				</h2>
+				<div class="row h2-affichArt">
+					<h2 class="col-2">
+						Description :
+					</h2>
+					<div>
+						<h2><c:out value="${description}"></c:out></h2>
 					</div>
-				</form>
-			</c:if>
-
+				</div>
+				<div class="row h2-affichArt">
+					<h2 class="col-2">
+						Catégorie :
+					</h2>
+					<h2><c:out value="${libelle}"></c:out></h2>
+				</div>
+				<div class="row h2-affichArt">
+					<h2 class="col-2">
+						Meilleur offre :		
+					</h2>
+					<h2><c:out value="${ prixVente}"></c:out> points par <c:out value="${ pseudoEnchereur}"></c:out></h2>
+				</div>
+				<div class="row h2-affichArt">
+					<h2 class="col-2">
+						Mise à prix :
+			
+					</h2>
+					<h2><c:out value="${ miseAPrix}"></c:out> points</h2>
+				</div>
+				<div class="row h2-affichArt">
+					<h2 class="col-2">
+						Fin de l'enchère :		
+					</h2>
+					<h2><c:out value="${ dateFinEnchere}"></c:out></h2>
+				</div>
+				<div class="row h2-affichArt">
+					<h2 class="col-2">
+						Retrait :
+					</h2>
+					<h2>
+						<c:out value="${ rue}"></c:out>
+						<c:out value="${ codePostal}"></c:out>
+						<p>
+							<c:out value="${ ville}"></c:out>
+						</p>
+					</h2>
+				</div>
+				<div class="row h2-affichArt">
+					<h2 class="col-2">
+						Vendeur :
+					</h2>
+					<h2><c:out value="${ nomVendeur}"></c:out></h2>
+				</div>
+				<c:if test="${verifDate}">
+					<c:if test="${pseudoEnchereur ==  pseudoSession}">
+						<div class="row h2-affichArt">
+							<h2 class="col-2">
+								Téléphone :
+							</h2>
+							<h2><c:out value="${ telephone}"></c:out></h2>
+						</div>
+						<a class="btn btn-primary" href="<%=request.getContextPath()%>/accueil">Retrait effectué</a>
+					</c:if>
+					<c:if test="${pseudoEnchereur !=  pseudoSession}">
+						<a class="btn btn-primary" href="<%=request.getContextPath()%>/accueil">Back</a>
+					</c:if>
+				</c:if>
+				<c:if test="${!verifDate}">
+					<form action="<%=request.getContextPath()%>/AffichEnchere?noArticle=${articleVendu.noArticleVendu}" method="post">
+						<input name="pseudoMeilleur" value="${pseudoEnchereur}" hidden>
+						<input name="prixVente" value="${prixVente}" hidden>
+						<div class="row h2-affichArt">
+							<h2 class="col-2">
+								<label for="proposition">Ma proposition : </label> 
+							</h2>
+							<div class="col-1">
+								<input class="form-control col-8" type="number" id="proposition" name="proposition">
+							</div>
+					
+							<div id="bouton text-center">
+								<input class="btn btn-primary" type="submit" name="btnEncherir" value="Enchérir" />
+							</div>
+						</div>
+					</form>
+				</c:if>
+	
+			</div>
 		</div>
 	</div>
-</div>
+</c:if>
+<c:if test="${pseudoSession == pseudoVendeur }">
+
+
+<form class="formulaire" action="<c:url value="/UpdateArticle"/>" method="post">
+
+
+		<div class="ajout">
+			<label for="nomArticleVendu">Nom de l'article<span
+				class="requis"></span></label>
+			<input type="text" id="nomArticleVendu" required="required"
+				name="nomArticleVendu" maxlength="30" placeholder="Nom de l'article"
+				value="<c:out value="${nomArticle}"/>" />
+		</div>
+
+		<div class="ajout">
+		<label for="description">Description<span
+				class="requis"></span></label>
+		<textarea name="description" rows=5 cols=60 required="required"
+				wrap="soft" placeholder="Description de votre article" ><c:out value="${description}"/></textarea>
+		</div>
+
+		<div class="ajout">
+			<label for="categorie">Catégorie<span class="requis"></span></label>
+			<select id="categorie" name="categorie">
+				<option value="1">Informatique</option>
+				<option value="2">Ameublement</option>
+				<option value="3">Vêtement</option>
+				<option value="4">Sport &amp; Loisirs</option>
+			</select>
+		</div>
+
+		<div class="ajout">
+			<label for="dateDebutEncheres">Date de la mise aux enchères<span
+				class="requis"></span></label>
+			<input type="date" id="dateDebutEncheresDate"
+				name="dateDebutEncheresDate"/>
+			<input type="time" id="dateDebutEncheresTime"
+				name="dateDebutEncheresTime">
+		</div>
+
+		<div class="ajout">
+			<label for="dateFinEncheres">Date de la fin des enchères<span
+				class="requis"></span></label>
+			<input type="date" id="dateFinEncheresDate"
+				name="dateFinEncheresDate"/>
+			<input type="time" id="dateFinEncheresTime"
+				name="dateFinEncheresTime">
+		</div>
+
+		<div class="ajout">
+			<label for="miseAPrix">Mise à prix<span class="requis"></span></label>
+			<input type="number" id="miseAPrix" name="miseAPrix"
+				placeholder="Prix proposé" value="<c:out value="${miseAPrix }"/>" />
+		</div>
+
+		<div>
+			<p>Retrait</p>
+			<fieldSet>
+				
+				<div class="ajout">
+					<label for="rue">Rue</label> <input type="text" id="rue" name="rue"
+						placeholder="Rue" value="<c:out value="${rue }"/>" />
+				</div>
+
+				<div class="ajout">
+					<label for="codePostal">Code postal</label> <input type="text"
+						id="codePostal" name="codePostal" placeholder="Code postal"
+						value="<c:out value="${codePostal }"/>" />
+				</div>
+
+				<div class="ajout">
+					<label for="ville">Ville</label> <input type="text" id="ville"
+						name="ville" placeholder="Ville"
+						value="<c:out value="${ville }"/>" />
+				</div>
+			</fieldSet>
+		</div>
+
+		<div id="boutons">
+			<input type="submit" name="btnEnregistrer" value="Enregistrer"
+				title="Enregistrer" />
+			<input type="reset" name="btAnnuler"
+				value="Annuler" title="Annuler" />
+		</div>
+
+	</form>
+
+
+</c:if>
 
 	<c:if test="${listeCodesErreur != null }">
 		<p style="color: red;">Erreur, votre participation est échouée :</p>
