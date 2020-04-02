@@ -3,6 +3,9 @@
  */
 package fr.eni.javaee.trocencheres.dal;
 
+import fr.eni.javaee.trocencheres.bo.Categorie;
+import fr.eni.javaee.trocencheres.exception.BusinessException;
+
 /**
  * Classe en charge de
  * @author Yann
@@ -10,5 +13,6 @@ package fr.eni.javaee.trocencheres.dal;
  * @date 31 mars 2020
  */
 public interface CategorieDAO {
-
+	
+	public Categorie selectCategorieById(int idCategorie) throws BusinessException;
 }

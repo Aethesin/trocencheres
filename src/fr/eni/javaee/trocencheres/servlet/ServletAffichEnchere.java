@@ -57,7 +57,16 @@ public class ServletAffichEnchere extends HttpServlet {
 		Categorie categorie = null;
 		listeCodesErreur = new ArrayList<>();
 		
-		int noArticleVendu = Integer.parseInt(request.getParameter("noArticle"));
+		int noArticleVendu = 0;
+		
+		
+		if(request.getParameter("noArticle") == null){
+			noArticleVendu = (int) session.getAttribute("noArticle");
+			System.out.println("No article session attribut : " + noArticleVendu);
+		}else{
+			noArticleVendu = Integer.parseInt(request.getParameter("noArticle"));
+			System.out.println("No article paramètre : " + noArticleVendu);
+		}
 		articleVendu.setNoArticleVendu(noArticleVendu);
 		
 		

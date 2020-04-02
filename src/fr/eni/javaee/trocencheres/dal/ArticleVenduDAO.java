@@ -8,7 +8,7 @@ import fr.eni.javaee.trocencheres.exception.BusinessException;
 public interface ArticleVenduDAO {
 
 	// 2001 vendre un article
-	public void insertArticleVendu(ArticleVendu articleVendu) throws BusinessException;
+	public ArticleVendu insertArticleVendu(ArticleVendu articleVendu) throws BusinessException;
 
 	// 2004,2005 filtrer ma recherche par categorie
 	public List<ArticleVendu> selectArticleVenduByCategorie(String categorie) throws BusinessException;
