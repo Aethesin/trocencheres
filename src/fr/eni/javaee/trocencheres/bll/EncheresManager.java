@@ -1,10 +1,7 @@
 package fr.eni.javaee.trocencheres.bll;
 
-import java.time.LocalDateTime;
-
 import fr.eni.javaee.trocencheres.bo.ArticleVendu;
 import fr.eni.javaee.trocencheres.bo.Enchere;
-import fr.eni.javaee.trocencheres.bo.Utilisateur;
 import fr.eni.javaee.trocencheres.dal.DAOFactory;
 import fr.eni.javaee.trocencheres.dal.EncheresDAO;
 import fr.eni.javaee.trocencheres.exception.BusinessException;
@@ -16,11 +13,10 @@ public class EncheresManager {
 		this.encheresDAO = DAOFactory.getEncheresDAO();
 	}
 	
-	public void insertEnchere(LocalDateTime dateEnchere, int montantEnchere, ArticleVendu articleVendu, Utilisateur utilisateur) throws BusinessException{
+	public void insertEnchere(Enchere enchere) throws BusinessException{
 		BusinessException businessException = new BusinessException();
-		Enchere enchere = new Enchere(dateEnchere, montantEnchere, articleVendu, utilisateur);
 		
-		this.validerDateEnchere(enchere, businessException);
+		//this.validerDateEnchere(enchere, businessException);
 		this.validerMontantEnchere(enchere, businessException);
 		this.validerNoArticleVendu(enchere, businessException);
 		this.validerNoUtilisateur(enchere, businessException);
@@ -29,7 +25,7 @@ public class EncheresManager {
 			throw businessException;
 		}
 		
-		
+		encheresDAO.insertEnchere(enchere);
 		
 	}
 	
@@ -53,14 +49,14 @@ public class EncheresManager {
 		
 	}
 
-	private void validerDateEnchere(Enchere enchere, BusinessException businessException) {
-		ArticleVendu articleVendu = new ArticleVendu();
-		if (enchere.getDateEnchere().isBefore(articleVendu.getDateDebutEncheres()) || enchere.getDateEnchere().isAfter(articleVendu.getDateFinEncheres()) || enchere.getDateEnchere() == null) {
-			businessException.ajouterErreur(CodesResultatBLL.REGLE_DATE_ENCHERE_ERREUR);
-
-		}
-		
-	}
+//	private void validerDateEnchere(Enchere enchere, BusinessException businessException) {
+//		ArticleVendu articleVendu = new ArticleVendu();
+//		if (enchere.getDateEnchere().isBefore(articleVendu.getDateDebutEncheres()) || enchere.getDateEnchere().isAfter(articleVendu.getDateFinEncheres()) || enchere.getDateEnchere() == null) {
+//			businessException.ajouterErreur(CodesResultatBLL.REGLE_DATE_ENCHERE_ERREUR);
+//
+//		}
+//		
+//	}
 
 	public void updateEnchere(Enchere enchere) throws BusinessException{
 		encheresDAO.updateEnchere(enchere);
@@ -72,8 +68,8 @@ public class EncheresManager {
 		
 	}
 
-	public Enchere selectEnchereByMeilleurOffre() throws BusinessException{
-		Enchere enchere = encheresDAO.selectEnchereByMeilleurOffre();
+	public Enchere selectEnchereByMeilleurOffre(int noArticleVendu) throws BusinessException{
+		Enchere enchere = encheresDAO.selectEnchereByMeilleurOffre(noArticleVendu);
 		return enchere;
 		
 	}

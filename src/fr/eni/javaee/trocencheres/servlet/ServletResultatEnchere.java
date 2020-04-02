@@ -44,7 +44,7 @@ public class ServletResultatEnchere extends HttpServlet {
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 
 		try {
-			enchere = encheresManager.selectEnchereByMeilleurOffre();
+			enchere = encheresManager.selectEnchereByMeilleurOffre(Integer.parseInt(request.getParameter("noArticle")));
 			if (enchere.getDateEnchere().isBefore(now)||utilisateur.getNoUtilisateur() == enchere.getUtilisateur().getNoUtilisateur()) {
 				RequestDispatcher rd = this.getServletContext().getNamedDispatcher("RemportEnchere");
 				rd.forward(request, response);

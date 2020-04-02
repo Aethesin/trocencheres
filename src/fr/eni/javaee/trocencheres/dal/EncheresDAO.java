@@ -11,11 +11,12 @@ public interface EncheresDAO {
 	public void updateEnchere(Enchere enchere) throws BusinessException;
 	
 	//2007 remporter une vente
-	public Enchere selectEnchereByMeilleurOffre();
+	public Enchere selectEnchereByMeilleurOffre(int noArticleVendu) throws BusinessException;
 	
 	//2009 afficher le détail d'une enchère
-	public Enchere selectEnchereByNoArticleVendu(int noArticleVendu);
+	public Enchere selectEnchereByNoArticleVendu(int noArticleVendu) throws BusinessException;
 	
-
+	public void insertEnchere(Enchere enchere) throws BusinessException;
+	
 	
 }

@@ -25,12 +25,11 @@
 								<a class="nav-link" href="<%=request.getContextPath()%>/GestionAdmin">Gestion Administrateur</a>
 							</li>
 						</c:if>
-						<li class="nav-item active">
-							<a class="nav-link" href="<%=request.getContextPath()%>/AffichEnchere">Enchères</a>
-						</li>
-						<li class="nav-item active">
-							<a class="nav-link" href ="<%=request.getContextPath()%>/AjoutArticle">Vendre un article</a>
-						</li>
+						<c:if test="${user.statut != 2 }">
+							<li class="nav-item active">
+								<a class="nav-link" href ="<%=request.getContextPath()%>/AjoutArticle">Vendre un article</a>
+							</li>
+						</c:if>
 						<li class="nav-item active">
 							<a class="nav-link" href="<%=request.getContextPath()%>/AffichProfil?pseudo=${sessionScope.utilisateur.pseudo}">Mon profil</a>
 						</li>

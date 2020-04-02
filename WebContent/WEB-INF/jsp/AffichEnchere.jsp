@@ -25,17 +25,16 @@
 		class="fr.eni.javaee.trocencheres.bo.Utilisateur"></jsp:useBean>
 
 	<h1>Détail vente</h1>
-	<form action="<%=request.getContextPath()%>/AffichEnchere" method="get">
 		<h2>
-			<c:out value="${ nomArticle}"></c:out>
+			${articleVendu.nomArticleVendu}
+			
 		</h2>
 		<h2>
-			Description :
-			<c:out value="${ description}"></c:out>
+			Description : ${articleVendu.description}
 		</h2>
 		<h2>
 			Catégorie :
-			<c:out value="${ categorie}"></c:out>
+			<c:out value="${categorie}"></c:out>
 		</h2>
 		<h2>
 			Meilleur offre :
@@ -65,8 +64,12 @@
 			<c:out value="${ nomVendeur}"></c:out>
 		</h2>
 
+	<form action="<%=request.getContextPath()%>/AffichEnchere?noArticle=${articleVendu.noArticleVendu}" method="post">
+		<input type="text" value="${articleVendu.noArticleVendu}" name="noArticle">
+		<c:set var="user" value="${articleVendu.utilisateur }"></c:set>
+		<input type="text" hidden value="${user.noUtilisateur}" name="noUtilisateur">
 		<h2>
-			<label for="prop osition">Ma proposition : </label> <input
+			<label for="proposition">Ma proposition : </label> <input
 				type="number" id="proposition" name="proposition">
 		</h2>
 

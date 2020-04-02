@@ -31,16 +31,11 @@
 						  <c:if test="${empty listeVendeurs}">
 						  	<h2>PROBLEME</h2>
 						  </c:if>
-						  <c:forEach var="u" items="${listeVendeurs}">
-							  <c:set var="user" value="${lArt.utilisateur}"></c:set>
-							  <c:if test="${(user.noUtilisateur == u.noUtilisateur) && (i == 0)}">
-								  <li>
-								  	Vendeur : ${u.pseudo}
-								  </li>
-							  <c:set var="i" value="1"/>
-							  </c:if>
+						  <c:set var="user" value="${lArt.utilisateur}"></c:set>
+						  <li>
+						  	Vendeur : ${user.pseudo}
+						  </li>
 						  
-						  </c:forEach> 
 						</ul>
 					</div>
 			</c:forEach>

@@ -12,8 +12,6 @@ import java.util.List;
 
 import fr.eni.javaee.trocencheres.bo.ArticleVendu;
 import fr.eni.javaee.trocencheres.bo.Categorie;
-import fr.eni.javaee.trocencheres.bo.Enchere;
-import fr.eni.javaee.trocencheres.bo.Retrait;
 import fr.eni.javaee.trocencheres.bo.Utilisateur;
 import fr.eni.javaee.trocencheres.exception.BusinessException;
 
@@ -23,25 +21,26 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			+ "(nom_article, description,date_debut_encheres, " + "date_fin_encheres, prix_initial, prix_vente, "
 			+ "no_utilisateur, no_categorie) VALUES (?, ?, ?, ?, ?, ?, ?,?)";
 
-	private static final String SELECT_ARTICLES_BY_CATEGORIE = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres,"
-			+ " prix_initial, prix_vente, no_utilisateur, a.no_categorie AS aNoCate, c.no_categorie AS cNoCate, c.libelle FROM articles_vendus a "
+	private static final String SELECT_ARTICLES_BY_CATEGORIE = "SELECT a.no_article as noArticle, a.nom_article as nomArticle, a.description as descArticle, a.date_debut_encheres as debutEnch, a.date_fin_encheres as finEnch,"
+			+ " a.prix_initial as prixInit, a.prix_vente as prixVente, a.no_utilisateur as articleNoU, a.no_categorie AS aNoCate, c.no_categorie AS cNoCate, c.libelle FROM articles_vendus a "
 			+ "INNER JOIN categories c ON a.no_categorie = c.no_categorie"
-			+ " WHERE c.libelle = ? ORDER BY date_fin_encheres ASC;";
-	private static final String SELECT_ARTICLES_BY_CONTENU = "SELECT no_article, nom_article, description, date_debut_encheres,"
-			+ " date_fin_encheres, prix_initial, prix_vente, no_utilisateur, a.no_categorie AS aNoCate, c.no_categorie AS cNoCate,"
+			+ " WHERE c.libelle = ? ORDER BY a.date_fin_encheres ASC;";
+	private static final String SELECT_ARTICLES_BY_CONTENU = "SELECT a.no_article as noArticle, a.nom_article as nomArticle, a.description as descArticle, a.date_debut_encheres as debutEnch,"
+			+ " a.date_fin_encheres as finEnch, a.prix_initial as prixInit, a.prix_vente as prixVente, a.no_utilisateur as articleNoU, a.no_categorie AS aNoCate, c.no_categorie AS cNoCate,"
 			+ " c.libelle FROM articles_vendus a INNER JOIN CATEGORIES c ON a.no_categorie = c.no_categorie WHERE a.nom_article LIKE ?"
-			+ " ORDER BY date_fin_encheres ASC;";
-	private static final String SELECT_ARTICLES_BY_CATEGORIE_AND_CONTENU = "SELECT no_article, nom_article, description, date_debut_encheres,"
-			+ " date_fin_encheres, prix_initial, prix_vente, no_utilisateur, a.no_categorie AS aNoCate, c.no_categorie AS cNoCate, c.libelle "
+			+ " ORDER BY a.date_fin_encheres ASC;";
+	private static final String SELECT_ARTICLES_BY_CATEGORIE_AND_CONTENU = "SELECT a.no_article as noArticle, a.nom_article as nomArticle, a.description as descArticle, a.date_debut_encheres as debutEnch,"
+			+ " a.date_fin_encheres as finEnch, a.prix_initial as prixInit, a.prix_vente as prixVente, a.no_utilisateur as articleNoU, a.no_categorie AS aNoCate, c.no_categorie AS cNoCate, c.libelle "
 			+ "FROM articles_vendus a INNER JOIN CATEGORIES c ON a.no_categorie = c.no_categorie WHERE a.nom_article"
-			+ " LIKE ? AND c.libelle = ? ORDER BY date_fin_encheres ASC;";
-	private static final String SELECT_ALL_ARTICLES = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres,"
-			+ " prix_initial, prix_vente, no_utilisateur, a.no_categorie AS aNoCate, c.no_categorie AS cNoCate, c.libelle FROM articles_vendus a "
-			+ "INNER JOIN CATEGORIES c ON a.no_categorie = c.no_categorie ORDER BY date_fin_encheres ASC;";
-	private static final String SELECT_ARTICLE_BY_NO_ARTICLE = "SELECT a.nom_article, a.description, a.prix_initial, a.prix_vente, a.date_debut_encheres, "
-			+ "a.date_fin_encheres, u.rue, u.code_postal, u.ville, u.pseudo "
-			+ "FROM ARTICLES_VENDUS a INNER JOIN ENCHERES e on a.no_article = e.no_article "
-			+ "INNER JOIN UTILISATEURS u on u.no_utilisateur = e.no_utilisateur " + "WHERE no_article = ?";
+			+ " LIKE ? AND c.libelle = ? ORDER BY a.date_fin_encheres ASC;";
+	private static final String SELECT_ALL_ARTICLES = "SELECT a.no_article as noArticle, a.nom_article as nomArticle, a.description as descArticle, a.date_debut_encheres as debutEnch, a.date_fin_encheres as finEnch,"
+			+ " a.prix_initial as prixInit, a.prix_vente as prixVente, a.no_utilisateur as articleNoU, a.no_categorie AS aNoCate, c.no_categorie AS cNoCate, c.libelle FROM articles_vendus a "
+			+ "INNER JOIN CATEGORIES c ON a.no_categorie = c.no_categorie ORDER BY a.date_fin_encheres ASC;";
+	
+	private static final String SELECT_ARTICLE_BY_NO_ARTICLE = "SELECT a.no_article as noArticle, a.nom_article as nomArticle, a.description as descArticle, a.prix_initial as prixInit, a.prix_vente as prixVente, a.date_debut_encheres as debutEnch, "
+			+ "a.date_fin_encheres as finEnch, a.no_utilisateur  as articleNoU, u.rue, u.code_postal, u.ville, u.pseudo "
+			+ "FROM ARTICLES_VENDUS a "
+			+ "INNER JOIN UTILISATEURS u on u.no_utilisateur = a.no_utilisateur " + "WHERE a.no_article = ?";
 
 	@Override
 	public void insertArticleVendu(ArticleVendu articleVendu) throws BusinessException {
@@ -139,16 +138,16 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private ArticleVendu mappingArticleVendu(ResultSet rs) throws SQLException {
 		ArticleVendu articleVendu = new ArticleVendu();
 		Utilisateur utilisateur = new Utilisateur();
-		utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
-		articleVendu.setNoArticleVendu(rs.getInt("no_article"));
-		articleVendu.setNomArticleVendu(rs.getString("nom_article"));
-		articleVendu.setDescription(rs.getString("description"));
+		utilisateur.setNoUtilisateur(rs.getInt("articleNoU"));
+		articleVendu.setNoArticleVendu(rs.getInt("noArticle"));
+		articleVendu.setNomArticleVendu(rs.getString("nomArticle"));
+		articleVendu.setDescription(rs.getString("descArticle"));
 		articleVendu.setDateDebutEncheres(
-				LocalDateTime.parse(rs.getTimestamp("date_debut_encheres").toLocalDateTime().toString()));
+				LocalDateTime.parse(rs.getTimestamp("debutEnch").toLocalDateTime().toString()));
 		articleVendu.setDateFinEncheres(
-				LocalDateTime.parse(rs.getTimestamp("date_fin_encheres").toLocalDateTime().toString()));
-		articleVendu.setMiseAPrix(rs.getInt("prix_initial"));
-		articleVendu.setPrixVente(rs.getInt("prix_vente"));
+				LocalDateTime.parse(rs.getTimestamp("finEnch").toLocalDateTime().toString()));
+		articleVendu.setMiseAPrix(rs.getInt("prixInit"));
+		articleVendu.setPrixVente(rs.getInt("prixVente"));
 		articleVendu.setUtilisateur(utilisateur);
 		return articleVendu;
 	}
@@ -156,7 +155,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private Categorie mappingCategorie(ResultSet rs) throws SQLException {
 		Categorie categorie = new Categorie();
 		categorie.setNoCategorie(rs.getInt("cNoCate"));
-		categorie.setLibelle(rs.getString("libelle"));
+		categorie.setLibelle(rs.getString("c.libelle"));
 		return categorie;
 	}
 
@@ -175,7 +174,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			while (rs.next()) {
 				articleVendu = mappingArticleVendu(rs);
 			}
-			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			businessException.ajouterErreur(CodesResultatDAL.SELECT_BY_NO_ARTICLE_ECHEC);
