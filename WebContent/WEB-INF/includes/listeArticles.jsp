@@ -32,9 +32,15 @@
 						  	<h2>PROBLEME</h2>
 						  </c:if>
 						  <c:set var="user" value="${lArt.utilisateur}"></c:set>
-						  <li>
-						  	Vendeur : ${user.pseudo}
-						  </li>
+						  <c:forEach var="u" items="${listeVendeurs}">
+						  <c:if test="${(user.noUtilisateur == u.noUtilisateur) && (i == 0)}">
+							  <li>
+							  	Vendeur : ${u.pseudo}
+							  </li>
+							  <c:set var="i" value="1"/>
+						  </c:if>
+					  
+					  </c:forEach> 
 						  
 						</ul>
 					</div>
@@ -48,7 +54,9 @@
 	<div>
 		<div class="row">
 			<c:forEach var="lArt" items="${listeArticlesVendu}">
-			<c:if test="${sessionScope.utilisateur !=  lArt.utilisateur}">
+			<c:set var="user" value="${lArt.utilisateur}"></c:set>
+			<c:set var="sessionUser" value="${sessionScope.utilisateur}"></c:set>
+			<c:if test="${sessionUser.noUtilisateur !=  user.noUtilisateur}">
 				<c:set var="i" value="0"/>
 				<div class="col-6 container-liste">
 					<ul class="list-group-item" style="list-style: none;">
@@ -71,7 +79,6 @@
 					  	<h2>Liste de vendeur vide</h2>
 					  </c:if>
 					  <c:forEach var="u" items="${listeVendeurs}">
-					  <c:set var="user" value="${lArt.utilisateur}"></c:set>
 						  <c:if test="${(user.noUtilisateur == u.noUtilisateur) && (i == 0)}">
 							  <li>
 							  	Vendeur : <a href="<%=request.getContextPath()%>/AffichProfil?pseudo=${u.pseudo}">${u.pseudo}</a>
@@ -90,7 +97,9 @@
 	<div>
 		<div class="row">
 			<c:forEach var="lArt" items="${listeArticlesVendu}">
-			<c:if test="${sessionScope.utilisateur ==  lArt.utilisateur}">
+			<c:set var="user" value="${lArt.utilisateur}"></c:set>
+			<c:set var="sessionUser" value="${sessionScope.utilisateur}"></c:set>
+			<c:if test="${sessionUser.noUtilisateur ==  user.noUtilisateur}">
 				<c:set var="i" value="0"/>
 				<div class="col-6 container-liste">
 					<ul class="list-group-item" style="list-style: none;">
@@ -113,7 +122,6 @@
 					  	<h2>Liste de vendeur vide</h2>
 					  </c:if>
 					  <c:forEach var="u" items="${listeVendeurs}">
-					  <c:set var="user" value="${lArt.utilisateur}"></c:set>
 						  <c:if test="${(user.noUtilisateur == u.noUtilisateur) && (i == 0)}">
 							  <li>
 							  	Vendeur : <a href="<%=request.getContextPath()%>/AffichProfil?pseudo=${u.pseudo}">${u.pseudo}</a>

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.javaee.trocencheres.bo.ArticleVendu;
-import fr.eni.javaee.trocencheres.bo.Categorie;
-import fr.eni.javaee.trocencheres.bo.Utilisateur;
 import fr.eni.javaee.trocencheres.dal.ArticleVenduDAO;
 import fr.eni.javaee.trocencheres.dal.DAOFactory;
 import fr.eni.javaee.trocencheres.exception.BusinessException;
@@ -28,8 +26,7 @@ public class ArticleVenduManager {
 	private ArticleVenduDAO articleVenduDAO;
 
 	public ArticleVenduManager() {
-		this.setArticleVenduDAO(DAOFactory.getArticleVenduDAO());
-
+		articleVenduDAO = DAOFactory.getArticleVenduDAO();
 	}
 
 	/**
@@ -44,25 +41,21 @@ public class ArticleVenduManager {
 	 * @param noUtilisateur
 	 * @param noCategorie
 	 */
-	public void insertArticleVendu(String nomArticleVendu, String description, LocalDateTime dateDebutEncheres,
-			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, Utilisateur utilisateur, Categorie categorie)
-			throws BusinessException {
-
-		BusinessException businessException = new BusinessException();
-		ArticleVendu articleVendu = new ArticleVendu(nomArticleVendu, description, dateDebutEncheres, dateFinEncheres,
-				miseAPrix, prixVente, utilisateur, categorie);
-		this.validerNomArticleVendu(articleVendu, businessException);
-		this.validerDescription(articleVendu, businessException);
-		this.validerDateDebutEncheres(articleVendu, businessException);
-		this.validerDateFinEncheres(articleVendu, businessException);
-		this.validerMiseAPrix(articleVendu, businessException);
-		this.validerPrixVente(articleVendu, businessException);
-		this.validerVendeur(articleVendu, businessException);
-		this.validerCategorie(articleVendu, businessException);
-
-		if (businessException.hasErreurs()) {
-			throw businessException;
-		}
+	public ArticleVendu insertArticleVendu(ArticleVendu articleVendu) throws BusinessException {
+//		BusinessException businessException = new BusinessException();
+//		this.validerNomArticleVendu(articleVendu, businessException);
+//		this.validerDescription(articleVendu, businessException);
+//		this.validerDateDebutEncheres(articleVendu, businessException);
+//		this.validerDateFinEncheres(articleVendu, businessException);
+//		this.validerMiseAPrix(articleVendu, businessException);
+//		this.validerPrixVente(articleVendu, businessException);
+//		this.validerVendeur(articleVendu, businessException);
+//		this.validerCategorie(articleVendu, businessException);
+		articleVendu = articleVenduDAO.insertArticleVendu(articleVendu);
+//		if (businessException.hasErreurs()) {
+//			throw businessException;
+//		}
+		return articleVendu;
 	}
 
 	private void validerCategorie(ArticleVendu articleVendu, BusinessException businessException) {

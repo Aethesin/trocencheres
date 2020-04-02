@@ -18,8 +18,8 @@ import fr.eni.javaee.trocencheres.exception.BusinessException;
 public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private static BusinessException businessException;
 	private static final String INSERT_ARTICLE_VENDU = "INSERT INTO ARTICLES_VENDUS"
-			+ "(nom_article, description,date_debut_encheres, " + "date_fin_encheres, prix_initial, prix_vente, "
-			+ "no_utilisateur, no_categorie) VALUES (?, ?, ?, ?, ?, ?, ?,?)";
+			+ "(nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, image_url, "
+			+ "no_utilisateur, no_categorie) VALUES (?, ?, ?, ?, ?, ?, '', ?, ?)";
 
 	private static final String SELECT_ARTICLES_BY_CATEGORIE = "SELECT a.no_article as noArticle, a.nom_article as nomArticle, a.description as descArticle, a.date_debut_encheres as debutEnch, a.date_fin_encheres as finEnch,"
 			+ " a.prix_initial as prixInit, a.prix_vente as prixVente, a.no_utilisateur as articleNoU, a.no_categorie AS aNoCate, c.no_categorie AS cNoCate, c.libelle FROM articles_vendus a "
@@ -43,10 +43,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			+ "INNER JOIN UTILISATEURS u on u.no_utilisateur = a.no_utilisateur " + "WHERE a.no_article = ?";
 
 	@Override
-	public void insertArticleVendu(ArticleVendu articleVendu) throws BusinessException {
+	public ArticleVendu insertArticleVendu(ArticleVendu articleVendu) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-			Utilisateur utilisateur = new Utilisateur();
-			Categorie categorie = new Categorie();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd HH:mm.ss");
 			PreparedStatement pstmt = cnx.prepareStatement(INSERT_ARTICLE_VENDU,
 					PreparedStatement.RETURN_GENERATED_KEYS);
@@ -57,8 +55,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			pstmt.setString(4, articleVendu.getDateFinEncheres().format(formatter));
 			pstmt.setInt(5, articleVendu.getMiseAPrix());
 			pstmt.setInt(6, articleVendu.getPrixVente());
-			pstmt.setInt(7, utilisateur.getNoUtilisateur());
-			pstmt.setInt(8, categorie.getNoCategorie());
+			pstmt.setInt(7, articleVendu.getUtilisateur().getNoUtilisateur());
+			pstmt.setInt(8, articleVendu.getCategorie().getNoCategorie());
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
 			if (rs.next()) {
@@ -67,6 +65,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return articleVendu;
 	}
 
 	@Override

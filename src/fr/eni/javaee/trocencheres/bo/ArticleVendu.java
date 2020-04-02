@@ -143,6 +143,7 @@ public class ArticleVendu implements Serializable {
 		this.prixVente = prixVente;
 	}
 	
+
 	public Utilisateur getUtilisateur() {
 		return utilisateur;
 	}
@@ -164,16 +165,15 @@ public class ArticleVendu implements Serializable {
 		return serialVersionUID;
 	}
 
-
-
-
-
-
-
+	
 	@Override
 	public String toString() {
-		return "ArticleVendu [noArticleVendu=" + noArticleVendu + ", nomArticleVendu=" + nomArticleVendu + ", dateDebutEncheres="
-				+ dateDebutEncheres + ", dateFinEncheres=" + dateFinEncheres + "]\n";
+		StringBuilder builder = new StringBuilder();
+		builder.append("ArticleVendu [noArticleVendu=").append(noArticleVendu).append(", nomArticleVendu=")
+				.append(nomArticleVendu).append(", description=").append(description).append(", dateDebutEncheres=")
+				.append(dateDebutEncheres).append(", dateFinEncheres=").append(dateFinEncheres).append(", miseAPrix=")
+				.append(miseAPrix).append(", prixVente=").append(prixVente).append(", utilisateur=").append(utilisateur)
+				.append(", categorie=").append(categorie).append("]");
+		return builder.toString();
 	}
-
 }

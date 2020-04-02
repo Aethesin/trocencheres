@@ -7,9 +7,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+<<<<<<< HEAD
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+=======
+>>>>>>> branch 'master' of https://github.com/Aethesin/trocencheres
 
 import fr.eni.javaee.trocencheres.bo.Categorie;
 import fr.eni.javaee.trocencheres.exception.BusinessException;
@@ -21,6 +24,7 @@ import fr.eni.javaee.trocencheres.exception.BusinessException;
  * @version trocencheres - v1.0
  * @date 31 mars 2020
  */
+<<<<<<< HEAD
 public class CategorieDAOJdbcImpl implements CategorieDAO {
 
 	private static final String INSERT_CATEGORIE = "INSERT INTO CATEGORIES (libelle) VALUES(?)";
@@ -78,6 +82,26 @@ public class CategorieDAOJdbcImpl implements CategorieDAO {
 	private Categorie mappingCategorie(ResultSet rs) throws SQLException{
 		Categorie categorie = new Categorie();
 		categorie.setLibelle(rs.getString("libelle"));
+=======
+public class CategorieDAOJdbcImpl implements CategorieDAO{
+	
+	private static final String SELECT_CATEGORIE_BY_ID = "SELECT no_categorie, libelle FROM CATEGORIES WHERE no_categorie = ?;";
+	
+	@Override
+	public Categorie selectCategorieById(int idCategorie) throws BusinessException {
+		Categorie categorie = new Categorie();
+		try (Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement psmt = cnx.prepareStatement(SELECT_CATEGORIE_BY_ID)){
+			psmt.setInt(1, idCategorie);
+			ResultSet rs = psmt.executeQuery();
+			while(rs.next()){
+				categorie.setNoCategorie(rs.getInt("no_categorie"));
+				categorie.setLibelle(rs.getString("libelle"));				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+>>>>>>> branch 'master' of https://github.com/Aethesin/trocencheres
 		return categorie;
 	}
 

@@ -36,27 +36,29 @@
 		<div class="ajout">
 			<label for="categorie">Catégorie<span class="requis"></span></label>
 			<select id="categorie" name="categorie">
-				<option>Informatique</option>
-				<option>Ameublement</option>
-				<option>Vêtement</option>
-				<option>Sport &amp; Loisirs</option>
+				<option value="1">Informatique</option>
+				<option value="2">Ameublement</option>
+				<option value="3">Vêtement</option>
+				<option value="4">Sport &amp; Loisirs</option>
 			</select>
 		</div>
 
 		<div class="ajout">
 			<label for="dateDebutEncheres">Date de la mise aux enchères<span
 				class="requis"></span></label>
-			<input type="datetime-local" id="dateDebutEncheres"
-				name="dateDebutEncheres" placeholder="Date de début des enchères"
-				value="<c:out value="${dateDebutEncheres }"/>" />
+			<input type="date" id="dateDebutEncheresDate"
+				name="dateDebutEncheresDate"/>
+			<input type="time" id="dateDebutEncheresTime"
+				name="dateDebutEncheresTime">
 		</div>
 
 		<div class="ajout">
 			<label for="dateFinEncheres">Date de la fin des enchères<span
 				class="requis"></span></label>
-			<input type="datetime-local" id="dateFinEncheres"
-				name="dateFinEncheres" placeholder="Date de fin des enchères"
-				value="<c:out value="${dateFinEncheres }"/>" />
+			<input type="date" id="dateFinEncheresDate"
+				name="dateFinEncheresDate"/>
+			<input type="time" id="dateFinEncheresTime"
+				name="dateFinEncheresTime">
 		</div>
 
 		<div class="ajout">
