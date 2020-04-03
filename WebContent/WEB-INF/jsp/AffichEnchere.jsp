@@ -26,7 +26,7 @@
 
 
 
-<c:if test="${pseudoSession != pseudoVendeur }">	
+<c:if test="${pseudoSession != pseudoVendeur || verifDateDebut}">	
 
 	<div>
 		<div class="text-center">
@@ -75,6 +75,14 @@
 					</h2>
 					<h2><c:out value="${ miseAPrix}"></c:out> points</h2>
 				</div>
+				<c:if test="${!verifDate && verifDateDebut }">
+					<div class="row h2-affichArt">
+						<h2 class="col-2">
+							Début de l'enchère :		
+						</h2>
+						<h2><c:out value="${ dateDebutEnchere}"></c:out></h2>
+					</div>
+				</c:if>
 				<div class="row h2-affichArt">
 					<h2 class="col-2">
 						Fin de l'enchère :		
@@ -113,7 +121,7 @@
 						<a class="btn btn-primary" href="<%=request.getContextPath()%>/accueil">Back</a>
 					</c:if>
 				</c:if>
-				<c:if test="${!verifDate && statut != 2}">
+				<c:if test="${(!verifDate && statut != 2 && !verifDateDebut) }">
 					<form action="<%=request.getContextPath()%>/AffichEnchere?noArticle=${articleVendu.noArticleVendu}" method="post">
 						<input name="pseudoMeilleur" value="${pseudoEnchereur}" hidden>
 						<input name="prixVente" value="${prixVente}" hidden>
@@ -139,7 +147,7 @@
 
 
 
-<c:if test="${pseudoSession == pseudoVendeur }">
+<c:if test="${pseudoSession == pseudoVendeur && !verifDateDebut}">
 
 <div class="text-center formulaire">
 		<h1>Modifiez votre article</h1>

@@ -122,7 +122,13 @@ public class ServletAffichEnchere extends HttpServlet {
 			
 			//Vérification de la date de fin enchère pour affichage du gagnant
 			Boolean verifDate = false;
+			Boolean verifDateDebut = false;
 			LocalDateTime dateAujourdhui = LocalDateTime.now();
+			if(dateAujourdhui.isBefore(dateDebutEnchere)){
+				verifDateDebut = false;
+			}else{
+				verifDateDebut = true;
+			}
 			if(dateAujourdhui.isBefore(dateFinEnchere)){
 				verifDate = false;
 			}else{
@@ -142,6 +148,7 @@ public class ServletAffichEnchere extends HttpServlet {
 			request.setAttribute("telephone", telephone);
 			request.setAttribute("pseudoSession", pseudoSession);
 			request.setAttribute("verifDate", verifDate);
+			request.setAttribute("verifDateDebut", verifDateDebut);
 			request.setAttribute("articleVendu", articleVendu);
 			request.setAttribute("nomArticle", nomArticleVendu);
 			request.setAttribute("description", description);
@@ -151,6 +158,7 @@ public class ServletAffichEnchere extends HttpServlet {
 			request.setAttribute("statut", sessionUser.getStatut());
 			request.setAttribute("pseudoEnchereur", pseudoEnchereur);			
 			request.setAttribute("miseAPrix", miseAPrix);
+			request.setAttribute("dateDebutEnchere", dateDebutEnchereDate + " " + dateDebutEnchereTime);
 			request.setAttribute("dateDebutEnchereDate", dateDebutEnchereDate);
 			request.setAttribute("dateDebutEnchereTime", dateDebutEnchereTime);
 			request.setAttribute("dateFinEnchere", dateFinEnchereDate + " " + dateDebutEnchereTime);
