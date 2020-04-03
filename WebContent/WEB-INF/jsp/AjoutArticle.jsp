@@ -17,7 +17,7 @@
 		<h1>Ajoutez votre article</h1>
 	</div>
 
-<div class="container row">
+<div class="container">
 <div class="col-3"></div>
 	<div class="col-9">
 		<form action="<c:url value="/AjoutArticle"/>" method="post">
