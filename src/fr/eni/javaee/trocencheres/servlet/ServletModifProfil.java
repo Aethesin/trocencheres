@@ -30,12 +30,11 @@ public class ServletModifProfil extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * Méthode pour afficher les champs avec les bonne données selon l'utilisateur
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		HttpSession session = request.getSession();
-		//Méthode pour afficher les champs avec les bonne données selon l'utilisateur
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 		if(utilisateur != null){
 			request.setAttribute("utilisateur", utilisateur);
@@ -54,14 +53,15 @@ public class ServletModifProfil extends HttpServlet {
 		RequestDispatcher rq = null;
 		Utilisateur user = null;
 		umger = new UtilisateurManager();
-		//Récupération des champs, même inchangé, pour la modification en base de données
+		/**
+		 * Récupération des champs, même inchangés, pour la modification en base de données
+		 */
 		try {
 			String pseudo = request.getParameter("pseudo");
 			user = umger.getConnexion(pseudo);
 			if (pseudo != user.getPseudo()) {
 				user.setPseudo(pseudo);
 			}
-			//TODO verif pseudo unique
 			
 			String nom = request.getParameter("nom");
 			if (nom != user.getNom()) {
@@ -77,7 +77,6 @@ public class ServletModifProfil extends HttpServlet {
 			if (email != user.getEmail()) {
 				user.setEmail(email);
 			}
-			//TODO verif email unique
 			
 			String telephone = request.getParameter("telephone");
 			if (telephone != user.getTelephone()) {
@@ -119,7 +118,6 @@ public class ServletModifProfil extends HttpServlet {
 			rq = request.getRequestDispatcher("/AffichProfil");
 			rq.forward(request, response);
 		} catch (BusinessException e) {
-			// TODO message erreur qui va  bien
 			e.printStackTrace();
 		}
 	}

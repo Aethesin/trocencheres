@@ -37,7 +37,9 @@ public class ServletConnexion extends HttpServlet {
 		Cookie[] cookies = request.getCookies();
 		
 		RequestDispatcher rd = null;
-		//Récupération des cookies et préremplissage dans les champs
+		/**
+		 * Récupération des cookies et pré-remplissage des champs
+		 */
 		if(session.getAttribute("utilisateur") != null){
 			response.sendRedirect("accueil");
 		}else{
@@ -58,7 +60,9 @@ public class ServletConnexion extends HttpServlet {
 		RequestDispatcher rd = null;
 		HttpSession session = request.getSession();
 		Cookie[] cookies = request.getCookies();
-		//Se connecter en tant qu'utilisateur, créé une session, qui se déconnectera au bout de 5 minutes d'inactivitée
+		/**
+		 * Connexion en tant qu'utilisateur, création d'une session, qui se déconnectera au bout de 5 minutes d'inactivitée
+		 */
 		try {
 			String pseudo = request.getParameter("pseudo");
 			String motDePasse = request.getParameter("motDePasse");
@@ -72,7 +76,9 @@ public class ServletConnexion extends HttpServlet {
 			user = umger.getConnexion(pseudo);
 			if(user.getPseudo().equals(pseudo) && user.getMotDePasse().equals(motDePasse)){
 				System.out.println("Connexion en tant que " + pseudo);
-				//Si on a laissé coché la checkbox "Se souvenir de moi" des cookies sont créés (Le mot de passe est affiché en clair pour le moment)
+				/**
+				 * Si on a laissé cochée la checkbox "Se souvenir de moi", des cookies sont créés (Le mot de passe est affiché en clair pour le moment)
+				 */
 				if(checkbox.equals("on")){					
 					Cookie cookiePseudo = new Cookie("pseudo", pseudo);
 					cookiePseudo.setMaxAge(-1);
@@ -81,7 +87,9 @@ public class ServletConnexion extends HttpServlet {
 					response.addCookie(cookiePseudo);
 					response.addCookie(cookieMDP);
 				}else{
-					//Si on a décoché les cookies seront vides
+					/**
+					 * Si on a décoché la checkbox les cookies seront vides
+					 */
 					Cookie cookiePseudo = new Cookie("pseudo", "");
 					cookiePseudo.setMaxAge(-1);
 					Cookie cookieMDP = new Cookie("motDePasse", "");
@@ -89,7 +97,9 @@ public class ServletConnexion extends HttpServlet {
 					response.addCookie(cookiePseudo);
 					response.addCookie(cookieMDP);
 				}
-				//Session de 5 minutes
+				/**
+				 * Session de 5 minutes
+				 */
 				session.setMaxInactiveInterval(300);
 				session.setAttribute("utilisateur", user);
 				doGet(request, response);

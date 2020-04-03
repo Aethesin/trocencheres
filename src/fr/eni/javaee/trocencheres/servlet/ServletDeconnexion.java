@@ -30,7 +30,9 @@ public class ServletDeconnexion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		//Lorsqu'on se déconnecte, cette méthode rend juste la session inactive
+		/**
+		 * Lorsqu'on se déconnecte, cette méthode rend juste la session inactive
+		 */
 		session.invalidate();
 		response.sendRedirect("accueil");
 	}

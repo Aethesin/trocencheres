@@ -15,6 +15,12 @@ import fr.eni.javaee.trocencheres.exception.BusinessException;
 /**
  * Servlet implementation class ServletDesactiverCompte
  */
+/**
+ * Classe en charge de désactiver un compte, çàd passer le statut de 0 à 2 en base de données
+ * @author D2WM2020_Team1
+ * @version trocencheres - v1.0
+ * @date 3 avr. 2020
+ */
 @WebServlet("/DesactiverCompte")
 public class ServletDesactiverCompte extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -25,7 +31,6 @@ public class ServletDesactiverCompte extends HttpServlet {
      */
     public ServletDesactiverCompte() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -39,7 +44,6 @@ public class ServletDesactiverCompte extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//Ici cette méthode permet de désactiver un compte, passer le statut de 0 à 2 en base de données
 		utilisateurManager = new UtilisateurManager();
 		HttpSession session = request.getSession();
 		Utilisateur utilisateurSession = (Utilisateur) session.getAttribute("utilisateur");

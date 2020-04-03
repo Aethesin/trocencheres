@@ -29,7 +29,6 @@ public class ServletModifArticle extends HttpServlet {
      */
     public ServletModifArticle() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
