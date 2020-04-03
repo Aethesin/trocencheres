@@ -27,7 +27,7 @@
 							  </li>
 						  </c:if>
 						  <li>
-						  <c:set var="date" value="${lArt.dateFinEncheres.toString() }"></c:set>
+						  <c:set var="date" value="${lArt.dateFinEncheres}"></c:set>
 						  	Fin de l'enchère : ${date }
 						  </li>
 						  
