@@ -50,9 +50,9 @@
 				</div>
 				<div class="col-4">
 					<select class="form-control" id="categorie" name="categorie">
-						<option value="1">Informatique</option>
-						<option value="2">Ameublement</option>
-						<option value="3">Vêtement</option>
+						<option value="1">Vêtement</option>
+						<option value="2">Informatique</option>
+						<option value="3">Ameublement</option>
 						<option value="4">Sport &amp; Loisirs</option>
 					</select>
 				</div>
