@@ -127,15 +127,17 @@ public class ServletAjoutArticle extends HttpServlet {
 			listeCodesErreurString.add(LecteurMessage.getMessageErreur(integer));
 		}
 		/**
-		 * On créé un objet article avec toutes les informations données
+		 * Création d'un objet article avec toutes les informations données
 		 */
 		ArticleVendu articleVendu = new ArticleVendu(nomArticleVendu, description, dateDebutEncheres, dateFinEncheres,
 				miseAPrix, prixVente, utilisateur, categorie);
 		/**
-		 * si la méthode a récupéré des erreurs, si oui, redirection vers le formulaire sans envoyer les informations plus loin
+		 * si la méthode a récupéré des erreurs, redirection vers le formulaire sans envoyer les informations plus loin
 		 */
 		if (listeCodesErreur.size() > 0) {
-			//Réaffichage des champs si ils ont été remplis par l'utilisateur
+			/**
+			 * Réaffichage des champs s'ils ont été remplis par l'utilisateur
+			 */
 			request.setAttribute("article", articleVendu);
 			request.setAttribute("listeCodesErreurString", listeCodesErreurString);
 			doGet(request, response);
