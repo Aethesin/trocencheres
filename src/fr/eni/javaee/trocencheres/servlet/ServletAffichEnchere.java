@@ -146,13 +146,13 @@ public class ServletAffichEnchere extends HttpServlet {
 			request.setAttribute("nomArticle", nomArticleVendu);
 			request.setAttribute("description", description);
 			request.setAttribute("libelle", libelle);
-			System.out.println(categorie.getNoCategorie() + libelle);
 			request.setAttribute("noCategorie", categorie.getNoCategorie());
 			request.setAttribute("prixVente", prixVente);
 			request.setAttribute("pseudoEnchereur", pseudoEnchereur);			
 			request.setAttribute("miseAPrix", miseAPrix);
 			request.setAttribute("dateDebutEnchereDate", dateDebutEnchereDate);
 			request.setAttribute("dateDebutEnchereTime", dateDebutEnchereTime);
+			request.setAttribute("dateFinEnchere", dateFinEnchereDate + " " + dateDebutEnchereTime);
 			request.setAttribute("dateFinEnchereDate", dateFinEnchereDate);
 			request.setAttribute("dateFinEnchereTime", dateFinEnchereTime);
 			request.setAttribute("rue", rue);

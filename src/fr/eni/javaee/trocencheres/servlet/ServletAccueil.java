@@ -1,6 +1,8 @@
 package fr.eni.javaee.trocencheres.servlet;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +42,6 @@ public class ServletAccueil extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		amger = new ArticleVenduManager();
 		RequestDispatcher rd = null;
-		
 		//Ici on affiche la page d'accueil du site trocencheres, l'affichage de base lorsqu'il n'y a pas eu de recherche par filtre
 		try {
 			//On créer alors deux listes, une pour tous les articles en ventes et une pour tous les utilisateurs qui ont mis un article en vente
@@ -65,8 +66,8 @@ public class ServletAccueil extends HttpServlet {
 		
 		amger = new ArticleVenduManager();
 		RequestDispatcher rd = null;
-		request.setCharacterEncoding("UTF-8");
 		
+		request.setCharacterEncoding("UTF-8");
 		//Ici on récupère nos champs de recherche motCle et la catégorie, si catégorie = "toutes" on recherche dans toutes les catégories
 		String motCle = request.getParameter("motCle");
 		String categorie = request.getParameter("categorie");

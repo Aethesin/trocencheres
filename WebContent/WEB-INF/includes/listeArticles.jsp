@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <c:if test="${empty listeArticlesVendu}">
 		<p>Aucun article ne correspond à la demande actuelle</p>
@@ -21,11 +22,13 @@
 						  </c:if>
 						  <c:if test="${lArt.prixVente != 0}">
 							  <li>
+								
 							  	Prix : ${lArt.prixVente }
 							  </li>
 						  </c:if>
 						  <li>
-						  	Fin de l'enchère : ${lArt.dateFinEncheres.toString() }
+						  <c:set var="date" value="${lArt.dateFinEncheres.toString() }"></c:set>
+						  	Fin de l'enchère : ${date }
 						  </li>
 						  
 						  <c:if test="${empty listeVendeurs}">
