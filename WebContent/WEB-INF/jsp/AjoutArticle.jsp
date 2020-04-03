@@ -29,7 +29,7 @@
 				<div class="col-6">
 					<input class="form-control" type="text" id="nomArticleVendu" required="required"
 						name="nomArticleVendu" maxlength="30" placeholder="Nom de l'article"
-						value="<c:out value="${nomArticleVendu}"/>" />
+						value="<c:out value="${article.nomArticleVendu}"/>" />
 				</div>
 			</div>
 	
@@ -40,7 +40,7 @@
 				</div>
 				<div class="col-6">
 					<textarea class="form-control" name="description" rows=5 cols=60 required="required"
-						wrap="soft" placeholder="Description de votre article"></textarea>
+						wrap="soft" placeholder="Description de votre article">${article.description }</textarea>
 				</div>
 			</div>
 	
@@ -90,7 +90,7 @@
 				</div>
 				<div class="col-4">
 					<input class="form-control" type="number" id="miseAPrix" name="miseAPrix"
-						placeholder="Prix proposé" value="<c:out value="${miseAPrix }"/>" />
+						placeholder="Prix proposé" value="<c:out value="${article.miseAPrix }"/>" />
 				</div>
 			</div>
 	

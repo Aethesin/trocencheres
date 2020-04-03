@@ -113,7 +113,7 @@
 						<a class="btn btn-primary" href="<%=request.getContextPath()%>/accueil">Back</a>
 					</c:if>
 				</c:if>
-				<c:if test="${!verifDate}">
+				<c:if test="${!verifDate && statut != 2}">
 					<form action="<%=request.getContextPath()%>/AffichEnchere?noArticle=${articleVendu.noArticleVendu}" method="post">
 						<input name="pseudoMeilleur" value="${pseudoEnchereur}" hidden>
 						<input name="prixVente" value="${prixVente}" hidden>
