@@ -15,6 +15,12 @@ import fr.eni.javaee.trocencheres.exception.BusinessException;
 /**
  * Servlet implementation class ServletActiverCompte
  */
+/**
+ * Classe en charge d'activer le compte d'un utilisateur, lorsqu'il a été désactivé auparavant, çàd passer le statut dans la base de données de 2 à 0
+ * @author D2WM2020_Team1
+ * @version trocencheres - v1.0
+ * @date 3 avr. 2020
+ */
 @WebServlet("/ActiverCompte")
 public class ServletActiverCompte extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -24,7 +30,6 @@ public class ServletActiverCompte extends HttpServlet {
      */
     public ServletActiverCompte() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -38,7 +43,6 @@ public class ServletActiverCompte extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//Cette méthode, et même cette servlet sert à activer le compte d'un utilisateur, lorsqu'il a été désactivé auparavant, passer le statut dans la base de données de 2 à 0
 		utilisateurManager = new UtilisateurManager();
 		HttpSession session = request.getSession();
 		Utilisateur utilisateurSession = (Utilisateur) session.getAttribute("utilisateur");
