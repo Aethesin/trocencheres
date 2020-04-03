@@ -30,14 +30,21 @@ public class ServletTestPoolConnexion extends HttpServlet {
 		
 		try {
 			Context context = new InitialContext();
-			//Recherche de la DataSource
+			/**
+			 * Recherche de la DataSource
+			 */
 			DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/pool_cnx");
-			//Demande une connexion. La méthode getConnection met la demande en attente tant qu'il n'y a
-			//pas de connexions disponibles dans le pool.
+			/**
+			 * Demande une connexion. La méthode getConnection met la demande en attente tant qu'il n'y a
+			 * pas de connexions disponibles dans le pool
+			 */
 			Connection cnx = dataSource.getConnection();
 			out.print("La connexion est " + (cnx.isClosed()?"fermée":"ouverte")+".");
-			//Libérer la connexion lorsque l'on en a plus besoin:
-			cnx.close();//La connexion n'est pas fermée mais remise dans le pool.
+			/**
+			 * Libérer la connexion lorsque l'on en a plus besoin
+			 * La connexion n'est pas fermée mais remise dans le pool
+			 */
+			cnx.close();
 			
 		} catch (NamingException | SQLException e) {
 			e.printStackTrace();

@@ -26,7 +26,6 @@ public class ServletSupprimProfil extends HttpServlet {
      */
     public ServletSupprimProfil() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -36,7 +35,9 @@ public class ServletSupprimProfil extends HttpServlet {
 		umger = new UtilisateurManager();
 		HttpSession session = request.getSession();
 		RequestDispatcher rq = null;
-		//Ici on supprime le compte lorsque l'utilisateur du compte en question clique sur le bouton supprimer
+		/**
+		 * on supprime le compte lorsque le propriétaire du compte en question clique sur le bouton supprimer
+		 */
 		try {
 			int noUtilisateur = Integer.parseInt(request.getParameter("noUtilisateur"));
 			umger.supprUtilisateur(noUtilisateur);
@@ -55,7 +56,9 @@ public class ServletSupprimProfil extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		umger = new UtilisateurManager();
-		//Ici on supprime le compte lorsque l'administrateur le décide
+		/**
+		 * on supprime le compte sur décision de l'administrateur
+		 */
 		HttpSession session = request.getSession();
 		Utilisateur utilisateurSession = (Utilisateur) session.getAttribute("utilisateur");
 		if(utilisateurSession.getStatut() != 1){
