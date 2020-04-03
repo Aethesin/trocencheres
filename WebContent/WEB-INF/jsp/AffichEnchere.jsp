@@ -178,11 +178,11 @@
 						<label for="categorie">Catégorie<span class="requis"></span></label>
 					</div>
 					<div class="col-4">
-						<select class="form-control" id="categorie" name="categorie">
-							<option value="1">Informatique</option>
-							<option value="2">Ameublement</option>
-							<option value="3">Vêtement</option>
-							<option value="4">Sport &amp; Loisirs</option>
+						<select class="form-control" id="categorie" name="categorie" value="${noCategorie}">
+							<option value="1" <c:if test="${noCategorie == 1}">selected</c:if> >Vêtement</option>
+							<option value="2" <c:if test="${noCategorie == 2}">selected</c:if> >Informatique</option>
+							<option value="3" <c:if test="${noCategorie == 3}">selected</c:if> >Ameublement</option>
+							<option value="4" <c:if test="${noCategorie == 4}">selected</c:if> >Sport &amp; Loisirs</option>
 						</select>
 					</div>
 				</div>

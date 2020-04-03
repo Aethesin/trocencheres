@@ -146,6 +146,8 @@ public class ServletAffichEnchere extends HttpServlet {
 			request.setAttribute("nomArticle", nomArticleVendu);
 			request.setAttribute("description", description);
 			request.setAttribute("libelle", libelle);
+			System.out.println(categorie.getNoCategorie() + libelle);
+			request.setAttribute("noCategorie", categorie.getNoCategorie());
 			request.setAttribute("prixVente", prixVente);
 			request.setAttribute("pseudoEnchereur", pseudoEnchereur);			
 			request.setAttribute("miseAPrix", miseAPrix);
