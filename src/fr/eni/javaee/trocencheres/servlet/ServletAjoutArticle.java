@@ -52,12 +52,11 @@ public class ServletAjoutArticle extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * Cette méthode sert à ajouter un article en base de données
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//Cette méthode sert à ajouter un article en base de données
+		//
 		request.setCharacterEncoding("UTF-8");
 		RequestDispatcher rd = null;
 		categorieManager = new CategorieManager();
@@ -75,7 +74,9 @@ public class ServletAjoutArticle extends HttpServlet {
 		HttpSession session = request.getSession();
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur = (Utilisateur) session.getAttribute("utilisateur");
-		//On récupère les informations liées à la création d'un article
+		/**
+		 * On récupère les informations liées à la création d'un article
+		 */
 		try {
 			nomArticleVendu = request.getParameter("nomArticleVendu");
 		} catch (StringIndexOutOfBoundsException e) {
@@ -107,13 +108,6 @@ public class ServletAjoutArticle extends HttpServlet {
 			e.printStackTrace();
 			listeCodesErreur.add(CodesResultatServlets.FORMAT_MISE_A_PRIX_ERREUR);
 		}
-		
-		
-	
-//			Utilisateur utilisateur =  (Utilisateur) session.getAttribute("utilisateur");
-//			int noUtilisateur = utilisateur.getNoUtilisateur();
-			
-		
 			
 		noUtilisateur = utilisateur.getNoUtilisateur();
 		Categorie categorie = null;
@@ -125,15 +119,17 @@ public class ServletAjoutArticle extends HttpServlet {
 			e1.printStackTrace();
 		}
 		
-		
 		for(Integer integer : listeCodesErreur) {
 			listeCodesErreurString.add(LecteurMessage.getMessageErreur(integer));
 		}
-		//On créé un objet article avec toutes les informations données
+		/**
+		 * On créé un objet article avec toutes les informations données
+		 */
 		ArticleVendu articleVendu = new ArticleVendu(nomArticleVendu, description, dateDebutEncheres, dateFinEncheres,
 				miseAPrix, prixVente, utilisateur, categorie);
-		
-		//Vérifier si la méthode a récupérée des erreurs, si oui, on le redirige sur le formulaire sans envoyer les informations plus loin
+		/**
+		 * si la méthode a récupéré des erreurs, si oui, redirection vers le formulaire sans envoyer les informations plus loin
+		 */
 		if (listeCodesErreur.size() > 0) {
 			//Réaffichage des champs si ils ont été remplis par l'utilisateur
 			request.setAttribute("article", articleVendu);

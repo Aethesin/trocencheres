@@ -62,7 +62,7 @@ public class ServletAccueil extends HttpServlet {
 	}
 
 	/**
-	 * on affiche la page d'accueil après la recherche par filtre, différent cas s'impose, avec soit un filtre, soit deux
+	 * on affiche la page d'accueil après la recherche par filtre, avec soit un filtre, soit deux
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		

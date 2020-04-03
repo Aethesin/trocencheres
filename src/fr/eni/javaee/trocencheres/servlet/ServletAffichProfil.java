@@ -26,9 +26,8 @@ public class ServletAffichProfil extends HttpServlet {
 
 	}
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * On récupère les informations liées à un utilisateur, pour les afficher
 	 */
-	//On récupère ici les informations liées à un utilisateur, pour les afficher
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String nomUtilisateur = null;

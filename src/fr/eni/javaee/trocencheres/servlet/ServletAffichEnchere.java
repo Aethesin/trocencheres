@@ -177,7 +177,9 @@ public class ServletAffichEnchere extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// Permet de gerer une proposition d'enchere
+		/**
+		 * Permet de gerer une proposition d'enchere
+		 */
 		int valeurProposition = Integer.parseInt(request.getParameter("proposition"));
 		int prixVente = Integer.parseInt(request.getParameter("prixVente"));
 		utilisateurManager = new UtilisateurManager();
@@ -187,7 +189,9 @@ public class ServletAffichEnchere extends HttpServlet {
 		RequestDispatcher rd = null;
 		Enchere enchere = new Enchere();
 		ArticleVendu articleVendu = new ArticleVendu();
-		//Ce passe ici la transaction envers les utilisateurs, celui qui a enchérit, et celui qui à "perdu" son enchère
+		/**
+		 * la transaction entre les utilisateurs, celui qui a enchéri, et celui qui à "perdu" son enchère
+		 */
 		if(valeurProposition <= utilisateur.getCredit()){
 			if(valeurProposition > prixVente){
 				articleVendu.setNoArticleVendu(Integer.parseInt(request.getParameter("noArticle")));
@@ -196,7 +200,9 @@ public class ServletAffichEnchere extends HttpServlet {
 				try {
 					
 					utilisateurMeilleur = utilisateurManager.getConnexion(pseudo);
-					//Vérifier si l'enréchisseur est le même que l'ancien
+					/**
+					 * Vérifier si l'enchérisseur est le même que le précédent
+					 */
 					if(utilisateur.getNoUtilisateur() == utilisateurMeilleur.getNoUtilisateur()){
 						utilisateur.setCredit(utilisateur.getCredit() - valeurProposition + prixVente);
 						utilisateurManager.modifUtilisateur(utilisateur);
