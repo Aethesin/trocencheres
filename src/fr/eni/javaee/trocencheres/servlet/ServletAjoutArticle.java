@@ -103,7 +103,11 @@ public class ServletAjoutArticle extends HttpServlet {
 		dateFinEncheres = LocalDateTime.parse(dateFinEnchereString);
 
 		try {
-			miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
+			if(Integer.parseInt(request.getParameter("miseAPrix")) > 0){
+				miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));				
+			}else{
+				listeCodesErreur.add(CodesResultatServlets.FORMAT_MISE_A_PRIX_ERREUR);
+			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 			listeCodesErreur.add(CodesResultatServlets.FORMAT_MISE_A_PRIX_ERREUR);
