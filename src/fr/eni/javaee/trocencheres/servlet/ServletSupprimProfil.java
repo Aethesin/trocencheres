@@ -42,8 +42,7 @@ public class ServletSupprimProfil extends HttpServlet {
 			int noUtilisateur = Integer.parseInt(request.getParameter("noUtilisateur"));
 			umger.supprUtilisateur(noUtilisateur);
 			session.invalidate();
-			rq= request.getRequestDispatcher("/Accueil");
-			rq.forward(request, response);
+			response.sendRedirect("accueil");
 		} catch (BusinessException e) {
 			rq = request.getRequestDispatcher("/ModifProfil");
 			rq.forward(request, response);

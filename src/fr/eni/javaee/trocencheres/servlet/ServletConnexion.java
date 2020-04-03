@@ -74,38 +74,43 @@ public class ServletConnexion extends HttpServlet {
 			umger = new UtilisateurManager();
 			Utilisateur user = new Utilisateur();
 			user = umger.getConnexion(pseudo);
-			if(user.getPseudo().equals(pseudo) && user.getMotDePasse().equals(motDePasse)){
-				System.out.println("Connexion en tant que " + pseudo);
-				/**
-				 * Si on a laissé cochée la checkbox "Se souvenir de moi", des cookies sont créés (Le mot de passe est affiché en clair pour le moment)
-				 */
-				if(checkbox.equals("on")){					
-					Cookie cookiePseudo = new Cookie("pseudo", pseudo);
-					cookiePseudo.setMaxAge(-1);
-					Cookie cookieMDP = new Cookie("motDePasse", motDePasse);
-					cookieMDP.setMaxAge(-1);
-					response.addCookie(cookiePseudo);
-					response.addCookie(cookieMDP);
-				}else{
+			try {
+				if(user.getPseudo().equals(pseudo) && user.getMotDePasse().equals(motDePasse)){
+					System.out.println("Connexion en tant que " + pseudo);
 					/**
-					 * Si on a décoché la checkbox les cookies seront vides
+					 * Si on a laissé cochée la checkbox "Se souvenir de moi", des cookies sont créés (Le mot de passe est affiché en clair pour le moment)
 					 */
-					Cookie cookiePseudo = new Cookie("pseudo", "");
-					cookiePseudo.setMaxAge(-1);
-					Cookie cookieMDP = new Cookie("motDePasse", "");
-					cookieMDP.setMaxAge(-1);
-					response.addCookie(cookiePseudo);
-					response.addCookie(cookieMDP);
+					if(checkbox.equals("on")){					
+						Cookie cookiePseudo = new Cookie("pseudo", pseudo);
+						cookiePseudo.setMaxAge(-1);
+						Cookie cookieMDP = new Cookie("motDePasse", motDePasse);
+						cookieMDP.setMaxAge(-1);
+						response.addCookie(cookiePseudo);
+						response.addCookie(cookieMDP);
+					}else{
+						/**
+						 * Si on a décoché la checkbox les cookies seront vides
+						 */
+						Cookie cookiePseudo = new Cookie("pseudo", "");
+						cookiePseudo.setMaxAge(-1);
+						Cookie cookieMDP = new Cookie("motDePasse", "");
+						cookieMDP.setMaxAge(-1);
+						response.addCookie(cookiePseudo);
+						response.addCookie(cookieMDP);
+					}
+					/**
+					 * Session de 5 minutes
+					 */
+					session.setMaxInactiveInterval(300);
+					session.setAttribute("utilisateur", user);
+					doGet(request, response);
+				}else {
+					doGet(request, response);
 				}
-				/**
-				 * Session de 5 minutes
-				 */
-				session.setMaxInactiveInterval(300);
-				session.setAttribute("utilisateur", user);
-				doGet(request, response);
-			}else {
+			} catch (NullPointerException e) {
 				doGet(request, response);
 			}
+			
 		} catch (BusinessException e) {
 			e.printStackTrace();
 			doGet(request, response);
