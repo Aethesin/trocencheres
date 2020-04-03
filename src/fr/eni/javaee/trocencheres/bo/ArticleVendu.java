@@ -114,7 +114,7 @@ public class ArticleVendu implements Serializable {
 
 	/**
 	 * Méthode en charge de récupérer la valeur de description
-	 * @return
+	 * @return description
 	 */
 	public String getDescription() {
 		return description;
@@ -130,7 +130,7 @@ public class ArticleVendu implements Serializable {
 
 	/**
 	 * Méthode en charge de récupérer la valeur de dateDebutEncheres
-	 * @return
+	 * @return dateDebutEncheres
 	 */
 	public LocalDateTime getDateDebutEncheres() {
 		return dateDebutEncheres;
@@ -146,7 +146,7 @@ public class ArticleVendu implements Serializable {
 
 	/**
 	 * Méthode en charge de récupérer la valeur de dateFinEncheres
-	 * @return
+	 * @return dateFinEncheres
 	 */
 	public LocalDateTime getDateFinEncheres() {
 		return dateFinEncheres;
@@ -162,7 +162,7 @@ public class ArticleVendu implements Serializable {
 
 	/**
 	 * Méthode en charge de récupérer la valeur de miseAPrix
-	 * @return
+	 * @return miseAPrix
 	 */
 	public int getMiseAPrix() {
 		return miseAPrix;
@@ -178,7 +178,7 @@ public class ArticleVendu implements Serializable {
 
 	/**
 	 * Méthode en charge de récupérer la valeur de prixVente
-	 * @return
+	 * @return prixVente
 	 */
 	public int getPrixVente() {
 		return prixVente;
@@ -194,7 +194,7 @@ public class ArticleVendu implements Serializable {
 
 	/**
 	 * Méthode en charge de récupérer la valeur de utilisateur
-	 * @return
+	 * @return utilisateur
 	 */
 	public Utilisateur getUtilisateur() {
 		return utilisateur;
@@ -210,7 +210,7 @@ public class ArticleVendu implements Serializable {
 
 	/**
 	 * Méthode en charge de récupérer la valeur de categorie
-	 * @return
+	 * @return categorie
 	 */
 	public Categorie getCategorie() {
 		return categorie;
@@ -226,7 +226,7 @@ public class ArticleVendu implements Serializable {
 
 	/**
 	 * Méthode en charge de récupérer la valeur de serialVersionUID
-	 * @return
+	 * @return serialVersionUID
 	 */
 	public static long getSerialversionuid() {
 		return serialVersionUID;
