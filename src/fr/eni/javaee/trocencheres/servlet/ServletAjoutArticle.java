@@ -2,6 +2,7 @@ package fr.eni.javaee.trocencheres.servlet;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,8 +90,13 @@ public class ServletAjoutArticle extends HttpServlet {
 			listeCodesErreur.add(CodesResultatServlets.FORMAT_DESCRIPTION_ERREUR);
 		}
 
-		String dateDebutEnchereString = request.getParameter("dateDebutEncheresDate")+"T"+request.getParameter("dateDebutEncheresTime");
-		dateDebutEncheres = LocalDateTime.parse(dateDebutEnchereString);
+		if(request.getParameter("dateDebutEncheresDate").trim().length() == 0 && request.getParameter("dateDebutEncheresTime").trim().length() == 0){
+			dateDebutEncheres = LocalDateTime.now();
+			System.out.println(dateDebutEncheres);
+		}else{
+			String dateDebutEnchereString = request.getParameter("dateDebutEncheresDate")+"T"+request.getParameter("dateDebutEncheresTime");
+			dateDebutEncheres = LocalDateTime.parse(dateDebutEnchereString);			
+		}
 		
 		String dateFinEnchereString = request.getParameter("dateFinEncheresDate")+"T"+request.getParameter("dateFinEncheresTime");
 		dateFinEncheres = LocalDateTime.parse(dateFinEnchereString);
