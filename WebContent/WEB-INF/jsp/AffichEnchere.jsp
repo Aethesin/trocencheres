@@ -136,12 +136,13 @@
 		</div>
 	</div>
 </c:if>
+
+
+
 <c:if test="${pseudoSession == pseudoVendeur }">
+<form class="formulaire" action="<c:url value="/ModifArticle"/>" method="post">
 
-
-<form class="formulaire" action="<c:url value="/UpdateArticle"/>" method="post">
-
-
+		<input hidden name="noArticle" value="${articleVendu.noArticleVendu}">
 		<div class="ajout">
 			<label for="nomArticleVendu">Nom de l'article<span
 				class="requis"></span></label>

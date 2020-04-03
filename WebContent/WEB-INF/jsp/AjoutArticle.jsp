@@ -17,89 +17,128 @@
 		<h1>Ajoutez votre article</h1>
 	</div>
 
-	<form action="<c:url value="/AjoutArticle"/>" method="post">
-
-
-		<div class="ajout">
-			<label for="nomArticleVendu">Nom de l'article<span
-				class="requis"></span></label>
-			<input type="text" id="nomArticleVendu" required="required"
-				name="nomArticleVendu" maxlength="30" placeholder="Nom de l'article"
-				value="<c:out value="${nomArticleVendu}"/>" />
-		</div>
-
-		<div class="ajout">
-		<label for="description">Description<span
-				class="requis"></span></label>
-		<textarea name="description" rows=5 cols=60 required="required"
-				wrap="soft" placeholder="Description de votre article"></textarea>
-		</div>
-
-		<div class="ajout">
-			<label for="categorie">Catégorie<span class="requis"></span></label>
-			<select id="categorie" name="categorie">
-				<option value="1">Informatique</option>
-				<option value="2">Ameublement</option>
-				<option value="3">Vêtement</option>
-				<option value="4">Sport &amp; Loisirs</option>
-			</select>
-		</div>
-
-		<div class="ajout">
-			<label for="dateDebutEncheres">Date de la mise aux enchères<span
-				class="requis"></span></label>
-			<input type="date" id="dateDebutEncheresDate"
-				name="dateDebutEncheresDate"/>
-			<input type="time" id="dateDebutEncheresTime"
-				name="dateDebutEncheresTime">
-		</div>
-
-		<div class="ajout">
-			<label for="dateFinEncheres">Date de la fin des enchères<span
-				class="requis"></span></label>
-			<input type="date" id="dateFinEncheresDate"
-				name="dateFinEncheresDate"/>
-			<input type="time" id="dateFinEncheresTime"
-				name="dateFinEncheresTime">
-		</div>
-
-		<div class="ajout">
-			<label for="miseAPrix">Mise à prix<span class="requis"></span></label>
-			<input type="number" id="miseAPrix" name="miseAPrix"
-				placeholder="Prix proposé" value="<c:out value="${miseAPrix }"/>" />
-		</div>
-
-		<div>
-			<p>Retrait</p>
-			<fieldSet>
-				
-				<div class="ajout">
-					<label for="rue">Rue</label> <input type="text" id="rue" name="rue"
-						placeholder="Rue" value="<c:out value="${utilisateur.rue }"/>" />
+<div class="container row">
+<div class="col-3"></div>
+	<div class="col-9">
+		<form action="<c:url value="/AjoutArticle"/>" method="post">
+			<div class="ajout row h2-affichArt">
+				<div class="col-2">
+					<label for="nomArticleVendu">Article:<span
+						class="requis"></span></label>
 				</div>
-
-				<div class="ajout">
-					<label for="codePostal">Code postal</label> <input type="text"
-						id="codePostal" name="codePostal" placeholder="Code postal"
-						value="<c:out value="${utilisateur.codePostal }"/>" />
+				<div class="col-6">
+					<input class="form-control" type="text" id="nomArticleVendu" required="required"
+						name="nomArticleVendu" maxlength="30" placeholder="Nom de l'article"
+						value="<c:out value="${nomArticleVendu}"/>" />
 				</div>
-
-				<div class="ajout">
-					<label for="ville">Ville</label> <input type="text" id="ville"
+			</div>
+	
+			<div class="ajout row h2-affichArt">
+				<div class="col-2">
+					<label for="description">Description<span
+						class="requis"></span></label>
+				</div>
+				<div class="col-6">
+					<textarea class="form-control" name="description" rows=5 cols=60 required="required"
+						wrap="soft" placeholder="Description de votre article"></textarea>
+				</div>
+			</div>
+	
+			<div class="ajout row h2-affichArt">
+				<div class="col-2">
+					<label for="categorie">Catégorie<span class="requis"></span></label>
+				</div>
+				<div class="col-4">
+					<select class="form-control" id="categorie" name="categorie">
+						<option value="1">Informatique</option>
+						<option value="2">Ameublement</option>
+						<option value="3">Vêtement</option>
+						<option value="4">Sport &amp; Loisirs</option>
+					</select>
+				</div>
+			</div>
+	
+			<div class="ajout row h2-affichArt">
+				<div class="col-2">
+					<label for="dateDebutEncheres">Date de la mise aux enchères<span
+						class="requis"></span></label>
+				</div>
+				<div class="col-4">
+					<input class="form-control" type="date" id="dateDebutEncheresDate"
+						name="dateDebutEncheresDate"/>
+					<input class="form-control" type="time" id="dateDebutEncheresTime"
+						name="dateDebutEncheresTime">
+				</div>
+			</div>
+	
+			<div class="ajout row h2-affichArt">
+				<div class="col-2">
+					<label for="dateFinEncheres">Date de la fin des enchères<span
+						class="requis"></span></label>
+				</div>
+				<div class="col-4">
+					<input class="form-control" type="date" id="dateFinEncheresDate"
+						name="dateFinEncheresDate"/>
+					<input class="form-control" type="time" id="dateFinEncheresTime"
+						name="dateFinEncheresTime">
+				</div>
+			</div>
+	
+			<div class="ajout row h2-affichArt">
+				<div class="col-2">
+					<label for="miseAPrix">Mise à prix<span class="requis"></span></label>
+				</div>
+				<div class="col-4">
+					<input class="form-control" type="number" id="miseAPrix" name="miseAPrix"
+						placeholder="Prix proposé" value="<c:out value="${miseAPrix }"/>" />
+				</div>
+			</div>
+	
+			<label>Retrait</label>
+			<div class="row h2-affichArt">
+				<div class="col-2">
+					<label for="rue">Rue</label>
+				</div>
+				<div class="col-4">
+					 <input class="form-control" type="text" id="rue" name="rue"
+							placeholder="Rue" value="<c:out value="${utilisateur.rue }"/>" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-2">
+					<label for="codePostal">Code postal</label>
+				</div>
+				<div class="col-4">
+				  <input class="form-control" type="text"
+					id="codePostal" name="codePostal" placeholder="Code postal"
+					value="<c:out value="${utilisateur.codePostal }"/>" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-2">
+					<label for="ville">Ville</label>
+				</div>
+				<div class="col-4">
+					 <input class="form-control" type="text" id="ville"
 						name="ville" placeholder="Ville"
 						value="<c:out value="${utilisateur.ville }"/>" />
 				</div>
-			</fieldSet>
-		</div>
-
-		<div id="boutons">
-			<input type="submit" name="btnEnregistrer" value="Enregistrer"
-				title="Enregistrer" />
-			<input type="reset" name="btAnnuler"
-				value="Annuler" title="Annuler" />
-		</div>
-
-	</form>
+			</div>
+	
+			<div id="boutons" class="row h2-affichArt">
+				<div class="col-2">
+					<input type="submit" name="btnEnregistrer" value="Enregistrer"
+						title="Enregistrer" />
+				</div>
+				<div class="col-10">
+					<input type="reset" name="btAnnuler"
+						value="Annuler" title="Annuler" />
+				</div>
+			</div>
+	
+		</form>
+	</div>
+</div>
 
 <jsp:include page="/WEB-INF/includes/footer.jsp"></jsp:include>
 

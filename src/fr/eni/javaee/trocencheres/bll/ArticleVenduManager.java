@@ -158,4 +158,8 @@ public class ArticleVenduManager {
 		return articleVendu;
 
 	}
+	
+	public void updateArticleVendu(ArticleVendu articleVendu) throws BusinessException{
+		articleVenduDAO.updateArticleVendu(articleVendu);
+	}
 }

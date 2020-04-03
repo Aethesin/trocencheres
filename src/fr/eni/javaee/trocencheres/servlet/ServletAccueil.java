@@ -40,6 +40,7 @@ public class ServletAccueil extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		amger = new ArticleVenduManager();
 		RequestDispatcher rd = null;
+		
 		//Ici on affiche la page d'accueil du site trocencheres, l'affichage de base lorsqu'il n'y a pas eu de recherche par filtre
 		try {
 			//On créer alors deux listes, une pour tous les articles en ventes et une pour tous les utilisateurs qui ont mis un article en vente
@@ -115,7 +116,7 @@ public class ServletAccueil extends HttpServlet {
 		
 	}
 	
-	//Cette méthode sert à allez chercher tous les vendeurs qui ont au moins un articles en ventes dans la bdd
+	//Cette méthode sert à allez chercher tous les vendeurs qui ont au moins un article en vente dans la base de données
 	private List<Utilisateur> selectUtilisateur(List<ArticleVendu> listeArticlesVendu){
 		umger = new UtilisateurManager();
 		List<Utilisateur> listeVendeurs = new ArrayList<>();

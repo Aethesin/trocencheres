@@ -49,8 +49,11 @@ public class ServletAffichEnchere extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		//Ce que l'on veut ici, c'est afficher le contenu d'un article, son nom, sa description, sa catégorie, une photo si il y en a une, sa meilleur proposition d'achat, la date de fin de l'enchère, le pseudo du vendeur.
+		
 		RequestDispatcher rd = null;
 		HttpSession session = request.getSession();
+		
 		// Permet d'afficher la page AfficherEnchere
 		utilisateurManager = new UtilisateurManager();
 		encheresManager = new EncheresManager();
@@ -70,10 +73,15 @@ public class ServletAffichEnchere extends HttpServlet {
 		}else{
 			noArticleVendu = Integer.parseInt(request.getParameter("noArticle"));
 		}
+		//Ici on récupère l'identifiant de l'article (no_article en base de données) pour l'insérer dans l'objet articleVendu.
 		articleVendu.setNoArticleVendu(noArticleVendu);
+		
 		try {
+			//On va ensuite chercher le contenu entier de l'objet en base de données grâce à son identifiant
 			articleVenduManager = new ArticleVenduManager();
 			articleVendu = articleVenduManager.selectArticleVenduByID(noArticleVendu);
+			//Ici, deux choix s'offre à nous, soit on récupère les informations des objets "Utilisateur" et "Catégorie" directement dans la requête SQL, soit on récupère juste leur identifiant
+			//Le choix ici était de récupérer les informations des objets grâce à leur identifiant
 			vendeur = articleVendu.getUtilisateur();
 			vendeur = utilisateurManager.selectUtilisateurById(vendeur.getNoUtilisateur());
 			String pseudoVendeur = vendeur.getPseudo();
@@ -81,6 +89,7 @@ public class ServletAffichEnchere extends HttpServlet {
 			categorie = articleVendu.getCategorie();
 			categorie = categorieManager.selectCategorieById(categorie.getNoCategorie());
 			String libelle = categorie.getLibelle();
+			
 			enchere = encheresManager.selectEnchereByMeilleurOffre(articleVendu.getNoArticleVendu());
 			
 			// Aller chercher en base de données les informations de l'article
@@ -165,6 +174,7 @@ public class ServletAffichEnchere extends HttpServlet {
 		RequestDispatcher rd = null;
 		Enchere enchere = new Enchere();
 		ArticleVendu articleVendu = new ArticleVendu();
+		//Ce passe ici la transaction envers les utilisateurs, celui qui a enchérit, et celui qui à "perdu" son enchère
 		if(valeurProposition <= utilisateur.getCredit()){
 			if(valeurProposition > prixVente){
 				articleVendu.setNoArticleVendu(Integer.parseInt(request.getParameter("noArticle")));
@@ -173,6 +183,7 @@ public class ServletAffichEnchere extends HttpServlet {
 				try {
 					
 					utilisateurMeilleur = utilisateurManager.getConnexion(pseudo);
+					//Vérifier si l'enréchisseur est le même que l'ancien
 					if(utilisateur.getNoUtilisateur() == utilisateurMeilleur.getNoUtilisateur()){
 						utilisateur.setCredit(utilisateur.getCredit() - valeurProposition + prixVente);
 						utilisateurManager.modifUtilisateur(utilisateur);

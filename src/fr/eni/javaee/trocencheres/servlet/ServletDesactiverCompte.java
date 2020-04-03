@@ -39,6 +39,7 @@ public class ServletDesactiverCompte extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//Ici cette méthode permet de désactiver un compte, passer le statut de 0 à 2 en base de données
 		utilisateurManager = new UtilisateurManager();
 		HttpSession session = request.getSession();
 		Utilisateur utilisateurSession = (Utilisateur) session.getAttribute("utilisateur");

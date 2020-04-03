@@ -25,8 +25,7 @@ public interface ArticleVenduDAO {
 	public ArticleVendu selectArticleVenduByID(int noArticleVendu) throws BusinessException;
 
 	// 1002 modifier une vente
-	// public void updateArtcileVendu(ArticleVendu articleVendu) throws
-	// BusinessException;
+	public void updateArticleVendu(ArticleVendu articleVendu) throws BusinessException;
 
 	// 2002 annuler une vente
 	// public void deleteArtcileVendu(int noArticleVendu) throws BusinessException;

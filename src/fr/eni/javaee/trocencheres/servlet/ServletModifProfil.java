@@ -35,6 +35,7 @@ public class ServletModifProfil extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		HttpSession session = request.getSession();
+		//Méthode pour afficher les champs avec les bonne données selon l'utilisateur
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 		if(utilisateur != null){
 			request.setAttribute("utilisateur", utilisateur);
@@ -53,7 +54,7 @@ public class ServletModifProfil extends HttpServlet {
 		RequestDispatcher rq = null;
 		Utilisateur user = null;
 		umger = new UtilisateurManager();
-		
+		//Récupération des champs, même inchangé, pour la modification en base de données
 		try {
 			String pseudo = request.getParameter("pseudo");
 			user = umger.getConnexion(pseudo);

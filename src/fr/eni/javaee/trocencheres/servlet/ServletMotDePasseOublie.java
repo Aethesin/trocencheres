@@ -43,6 +43,7 @@ public class ServletMotDePasseOublie extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		umger = new UtilisateurManager();
+		//Récuparation du pseudo (Unique en base de données) pour la modification du mot de passe
 		String pseudo = request.getParameter("pseudo");
 		try {
 			Utilisateur utilisateur = umger.getConnexion(pseudo);

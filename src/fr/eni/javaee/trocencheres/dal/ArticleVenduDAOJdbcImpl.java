@@ -45,6 +45,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			+ "FROM ARTICLES_VENDUS a "
 			+ "INNER JOIN UTILISATEURS u on u.no_utilisateur = a.no_utilisateur " + "WHERE a.no_article = ?";
 
+	private static final String UPDATE_ARTICLE = "UPDATE ARTICLES_VENDUS set nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, image_url = ?, prix_initial = ?, prix_vente = ?, no_utilisateur = ?, no_categorie = ? "
+			+ "WHERE no_article = ?;";
 	@Override
 	public ArticleVendu insertArticleVendu(ArticleVendu articleVendu) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
@@ -178,6 +180,28 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			businessException.ajouterErreur(CodesResultatDAL.SELECT_BY_NO_ARTICLE_ECHEC);
 		}
 		return articleVendu;
+	}
+	
+	public void updateArticleVendu(ArticleVendu articleVendu) throws BusinessException {
+		Connection cnx = null;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd HH:mm.ss");
+		try {
+			cnx= ConnectionProvider.getConnection();			
+			PreparedStatement pstmt = cnx.prepareStatement(UPDATE_ARTICLE);
+			pstmt.setString(1, articleVendu.getNomArticleVendu());
+			pstmt.setString(2, articleVendu.getDescription());
+			pstmt.setString(3, articleVendu.getDateDebutEncheres().format(formatter));
+			pstmt.setString(4, articleVendu.getDateFinEncheres().format(formatter));
+			pstmt.setString(5, "");
+			pstmt.setInt(6, articleVendu.getMiseAPrix());
+			pstmt.setInt(7, articleVendu.getPrixVente());
+			pstmt.setInt(8, articleVendu.getUtilisateur().getNoUtilisateur());
+			pstmt.setInt(9, articleVendu.getCategorie().getNoCategorie());
+			pstmt.setInt(10, articleVendu.getNoArticleVendu());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

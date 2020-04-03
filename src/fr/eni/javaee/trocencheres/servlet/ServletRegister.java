@@ -47,6 +47,7 @@ public class ServletRegister extends HttpServlet {
 		umger = new UtilisateurManager();
 		HttpSession session = request.getSession();
 		request.setCharacterEncoding("UTF-8");
+		//Création du compte utilisateur
 		List<Integer> listeCodesErreur = new ArrayList<>();
 		List<String> listeCodesErreurString = new ArrayList<>();
 		String pseudo = null;
@@ -60,6 +61,8 @@ public class ServletRegister extends HttpServlet {
 		String motDePasse = null;
 		String motDePasseVerif = null;
 		
+		
+		//Récupération de tous les champs
 		if(request.getParameter("pseudo").trim().length() == 0){
 			listeCodesErreur.add(CodesResultatServlets.PSEUDO_ERREUR);
 		}else{
@@ -113,6 +116,7 @@ public class ServletRegister extends HttpServlet {
 			listeCodesErreurString.add(LecteurMessage.getMessageErreur(integer));
 		}
 		
+		//Si la servlet a récupérée des erreurs, l'utilisateur se voit redirigé sur la même page, avec les champs préremplis par rapport à ceux qu'il a déjà remplis
 		if(listeCodesErreur.size() > 0){
 			Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse);
 			request.setAttribute("utilisateur", utilisateur);
