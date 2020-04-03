@@ -194,9 +194,9 @@
 					</div>
 					<div class="col-4">
 						<input class="form-control" type="date" id="dateDebutEncheresDate"
-							name="dateDebutEncheresDate"/>
+							name="dateDebutEncheresDate" value="${dateDebutEnchereDate }"/>
 						<input class="form-control" type="time" id="dateDebutEncheresTime"
-							name="dateDebutEncheresTime">
+							name="dateDebutEncheresTime" value="${dateDebutEnchereTime }">
 					</div>
 				</div>
 		
@@ -207,9 +207,9 @@
 					</div>
 					<div class="col-4">
 						<input class="form-control" type="date" id="dateFinEncheresDate"
-							name="dateFinEncheresDate"/>
+							name="dateFinEncheresDate" value="${dateFinEnchereDate }"/>
 						<input class="form-control" type="time" id="dateFinEncheresTime"
-							name="dateFinEncheresTime">
+							name="dateFinEncheresTime" value="${dateFinEnchereTime }">
 					</div>
 				</div>
 		

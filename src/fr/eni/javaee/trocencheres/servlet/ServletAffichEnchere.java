@@ -113,7 +113,8 @@ public class ServletAffichEnchere extends HttpServlet {
 				pseudoEnchereur = vendeur.getPseudo();
 			}
 			
-			int miseAPrix = articleVendu.getMiseAPrix();
+			int miseAPrix = articleVendu.getMiseAPrix();			
+			LocalDateTime dateDebutEnchere = articleVendu.getDateDebutEncheres();
 			LocalDateTime dateFinEnchere = articleVendu.getDateFinEncheres();
 			String rue = vendeur.getRue();
 			String codePostal = vendeur.getCodePostal();
@@ -127,8 +128,15 @@ public class ServletAffichEnchere extends HttpServlet {
 			}else{
 				verifDate = true;
 			}
-			DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+			DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm");
+			
+			String dateDebutEnchereString = formatter.format(dateDebutEnchere);
+			String dateDebutEnchereDate = dateDebutEnchereString.substring(0, 10);
+			String dateDebutEnchereTime = dateDebutEnchereString.substring(11, 16);
+			
 			String dateFinEnchereString = formatter.format(dateFinEnchere);
+			String dateFinEnchereDate = dateFinEnchereString.substring(0, 10);
+			String dateFinEnchereTime = dateFinEnchereString.substring(11, 16);
 			// Afficher les données à l'écran
 			request.setAttribute("pseudoVendeur", pseudoVendeur);
 			request.setAttribute("telephone", telephone);
@@ -141,7 +149,10 @@ public class ServletAffichEnchere extends HttpServlet {
 			request.setAttribute("prixVente", prixVente);
 			request.setAttribute("pseudoEnchereur", pseudoEnchereur);			
 			request.setAttribute("miseAPrix", miseAPrix);
-			request.setAttribute("dateFinEnchere", dateFinEnchereString);
+			request.setAttribute("dateDebutEnchereDate", dateDebutEnchereDate);
+			request.setAttribute("dateDebutEnchereTime", dateDebutEnchereTime);
+			request.setAttribute("dateFinEnchereDate", dateFinEnchereDate);
+			request.setAttribute("dateFinEnchereTime", dateFinEnchereTime);
 			request.setAttribute("rue", rue);
 			request.setAttribute("codePostal", codePostal);
 			request.setAttribute("ville", ville);
